@@ -1,0 +1,9 @@
+To fix: Warning: "continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"?
+Solution:
+- /vendor/zendframework/zend-code/src/Reflection/MethodReflection.php
+- /vendor/doctrine/orm/lib/Doctrine/ORM/UnitOfWork.php
+- /vendor/knplabs/gaufrette/src/Gaufrette/Util/Path.php
+-> Replace all "continue" to "break"
+
+Note: Do not replace in this file
+- /vendor/guzzlehttp/ringphp/src/Client/CurlFactory.php

@@ -1,2 +1,7 @@
-open_loyalty_core:
-    resource: "@OpenLoyaltyCoreBundle/Resources/config/routing.yml"
+kulcua_extension:
+    resource: "@KulcuaExtensionBundle/Controller/"
+    type:     annotation
+    prefix:   /api
+
+# open_loyalty_core:
+    # resource: "@OpenLoyaltyCoreBundle/Resources/config/routing.yml"
