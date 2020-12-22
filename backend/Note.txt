@@ -1,9 +1,13 @@
-To fix: Warning: "continue" targeting switch is equivalent to "break". Did you mean to use "continue 2"?
-Solution:
-- /vendor/zendframework/zend-code/src/Reflection/MethodReflection.php
-- /vendor/doctrine/orm/lib/Doctrine/ORM/UnitOfWork.php
-- /vendor/knplabs/gaufrette/src/Gaufrette/Util/Path.php
--> Replace all "continue" to "break"
+run: docker exec -it <container_id> bash
+to run in docker enviroment (php)
 
-Note: Do not replace in this file
-- /vendor/guzzlehttp/ringphp/src/Client/CurlFactory.php
+cache:clear --env=prod (remember fix permission to writable var/ folder by acl)
+
+app_dev.php = dev
+site: http://openloyalty.localhost/app_dev.php/
+
+app.php = prod
+site: http://openloyalty.localhost
+
+unuse:
+set localhost 127.0.0.1 for openloyalty.localhost

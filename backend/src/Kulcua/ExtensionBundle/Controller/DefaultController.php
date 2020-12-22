@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/ne")
      */
     public function indexAction()
     {
