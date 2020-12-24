@@ -1,0 +1,4 @@
+kulcua_extension:
+    resource: "@KulcuaExtensionBundle/Controller/"
+    type:     annotation
+    prefix:   /tui
