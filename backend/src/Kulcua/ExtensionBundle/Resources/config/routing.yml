@@ -1,4 +1,4 @@
 kulcua_extension:
-    resource: "@KulcuaExtensionBundle/Controller/"
+    resource: "@KulcuaExtensionBundle/Controller/DateMaintenaceController.php"
     type:     annotation
-    prefix:   /tui
+    prefix:   /api
