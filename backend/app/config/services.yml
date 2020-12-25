@@ -1,5 +1,6 @@
 imports:
     - { resource: services_deprecated.yml }
+    # - { resource: '@KulcuaExtensionBundle/Resources/config/services.yml' }
 
 services:
     _defaults:
