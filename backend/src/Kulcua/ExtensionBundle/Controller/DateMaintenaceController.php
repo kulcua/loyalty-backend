@@ -30,8 +30,8 @@ class DateMaintenaceController extends FOSRestController
      *
      * @return View
      */
-    public function indexController(Request $request)
+    public function indexAction()
     {
-        return $this->view(['data' => ['data']]);
+        return $this->render('KulcuaExtensionBundle:Default:index.html.twig');
     }
 }
