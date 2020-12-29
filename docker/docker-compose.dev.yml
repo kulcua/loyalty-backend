@@ -49,8 +49,8 @@ services:
       - "5432:5432"
     env_file:
         - .env
-  # mail:
-  #   container_name: open_loyalty_mail
-  #   image: mailhog/mailhog
-  #   ports:
-  #     - "8186:8025"
+  mail:
+    container_name: open_loyalty_mail
+    image: mailhog/mailhog
+    ports:
+      - "8186:8025"
