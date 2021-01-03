@@ -1,6 +1,6 @@
 <?php
 
-namespace Kulcua\ExtensionBundle\Tests\Controller;
+namespace MaintenanceBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
