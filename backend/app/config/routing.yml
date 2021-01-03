@@ -1,5 +1,5 @@
 maintenance:
     resource: "@MaintenanceBundle/Resources/config/routing.yml"
 
-# open_loyalty_core:
-#     resource: "@OpenLoyaltyCoreBundle/Resources/config/routing.yml"
+open_loyalty_core:
+    resource: "@OpenLoyaltyCoreBundle/Resources/config/routing.yml"
