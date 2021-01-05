@@ -5,10 +5,10 @@ namespace Kulcua\Extension\Component\Maintenance\Domain\ReadModel;
 use Broadway\ReadModel\SerializableReadModel;
 use OpenLoyalty\Component\Core\Domain\ReadModel\Versionable;
 use OpenLoyalty\Component\Core\Domain\ReadModel\VersionableReadModel;
-use OpenLoyalty\Component\Maintenance\Domain\CustomerId;
+use Kulcua\Extension\Component\Maintenance\Domain\CustomerId;
 use Kulcua\Extension\Component\Maintenance\Domain\Model\CustomerBasicData;
-use OpenLoyalty\Component\Maintenance\Domain\Maintenance;
-use OpenLoyalty\Component\Maintenance\Domain\MaintenanceId;
+use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
+use Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId;
 
 /**
  * Class MaintenanceDetails.
@@ -82,6 +82,18 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
      */
     public static function deserialize(array $data)
     {
+        if (is_numeric($data['bookingDate'])) {
+            $tmp = new \DateTime();
+            $tmp->setTimestamp($data['bookingDate']);
+            $data['bookingDate'] = $tmp;
+        }
+
+        if (is_numeric($data['createdAt'])) {
+            $tmp = new \DateTime();
+            $tmp->setTimestamp($data['createdAt']);
+            $data['createdAt'] = $tmp;
+        }
+
         $customerData = $data['customerData'];
 
         $maintenance = new self(new MaintenanceId($data['maintenanceId']));
@@ -89,7 +101,7 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
         $maintenance->customerData = CustomerBasicData::deserialize($customerData);
 
         $maintenance->productSku = $data['productSku'];
-        $maintenance->bookingDate = isset($data['bookingDate']);
+        $maintenance->bookingDate = $data['bookingDate'];
         $maintenance->warrantyCenter = $data['warrantyCenter'];
         $maintenance->createdAt = $data['createdAt'];
         $maintenance->active = $data['active'];
@@ -106,7 +118,7 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
             'customerId' => $this->customerId ? (string) $this->customerId : null,
             'maintenanceId' => (string) $this->maintenanceId,
             'productSku' => $this->productSku,
-            'bookingDate' => $this->bookingDate,
+            'bookingDate' => $this->bookingDate->getTimestamp(),
             'warrantyCenter' => $this->warrantyCenter,
             'createdAt' => $this->createdAt->getTimestamp(),
             'active' => $this->active,

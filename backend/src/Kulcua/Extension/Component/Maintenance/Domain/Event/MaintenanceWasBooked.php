@@ -2,15 +2,13 @@
 
 namespace Kulcua\Extension\Component\Maintenance\Domain\Event;
 
-use OpenLoyalty\Component\Core\Domain\Model\Label;
-// use OpenLoyalty\Component\Maintenance\Domain\Model\Item;
-// use OpenLoyalty\Component\Maintenance\Domain\PosId;
 use Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId;
+use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceEvent;
 
 /**
- * Class MaintenanceWasRegistered.
+ * Class MaintenanceWasBooked.
  */
-class MaintenanceWasRegistered extends MaintenanceEvent
+class MaintenanceWasBooked extends MaintenanceEvent
 {
     /**
      * @var array
@@ -32,7 +30,7 @@ class MaintenanceWasRegistered extends MaintenanceEvent
     public function __construct(
         MaintenanceId $maintenanceId,
         array $maintenanceData,
-        array $customerData,
+        array $customerData
     ) {
         parent::__construct($maintenanceId);
         // $itemsObjects = [];
@@ -53,11 +51,11 @@ class MaintenanceWasRegistered extends MaintenanceEvent
         // }
         // $this->labels = $maintenanceLabels;
 
-        // if (is_numeric($maintenanceData['purchaseDate'])) {
-        //     $tmp = new \DateTime();
-        //     $tmp->setTimestamp($maintenanceData['purchaseDate']);
-        //     $maintenanceData['purchaseDate'] = $tmp;
-        // }
+        if (is_numeric($maintenanceData['bookingDate'])) {
+            $tmp = new \DateTime();
+            $tmp->setTimestamp($maintenanceData['bookingDate']);
+            $maintenanceData['bookingDate'] = $tmp;
+        }
 
         $this->maintenanceData = $maintenanceData;
         $this->customerData = $customerData;
@@ -112,7 +110,7 @@ class MaintenanceWasRegistered extends MaintenanceEvent
         return new self(
             new MaintenanceId($data['maintenanceId']),
             $maintenanceData,
-            $customerData,
+            $customerData
         );
     }
 }

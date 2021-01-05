@@ -5,12 +5,6 @@ namespace Kulcua\Extension\Component\Maintenance\Domain\ReadModel;
 use Broadway\ReadModel\Repository;
 use Broadway\Repository\Repository as AggregateRootRepository;
 use OpenLoyalty\Component\Core\Infrastructure\Projector\Projector;
-// use OpenLoyalty\Component\Pos\Domain\Pos;
-// use OpenLoyalty\Component\Pos\Domain\PosId;
-// use OpenLoyalty\Component\Pos\Domain\PosRepository;
-// use OpenLoyalty\Component\Maintenance\Domain\Event\CustomerWasAssignedToMaintenance;
-// use OpenLoyalty\Component\Maintenance\Domain\Event\LabelsWereAppendedToMaintenance;
-// use OpenLoyalty\Component\Maintenance\Domain\Event\LabelsWereUpdated;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasBooked;
 use Kulcua\Extension\Component\Maintenance\Domain\Model\CustomerBasicData;
 use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
@@ -26,11 +20,6 @@ class MaintenanceDetailsProjector extends Projector
      */
     private $repository;
 
-    // /**
-    //  * @var PosRepository
-    //  */
-    // private $posRepository;
-
     /**
      * @var AggregateRootRepository
      */
@@ -40,16 +29,13 @@ class MaintenanceDetailsProjector extends Projector
      * MaintenanceDetailsProjector constructor.
      *
      * @param Repository              $repository
-    //  * @param PosRepository           $posRepository
      * @param AggregateRootRepository $maintenanceRepository
      */
     public function __construct(
         Repository $repository,
-        // PosRepository $posRepository,
         AggregateRootRepository $maintenanceRepository
     ) {
         $this->repository = $repository;
-        // $this->posRepository = $posRepository;
         $this->maintenanceRepository = $maintenanceRepository;
     }
 
@@ -70,16 +56,6 @@ class MaintenanceDetailsProjector extends Projector
         $readModel->setCreatedAt($maintenanceData['createdAt']);
         $readModel->setActive($maintenanceData['active']);
         $readModel->setCustomerData(CustomerBasicData::deserialize($event->getCustomerData()));
-
-        // if ($readModel->getPosId()) {
-        //     /** @var Pos $pos */
-        //     $pos = $this->posRepository->byId(new PosId((string) $readModel->getPosId()));
-        //     if ($pos) {
-        //         $pos->setMaintenancesAmount($pos->getMaintenancesAmount() + $maintenance->getGrossValue());
-        //         $pos->setMaintenancesCount($pos->getMaintenancesCount() + 1);
-        //         $this->posRepository->save($pos);
-        //     }
-        // }
 
         $this->repository->save($readModel);
     }

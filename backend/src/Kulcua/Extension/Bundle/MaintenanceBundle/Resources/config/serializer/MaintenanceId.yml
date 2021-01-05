@@ -1,0 +1,6 @@
+Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId:
+  exlusion_policy: ALL
+  properties:
+    maintenanceId:
+      expose: true
+      serialized_name: maintenanceId

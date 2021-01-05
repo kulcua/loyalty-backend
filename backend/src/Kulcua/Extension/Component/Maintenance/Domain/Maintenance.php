@@ -6,6 +6,7 @@ use OpenLoyalty\Component\Core\Domain\Model\Label;
 use OpenLoyalty\Component\Core\Domain\Model\SKU;
 use OpenLoyalty\Component\Core\Domain\SnapableEventSourcedAggregateRoot;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasBooked;
+use Kulcua\Extension\Component\Maintenance\Domain\Model\CustomerBasicData;
 
 /**
  * Class Maintenance.
@@ -70,13 +71,13 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     public static function createMaintenance(
         MaintenanceId $maintenanceId,
         array $maintenanceData,
-        array $customerData,
+        array $customerData
     ): Maintenance {
         $maintenance = new self();
         $maintenance->create(
             $maintenanceId,
             $maintenanceData,
-            $customerData,
+            $customerData
         );
 
         return $maintenance;
@@ -126,13 +127,13 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     private function create(
         MaintenanceId $maintenanceId,
         array $maintenanceData,
-        array $customerData,
+        array $customerData
     ): void {
         $this->apply(
             new MaintenanceWasBooked(
                 $maintenanceId,
                 $maintenanceData,
-                $customerData,
+                $customerData
             )
         );
     }

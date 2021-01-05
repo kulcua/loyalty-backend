@@ -39,26 +39,5 @@ services:
         arguments:
             $maintenanceRepository: '@kc.maintenance.repository'
             $repository: '@Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository'
-            # $posRepository: '@oloy.pos.repository'
 
-    kc.maintenance.listener.assing_customer_to_maintenance:
-        class: Kulcua\Extension\Component\Maintenance\Domain\Event\Listener\AssignCustomerToMaintenanceListener
-        arguments:
-            $customerIdProvider: '@kc.maintenance.customer_id_provider'
-            $commandBus: '@broadway.command_handling.command_bus'
-            $eventDispatcher: '@broadway.event_dispatcher'
-            $customerRepository: '@kc.user.customer.repository'
-            $maintenanceRepository: '@kc.maintenance.repository'
-            $maintenanceDetailsRepository: '@Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository'
-        lazy: true
-        tags:
-            - { name: broadway.domain.event_listener }
-
-    # Kulcua\Extension\Component\Maintenance\Domain\Provider\ParentMaintenanceIdProvider: ~
-    # Kulcua\Extension\Component\Maintenance\Domain\Provider\MaintenanceValueProvider:
-        # arguments:
-        #     $maintenanceRepository: '@kc.maintenance.repository'
-
-    # Kulcua\Extension\Component\Maintenance\Domain\Provider\ParentMaintenanceIdProviderInterface: '@Kulcua\Extension\Component\Maintenance\Domain\Provider\ParentMaintenanceIdProvider'
-    # Kulcua\Extension\Component\Maintenance\Domain\Provider\MaintenanceValueProviderInterface: '@Kulcua\Extension\Component\Maintenance\Domain\Provider\MaintenanceValueProvider'
     Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository: '@Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository'

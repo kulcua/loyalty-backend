@@ -1,0 +1,9 @@
+Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetails:
+  exlusion_policy: all
+  properties:
+    maintenanceId:
+      expose: true
+      inline: true
+    customerId:
+      expose: true
+      inline: true

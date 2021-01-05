@@ -45,15 +45,8 @@ class MaintenanceCommandHandler extends SimpleCommandHandler
     {
         $maintenance = Maintenance::createMaintenance(
             $command->getMaintenanceId(),
-            $command->getTransactionData(),
-            $command->getCustomerData(),
-            $command->getItems(),
-            $command->getPosId(),
-            $command->getExcludedDeliverySKUs(),
-            $command->getExcludedLevelSKUs(),
-            $command->getExcludedCategories(),
-            $command->getRevisedDocument(),
-            $command->getLabels()
+            $command->getMaintenanceData(),
+            $command->getCustomerData()
         );
 
         $this->repository->save($maintenance);
@@ -62,48 +55,46 @@ class MaintenanceCommandHandler extends SimpleCommandHandler
             MaintenanceSystemEvents::MAINTENANCE_BOOKED,
             [new MaintenanceBookedEvent(
                 $command->getMaintenanceId(),
-                $command->getTransactionData(),
-                $command->getCustomerData(),
-                $command->getItems(),
-                $command->getPosId()
+                $command->getMaintenanceData(),
+                $command->getCustomerData()
             )]
         );
     }
 
     // /**
-    //  * @param AppendLabelsToTransaction $command
+    //  * @param AppendLabelsToMaintenance $command
     //  */
-    // public function handleAppendLabelsToTransaction(AppendLabelsToTransaction $command)
+    // public function handleAppendLabelsToMaintenance(AppendLabelsToMaintenance $command)
     // {
-    //     /** @var Transaction $transaction */
-    //     $transaction = $this->repository->load($command->getTransactionId()->__toString());
-    //     $transaction->appendLabels($command->getLabels());
-    //     $this->repository->save($transaction);
+    //     /** @var Maintenance $maintenance */
+    //     $maintenance = $this->repository->load($command->getMaintenanceId()->__toString());
+    //     $maintenance->appendLabels($command->getLabels());
+    //     $this->repository->save($maintenance);
     // }
 
     // /**
-    //  * @param EditTransactionLabels $command
+    //  * @param EditMaintenanceLabels $command
     //  */
-    // public function handleEditTransactionLabels(EditTransactionLabels $command)
+    // public function handleEditMaintenanceLabels(EditMaintenanceLabels $command)
     // {
-    //     /** @var Transaction $transaction */
-    //     $transaction = $this->repository->load($command->getTransactionId()->__toString());
-    //     $transaction->setLabels($command->getLabels());
-    //     $this->repository->save($transaction);
+    //     /** @var Maintenance $maintenance */
+    //     $maintenance = $this->repository->load($command->getMaintenanceId()->__toString());
+    //     $maintenance->setLabels($command->getLabels());
+    //     $this->repository->save($maintenance);
     // }
 
     // /**
-    //  * @param AssignCustomerToTransaction $command
+    //  * @param AssignCustomerToMaintenance $command
     //  */
-    // public function handleAssignCustomerToTransaction(AssignCustomerToTransaction $command)
+    // public function handleAssignCustomerToMaintenance(AssignCustomerToMaintenance $command)
     // {
-    //     /** @var Transaction $transaction */
-    //     $transaction = $this->repository->load((string) $command->getTransactionId());
-    //     $transaction->assignCustomerToTransaction(
+    //     /** @var Maintenance $maintenance */
+    //     $maintenance = $this->repository->load((string) $command->getMaintenanceId());
+    //     $maintenance->assignCustomerToMaintenance(
     //         $command->getCustomerId(),
     //         $command->getEmail(),
     //         $command->getPhone()
     //     );
-    //     $this->repository->save($transaction);
+    //     $this->repository->save($maintenance);
     // }
 }

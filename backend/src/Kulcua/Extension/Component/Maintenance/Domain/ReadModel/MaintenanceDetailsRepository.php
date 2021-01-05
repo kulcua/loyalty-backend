@@ -34,7 +34,7 @@ interface MaintenanceDetailsRepository extends Repository
      *
      * @return MaintenanceDetails[]
      */
-    public function findByWarrantyCenter(string $warrantyCenter, $withCustomer = true): array;
+    public function findByWarrantyCenter(string $warrantyCenter, bool $withCustomer = true): array;
 
     /**
      * @param bool $active
@@ -42,7 +42,7 @@ interface MaintenanceDetailsRepository extends Repository
      *
      * @return MaintenanceDetails[]
      */
-    public function findByActive(bool $active, $withCustomer = true): array;
+    public function findByActive(bool $active, bool $withCustomer = true): array;
 
     /**
      * @param array $params

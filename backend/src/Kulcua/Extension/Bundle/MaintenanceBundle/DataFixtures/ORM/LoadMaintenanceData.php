@@ -7,11 +7,9 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
-// use OpenLoyalty\Bundle\PosBundle\DataFixtures\ORM\LoadPosData;
 use OpenLoyalty\Bundle\UserBundle\DataFixtures\ORM\LoadUserData;
 use Kulcua\Extension\Component\Maintenance\Domain\Command\BookMaintenance;
-// use OpenLoyalty\Component\Maintenance\Domain\PosId;
-use OpenLoyalty\Component\Maintenance\Domain\MaintenanceId;
+use Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId;
 use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
 
 /**
@@ -19,12 +17,12 @@ use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
  */
 class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterface, OrderedFixtureInterface
 {
-    const MAINTENANCE_ID = '00000000-0000-1111-0000-000000000000';
+    const MAINTENANCE_ID = '00000000-0000-2222-0000-000000000000';
     // const MAINTENANCE_COUPONS_ID = '00000000-0000-1111-0000-000000002121';
     // const MAINTENANCE_COUPONS_USED_ID = '00000000-0000-1111-0000-000000002123';
-    const MAINTENANCE2_ID = '00000000-0000-1111-0000-000000000002';
-    const MAINTENANCE3_ID = '00000000-0000-1111-0000-000000000003';
-    const MAINTENANCE4_ID = '00000000-0000-1111-0000-000000000004';
+    const MAINTENANCE2_ID = '00000000-0000-2222-0000-000000000002';
+    const MAINTENANCE3_ID = '00000000-0000-2222-0000-000000000003';
+    const MAINTENANCE4_ID = '00000000-0000-2222-0000-000000000004';
     // const MAINTENANCE5_ID = '00000000-0000-1111-0000-000000000005';
     // const MAINTENANCE6_ID = '00000000-0000-1111-0000-000000000006';
     // const MAINTENANCE7_ID = '00000000-0000-1111-0000-000000000007';
