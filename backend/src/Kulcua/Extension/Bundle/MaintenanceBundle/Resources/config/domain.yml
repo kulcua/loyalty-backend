@@ -1,0 +1,43 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    kc.maintenance.command_handler:
+        class: Kulcua\Extension\Component\Maintenance\Domain\Command\MaintenanceCommandHandler
+        arguments:
+            - '@kc.maintenance.repository'
+            - '@broadway.event_dispatcher'
+        lazy: true
+        tags:
+            - { name: broadway.command_handler }
+
+    Kulcua\Extension\Component\Maintenance\Domain\EventSourcedMaintenanceRepository:
+        arguments:
+            - '@broadway.event_store'
+            - '@broadway.event_handling.event_bus'
+            - ['@broadway.metadata_enriching_event_stream_decorator']
+
+    Kulcua\Extension\Component\Maintenance\Domain\MaintenanceRepository:
+        arguments:
+            - '@Kulcua\Extension\Component\Maintenance\Domain\EventSourcedMaintenanceRepository'
+            - '@broadway.event_store'
+            - '@OpenLoyalty\Bundle\CoreBundle\Repository\DBALSnapshotRepository'
+            - '@Broadway\Snapshotting\Snapshot\Trigger\EventCountTrigger'
+
+    Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository:
+        class: 'Broadway\ReadModel\ReadModel'
+        factory: ['@oloy.read_model.repository.factory', create]
+        arguments:
+            - 'kc.maintenances_details'
+            - 'Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetails'
+            - 'Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository'
+
+    Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsProjector:
+        tags:
+            - { name: broadway.domain.event_listener }
+        arguments:
+            $maintenanceRepository: '@kc.maintenance.repository'
+            $repository: '@Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository'
+
+    Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository: '@Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository'

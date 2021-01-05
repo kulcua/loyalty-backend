@@ -2,6 +2,10 @@ services:
     _defaults:
         public: true
 
+    kc.maintenance.repository:
+        alias: Kulcua\Extension\Component\Maintenance\Domain\MaintenanceRepository
+        deprecated: The "%service_id%" service is deprecated since Kulcua
+
     oloy.pagination:
         alias: OpenLoyalty\Bundle\PaginationBundle\Service\Paginator
         deprecated: The "%service_id%" service is deprecated since 2.8.0

@@ -12,6 +12,9 @@ services:
       - db
     env_file:
         - .env
+    environment:
+      - frontend_customer_panel_url=http://openloyalty.dev:8183/client
+      - frontend_password_reset_url=openloyalty.dev:8183/client#!/password/reset
   nginx:
     container_name: openloyalty_frontend
     image: divante/open-loyalty-web
@@ -22,9 +25,10 @@ services:
       - "8182:3001"
       - "8183:3002"
       - "8184:3003"
+    command: bash -c "sed -i -e 's@"http://openloyalty.localhost/api"@'\"http://localhost/api\"'@g' /var/www/openloyalty/front/config.js && nginx -g 'daemon off;'"
   elk:
     container_name: openloyalty_elk
-    image: divante/open-loyalty-elasticsearch:2.2.0
+    image: elasticsearch:2.2
   db:
     container_name: openloyalty_db
     image: postgres:9
