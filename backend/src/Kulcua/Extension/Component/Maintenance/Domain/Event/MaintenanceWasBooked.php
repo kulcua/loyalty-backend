@@ -33,28 +33,17 @@ class MaintenanceWasBooked extends MaintenanceEvent
         array $customerData
     ) {
         parent::__construct($maintenanceId);
-        // $itemsObjects = [];
-        // foreach ($items as $item) {
-        //     if ($item instanceof Item) {
-        //         $itemsObjects[] = $item;
-        //     } else {
-        //         $itemsObjects[] = Item::deserialize($item);
-        //     }
-        // }
-        // $maintenanceLabels = [];
-        // foreach ($labels as $label) {
-        //     if ($label instanceof Label) {
-        //         $maintenanceLabels[] = $label;
-        //     } else {
-        //         $maintenanceLabels[] = Label::deserialize($label);
-        //     }
-        // }
-        // $this->labels = $maintenanceLabels;
 
         if (is_numeric($maintenanceData['bookingDate'])) {
             $tmp = new \DateTime();
             $tmp->setTimestamp($maintenanceData['bookingDate']);
             $maintenanceData['bookingDate'] = $tmp;
+        }
+
+        if (is_numeric($maintenanceData['createdAt'])) {
+            $tmp = new \DateTime();
+            $tmp->setTimestamp($maintenanceData['createdAt']);
+            $maintenanceData['createdAt'] = $tmp;
         }
 
         $this->maintenanceData = $maintenanceData;
