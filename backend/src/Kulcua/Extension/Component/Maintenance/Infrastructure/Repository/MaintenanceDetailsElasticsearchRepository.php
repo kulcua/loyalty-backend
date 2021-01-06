@@ -84,8 +84,6 @@ class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchReposit
         $sortField = null,
         $direction = 'DESC'
     ): array {
-        $params = $this->prepareLabels($params);
-
         return parent::findByParametersPaginated($params, $exact, $page, $perPage, $sortField, $direction);
     }
 
