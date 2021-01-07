@@ -36,8 +36,8 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
 
         $maintenanceData = [
             'productSku' => '11111',
-            'bookingDate' => (new \DateTime('+1 day'))->getTimestamp(),
-            'createdAt' => (new \DateTime('+3 day'))->getTimestamp(),
+            'bookingDate' => (new \DateTime('+3 day'))->getTimestamp(),
+            'createdAt' => (new \DateTime('+1 day'))->getTimestamp(),
             'active' => false,
             'warrantyCenter' => 'HCM',
         ];

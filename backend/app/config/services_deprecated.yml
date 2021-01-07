@@ -1,6 +1,9 @@
 services:
     _defaults:
         public: true
+    # kc.maintenance.form_handler.book:
+    #     alias:  Kulcua\Extension\Bundle\MaintenanceBundle\Form\Handler\BookMaintenanceFormHandler
+    #     deprecated: The "%service_id%" service is deprecated since Kulcua
 
     kc.maintenance.repository:
         alias: Kulcua\Extension\Component\Maintenance\Domain\MaintenanceRepository
