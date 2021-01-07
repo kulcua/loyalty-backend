@@ -122,14 +122,11 @@ class MaintenanceController extends FOSRestController
     {
         $form = $this->get('form.factory')->createNamed('maintenance', MaintenanceFormType::class);
         $form->handleRequest($request);
-        // $returnsEnabled = $this->get('ol.settings.manager')->getSettingByKey('returns');
-        // $returnsEnabled = $returnsEnabled ? $returnsEnabled->getValue() : false;
 
         if ($form->isValid()) {
             $data = $form->getData();
             
             $maintenanceId = new MaintenanceId($this->get('broadway.uuid.generator')->generate());
-            // $settingsManager = $this->get('ol.settings.manager');
             
             $this->get('broadway.command_handling.command_bus')->dispatch(
                 new BookMaintenance(
@@ -140,59 +137,8 @@ class MaintenanceController extends FOSRestController
             );
 
             return $this->view(['maintenanceId' => (string) $maintenanceId]);
-            // return $this->view($data);
         }
 
         return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
     }
-
-    // /**
-    //  * Method allows to book customer to specific maintenance.
-    //  *
-    //  * @Route(name="kc.maintenance.book", path="/admin/maintenance/customer/book")
-    //  * @Route(name="kc.maintenance.customer.book", path="/customer/maintenance/customer/book")
-    // //  Route(name="kc.maintenance.pos.book", path="/pos/maintenance/customer/book")
-    //  * @Method("POST")
-    //  * @ApiDoc(
-    //  *     name="Book maintenance",
-    //  *     section="Maintenances",
-    //  *     input={"class" = "OpenLoyalty\Bundle\MaintenanceBundle\Form\Type\ManuallyBookCustomerToMaintenanceFormType", "name" = "book"},
-    //  *     statusCodes={
-    //  *       200="Returned when successful",
-    //  *       400="Returned when form contains errors",
-    //  *     }
-    //  * )
-    //  *
-    //  * @param Request $request
-    //  *
-    //  * @return View
-    //  */
-    // public function bookAction(Request $request): View
-    // {
-    //     /** @var User $user */
-    //     $user = $this->getUser();
-
-    //     if ($this->isGranted('ROLE_PARTICIPANT')) {
-    //         $parameters = $request->request->get('book');
-    //         $parameters['customerId'] = $user->getId();
-    //         unset($parameters['customerLoyaltyCardNumber'], $parameters['customerPhoneNumber']);
-    //         $request->request->set('book', $parameters);
-    //     }
-
-    //     /** @var BookMaintenanceFormType|FormInterface $form */
-    //     $form = $this->get('form.factory')->createNamed('book', BookMaintenanceFormType::class);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isValid()) {
-    //         $result = $this->get('kc.maintenance.form_handler.book')->onSuccess($form);
-
-    //         if ($result === false) {
-    //             return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
-    //         }
-
-    //         return $this->view(['maintenanceId' => (string) $result]);
-    //     }
-
-    //     return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
-    // }
 }
