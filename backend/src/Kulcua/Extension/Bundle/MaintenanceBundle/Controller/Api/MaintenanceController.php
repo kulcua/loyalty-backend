@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormError;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\LabelsFilterFormType;
 use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceFormType;
+// use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceDetailsFormType;
 
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetails;
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository;
@@ -27,6 +29,7 @@ use Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId;
 use OpenLoyalty\Bundle\UserBundle\Entity\User;
 use OpenLoyalty\Component\Customer\Domain\ReadModel\CustomerDetails;
 use Kulcua\Extension\Component\Maintenance\Domain\Command\BookMaintenance;
+use Kulcua\Extension\Component\Maintenance\Domain\Command\UpdateMaintenance;
 
 class MaintenanceController extends FOSRestController
 {
@@ -35,13 +38,13 @@ class MaintenanceController extends FOSRestController
      *
      * @Route(name="kc.maintenance.list", path="/maintenance")
     //   Route(name="kc.maintenance.customer.list", path="/customer/maintenance")
-    //   Route(name="kc.maintenance.seller.list", path="/seller/maintenance")
+    //   Route(name="kc.maintenance.maintenance.list", path="/maintenance/maintenance")
     //   Security("is_granted('LIST_MAINTENANCES') or is_granted('LIST_CURRENT_CUSTOMER_MAINTENANCES') or is_granted('LIST_CURRENT_POS_MAINTENANCES')")
      * @Method("GET")
      *
      * @ApiDoc(
      *     name="get maintenances list",
-     *     section="Maintenances",
+     *     section="Maintenance",
      *     parameters={
      *      {"name"="page", "dataType"="integer", "required"=false, "description"="Page number"},
      *      {"name"="perPage", "dataType"="integer", "required"=false, "description"="Number of elements per page"},
@@ -106,7 +109,7 @@ class MaintenanceController extends FOSRestController
     //  Security("is_granted('CREATE_MAINTENANCE')")
      * @ApiDoc(
      *     name="Book maintenance",
-     *     section="Maintenances",
+     *     section="Maintenance",
      *     input={"class" = "Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceFormType", "name" = "maintenance"},
      *     statusCodes={
      *       200="Returned when successful",
@@ -137,6 +140,47 @@ class MaintenanceController extends FOSRestController
             );
 
             return $this->view(['maintenanceId' => (string) $maintenanceId]);
+        }
+
+        return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * Method allows to update maintenance details.
+     *
+     * @param Request       $request
+     * @param MaintenanceDetails $maintenance
+     *
+     * @return \FOS\RestBundle\View\View
+     * @Route(name="kc.maintenance.edit", path="/maintenance/{maintenance}")
+     * @Method("PUT")
+     * @Security("is_granted('EDIT', maintenance)")
+     * @ApiDoc(
+     *     name="Edit Maintenance",
+     *     section="Maintenance",
+     *     input={"class" = "Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceFormType", "name" = "maintenance"},
+     *     statusCodes={
+     *       200="Returned when successful",
+     *       400="Returned when form contains errors",
+     *     }
+     * )
+     */
+    public function editMaintenanceAction(Request $request, MaintenanceDetails $maintenance)
+    {
+        $form = $this->get('form.factory')->createNamed('maintenance', MaintenanceFormType::class, [], [
+            'method' => 'PUT',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            if ($this->get('kc.maintenance.form_handler.edit')->onSuccess($maintenance->getMaintenanceId(), $form) === true) {
+                return $this->view([
+                    'maintenanceId' => (string) $maintenance->getMaintenanceId(),
+                ]);
+            } else {
+                return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
+            }
         }
 
         return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);

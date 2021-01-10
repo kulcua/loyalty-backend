@@ -1,5 +1,6 @@
 imports:
     - { resource: "@OpenLoyaltyCoreBundle/Resources/config/config.yml"}
+    - { resource: "@MaintenanceBundle/Resources/config/config.yml"}
 
     - { resource: parameters.yml }
     - { resource: security.yml }

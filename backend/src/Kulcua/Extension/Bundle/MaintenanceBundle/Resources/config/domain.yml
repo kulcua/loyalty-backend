@@ -12,6 +12,22 @@ services:
         tags:
             - { name: broadway.command_handler }
 
+    kc.maintenance.read_model.repository.maintenance_details:
+        class: 'Broadway\ReadModel\ReadModel'
+        factory: ['@oloy.read_model.repository.factory', create]
+        arguments:
+            - 'kc.maintenance_details'
+            - 'Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetails'
+            - 'Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository'
+
+    kc.maintenance.read_model.projector.maintenance_details:
+        class: 'Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsProjector'
+        tags:
+            - { name: broadway.domain.event_listener }
+        arguments:
+            $repository: '@kc.maintenance.read_model.repository.maintenance_details'
+            $maintenanceRepository: '@kc.maintenance.repository'
+
     Kulcua\Extension\Component\Maintenance\Domain\EventSourcedMaintenanceRepository:
         arguments:
             - '@broadway.event_store'

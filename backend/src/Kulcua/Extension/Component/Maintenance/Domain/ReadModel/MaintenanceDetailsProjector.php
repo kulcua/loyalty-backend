@@ -60,37 +60,55 @@ class MaintenanceDetailsProjector extends Projector
         $this->repository->save($readModel);
     }
 
-    // /**
-    //  * @param CustomerWasAssignedToMaintenance $event
-    //  */
-    // public function applyCustomerWasAssignedToMaintenance(CustomerWasAssignedToMaintenance $event): void
-    // {
-    //     $readModel = $this->getReadModel($event->getMaintenanceId());
-    //     $readModel->setCustomerId($event->getCustomerId());
-    //     $customerData = $readModel->getCustomerData();
-    //     $customerData->updateEmailAndPhone($event->getEmail(), $event->getPhone());
-    //     $this->repository->save($readModel);
-    // }
+    /**
+     * @param MaintenanceWasUpdated $event
+     */
+    protected function applyMaintenanceWasUpdated(MaintenanceWasUpdated $event): void
+    {
+        $readModel = $this->getReadModel($event->getMaintenanceId());
+        $data = $event->getMaintenanceData();
 
-    // /**
-    //  * @param LabelsWereAppendedToMaintenance $event
-    //  */
-    // public function applyLabelsWereAppendedToMaintenance(LabelsWereAppendedToMaintenance $event): void
-    // {
-    //     $readModel = $this->getReadModel($event->getMaintenanceId());
-    //     $readModel->appendLabels($event->getLabels());
-    //     $this->repository->save($readModel);
-    // }
+        if (isset($data['productSku'])) {
+            $readModel->setProductSku($data['productSku']);
+        }
 
-    // /**
-    //  * @param LabelsWereUpdated $event
-    //  */
-    // public function applyLabelsWereUpdated(LabelsWereUpdated $event): void
-    // {
-    //     $readModel = $this->getReadModel($event->getMaintenanceId());
-    //     $readModel->setLabels($event->getLabels());
-    //     $this->repository->save($readModel);
-    // }
+        if (isset($data['bookingDate'])) {
+            $readModel->setBookingDate($data['bookingDate']);
+        }
+
+        if (isset($data['warrantyCenter'])) {
+            $readModel->setWarrantyCenter($data['warrantyCenter']);
+        }
+
+        if (isset($data['createdAt'])) {
+            $readModel->setcCreatedAt($data['createdAt']);
+        }
+
+        if (isset($data['active'])) {
+            $readModel->setActive($data['active']);
+        }
+
+        $readModel->setCustomerData(CustomerBasicData::deserialize($event->getCustomerData()));
+
+        // if (isset($data['customerId'])) {
+        //     if (!$data['customerId'] instanceof CustomerId) {
+        //         $data['customerId'] = new CustomerId($data['customerId']);
+        //     }
+        //     $readModel->setCustomerId($data['customerId']);
+        //     if ($readModel->getCustomerId()) {
+        //         /** @var Customer $customer */
+        //         $customer = $this->customerRepository->byId(
+        //             new \Kulcua\Extension\Component\Maintenance\Domain\CustomerId($readModel->getCustomerId()->__toString())
+        //         );
+        //         if ($customer) {
+        //             $readModel->setPosName($customer->getName());
+        //             $readModel->setPosCity($customer->getLocation() ? $pos->getLocation()->getCity() : null);
+        //         }
+        //     }
+        // }
+
+        $this->repository->save($readModel);
+    }
 
     /**
      * @param MaintenanceId $maintenanceId

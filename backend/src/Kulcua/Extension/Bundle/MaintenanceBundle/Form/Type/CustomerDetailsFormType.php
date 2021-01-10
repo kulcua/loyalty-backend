@@ -33,6 +33,8 @@ class CustomerDetailsFormType extends AbstractType
             'required' => false,
         ]);
         $builder->add('nip', TextType::class);
-        $builder->add('address', CustomerAddressFormType::class);
+        $builder->add('address', CustomerAddressFormType::class, [
+            'required' => false,
+        ]);
     }
 }

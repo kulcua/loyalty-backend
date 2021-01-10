@@ -16,9 +16,7 @@ class MaintenanceFormType extends AbstractType
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        // $builder->add($this->buildMaintenanceDataForm($builder));
-        
+    {     
         $builder->add('maintenanceData', MaintenanceDetailsFormType::class, [
             'required' => true,
             'constraints' => [new NotBlank(), new Valid()],

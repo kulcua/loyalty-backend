@@ -4,3 +4,7 @@ jms_serializer:
         Maintenance:
           namespace_prefix: "Kulcua\\Extension\\Component\\Maintenance\\Domain"
           path: "@MaintenanceBundle/Resources/config/serializer"
+doctrine:
+    orm:
+        mappings:
+          MaintenanceBundle: ~
