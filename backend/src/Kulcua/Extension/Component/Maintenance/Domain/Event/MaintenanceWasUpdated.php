@@ -11,13 +11,10 @@ class MaintenanceWasUpdated extends MaintenanceEvent
 {
     protected $maintenanceData;
 
-    protected $customerData;
-
-    public function __construct(MaintenanceId $maintenanceId, array $maintenanceData, array $customerData)
+    public function __construct(MaintenanceId $maintenanceId, array $maintenanceData)
     {
         parent::__construct($maintenanceId);
         $this->maintenanceData = $maintenanceData;
-        $this->customerData = $customerData;
     }
 
     public function serialize(): array
@@ -25,8 +22,7 @@ class MaintenanceWasUpdated extends MaintenanceEvent
         $data = $this->maintenanceData;
 
         return array_merge(parent::serialize(), array(
-            'maintenanceData' => $this->maintenanceData,
-            'customerData' => $this->customerData,
+            'maintenanceData' => $data
         ));
     }
 
@@ -34,24 +30,15 @@ class MaintenanceWasUpdated extends MaintenanceEvent
     {
         return new self(
             new MaintenanceId($data['maintenanceId']),
-            $data['maintenanceData'],
-            $data['customerData']
+            $data['maintenanceData']
         );
     }
 
-    // /**
-    //  * @return array
-    //  */
-    // public function getMaintenanceData()
-    // {
-    //     return $this->maintenanceData;
-    // }
-
-    // /**
-    //  * @return array
-    //  */
-    // public function getCustomerData()
-    // {
-    //     return $this->customerData;
-    // }
+    /**
+     * @return array
+     */
+    public function getMaintenanceData()
+    {
+        return $this->maintenanceData;
+    }
 }

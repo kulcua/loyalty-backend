@@ -67,8 +67,13 @@ class MaintenanceCommandHandler extends SimpleCommandHandler
      */
     public function handleUpdateMaintenance(UpdateMaintenance $command)
     {
+        $maintenanceId = $command->getMaintenanceId();
+        $maintenanceData = $command->getMaintenanceData();
+        
         /** @var Maintenance $maintenance */
-        $maintenance = $this->repository->load($command->getMaintenanceId());
+
+        $maintenance = $this->repository->load((string) $maintenanceId);
+        $maintenance->updateMaintenanceDetails($maintenanceData);
         $this->repository->save($maintenance);
 
         $this->eventDispatcher->dispatch(

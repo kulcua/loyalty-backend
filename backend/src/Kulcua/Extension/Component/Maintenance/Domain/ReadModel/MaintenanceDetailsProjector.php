@@ -6,6 +6,7 @@ use Broadway\ReadModel\Repository;
 use Broadway\Repository\Repository as AggregateRootRepository;
 use OpenLoyalty\Component\Core\Infrastructure\Projector\Projector;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasBooked;
+use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasUpdated;
 use Kulcua\Extension\Component\Maintenance\Domain\Model\CustomerBasicData;
 use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
 use Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId;
@@ -52,6 +53,7 @@ class MaintenanceDetailsProjector extends Projector
 
         $readModel->setProductSku($maintenanceData['productSku']);
         $readModel->setBookingDate($maintenanceData['bookingDate']);
+        $readModel->setBookingTime($maintenanceData['bookingTime']);
         $readModel->setWarrantyCenter($maintenanceData['warrantyCenter']);
         $readModel->setCreatedAt($maintenanceData['createdAt']);
         $readModel->setActive($maintenanceData['active']);
@@ -76,36 +78,21 @@ class MaintenanceDetailsProjector extends Projector
             $readModel->setBookingDate($data['bookingDate']);
         }
 
+        if (isset($data['bookingTime'])) {
+            $readModel->setBookingTime($data['bookingTime']);
+        }
+
         if (isset($data['warrantyCenter'])) {
             $readModel->setWarrantyCenter($data['warrantyCenter']);
         }
 
         if (isset($data['createdAt'])) {
-            $readModel->setcCreatedAt($data['createdAt']);
+            $readModel->setCreatedAt($data['createdAt']);
         }
 
         if (isset($data['active'])) {
             $readModel->setActive($data['active']);
         }
-
-        $readModel->setCustomerData(CustomerBasicData::deserialize($event->getCustomerData()));
-
-        // if (isset($data['customerId'])) {
-        //     if (!$data['customerId'] instanceof CustomerId) {
-        //         $data['customerId'] = new CustomerId($data['customerId']);
-        //     }
-        //     $readModel->setCustomerId($data['customerId']);
-        //     if ($readModel->getCustomerId()) {
-        //         /** @var Customer $customer */
-        //         $customer = $this->customerRepository->byId(
-        //             new \Kulcua\Extension\Component\Maintenance\Domain\CustomerId($readModel->getCustomerId()->__toString())
-        //         );
-        //         if ($customer) {
-        //             $readModel->setPosName($customer->getName());
-        //             $readModel->setPosCity($customer->getLocation() ? $pos->getLocation()->getCity() : null);
-        //         }
-        //     }
-        // }
 
         $this->repository->save($readModel);
     }

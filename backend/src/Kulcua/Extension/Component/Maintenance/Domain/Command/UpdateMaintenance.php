@@ -10,27 +10,33 @@ use Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId;
 class UpdateMaintenance extends MaintenanceCommand
 {
     /**
+     * @var MaintenanceId
+     */
+    protected $id;
+
+    /**
      * @var array
      */
     protected $maintenanceData;
-
-    // /**
-    //  * @var array
-    //  */
-    // protected $customerData;
 
     /**
      * UpdateMaintenance constructor.
      *
      * @param MaintenanceId $maintenanceId
      * @param array   $maintenanceData
-    //  * @param array   $customerData
      */
     public function __construct(MaintenanceId $maintenanceId, array $maintenanceData)
     {
         parent::__construct($maintenanceId);
         $this->maintenanceData = $maintenanceData;
-        // $this->customerData = $customerData;
+    }
+
+    /**
+     * @return null|MaintenanceId
+     */
+    public function getId(): ?MaintenanceId
+    {
+        return $this->id;
     }
 
     /**
@@ -40,12 +46,4 @@ class UpdateMaintenance extends MaintenanceCommand
     {
         return $this->maintenanceData;
     }
-
-    // /**
-    //  * @return array
-    //  */
-    // public function getCustomerData()
-    // {
-    //     return $this->customerData;
-    // }
 }

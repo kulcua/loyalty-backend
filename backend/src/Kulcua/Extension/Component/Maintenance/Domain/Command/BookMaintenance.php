@@ -25,6 +25,7 @@ class BookMaintenance extends MaintenanceCommand
         'bookingDate',
         'warrantyCenter',
         'createdAt',
+        'bookingTime',
         'active'
     ];
 

@@ -6,6 +6,7 @@ use OpenLoyalty\Component\Core\Domain\Model\Label;
 use OpenLoyalty\Component\Core\Domain\Model\SKU;
 use OpenLoyalty\Component\Core\Domain\SnapableEventSourcedAggregateRoot;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasBooked;
+use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasUpdated;
 use Kulcua\Extension\Component\Maintenance\Domain\Model\CustomerBasicData;
 
 /**
@@ -19,7 +20,7 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     protected $maintenanceId;
 
     /**
-     * @var CustomerId
+     * @var CustomerId|null
      */
     protected $customerId;
 
@@ -32,6 +33,11 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
      * @var \DateTime
      */
     protected $bookingDate;
+
+     /**
+     * @var string
+     */
+    protected $bookingTime;
 
     /**
      * @var string
@@ -114,9 +120,20 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
         $this->maintenanceId = $event->getMaintenanceId();
         $this->productSku = $maintenanceData['productSku'];
         $this->bookingDate = $maintenanceData['bookingDate'];
+        $this->bookingTime = $maintenanceData['bookingTime'];
         $this->warrantyCenter = $maintenanceData['warrantyCenter'];
         $this->createdAt = $maintenanceData['createdAt'];
         $this->customerData = CustomerBasicData::deserialize($event->getCustomerData());
+    }
+
+    /**
+     * @param array $customerData
+     */
+    public function updateMaintenanceDetails(array $maintenanceData): void
+    {
+        $this->apply(
+            new MaintenanceWasUpdated($this->getMaintenanceId(), $maintenanceData)
+        );
     }
 
     /**
@@ -173,6 +190,14 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     public function getBookingDate(): \DateTime
     {
         return $this->bookingDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBookingTime(): bool
+    {
+        return $this->bookingTime;
     }
 
     /**

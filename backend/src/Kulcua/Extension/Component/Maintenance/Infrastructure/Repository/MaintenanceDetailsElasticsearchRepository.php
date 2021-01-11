@@ -106,6 +106,22 @@ class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchReposit
     /**
      * {@inheritdoc}
      */
+    public function findByBookingTime(string $bookingTime, bool $withCustomer = true): array
+    {
+        $query['bool']['must'][]['term'] = ['bookingTime' => $warrantyCenter];
+
+        if ($customer) {
+            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+        }
+
+        $result = $this->query($query);
+
+        return $result[0] ?? null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function findByActive(bool $active, bool $withCustomer = true): array
     {
         $query['bool']['must'][]['term'] = ['active' => $active];

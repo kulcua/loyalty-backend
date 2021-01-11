@@ -32,6 +32,7 @@ class MaintenanceDetailsFormType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('bookingTime', TextType::class);
         $builder->add('createdAt', DateTimeType::class, [
             'required' => true,
             'widget' => 'single_text',

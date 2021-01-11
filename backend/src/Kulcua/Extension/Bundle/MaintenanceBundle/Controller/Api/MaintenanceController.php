@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\LabelsFilterFormType;
 use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceFormType;
-// use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceDetailsFormType;
+use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceDetailsFormType;
 
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetails;
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository;
@@ -158,7 +158,7 @@ class MaintenanceController extends FOSRestController
      * @ApiDoc(
      *     name="Edit Maintenance",
      *     section="Maintenance",
-     *     input={"class" = "Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceFormType", "name" = "maintenance"},
+     *     input={"class" = "Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceDetailsFormType", "name" = "maintenance"},
      *     statusCodes={
      *       200="Returned when successful",
      *       400="Returned when form contains errors",
@@ -167,7 +167,7 @@ class MaintenanceController extends FOSRestController
      */
     public function editMaintenanceAction(Request $request, MaintenanceDetails $maintenance)
     {
-        $form = $this->get('form.factory')->createNamed('maintenance', MaintenanceFormType::class, [], [
+        $form = $this->get('form.factory')->createNamed('maintenance', MaintenanceDetailsFormType::class, [], [
             'method' => 'PUT',
         ]);
 
