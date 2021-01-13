@@ -2,8 +2,6 @@
 
 namespace Kulcua\Extension\Component\Maintenance\Domain;
 
-use OpenLoyalty\Component\Core\Domain\Model\Label;
-use OpenLoyalty\Component\Core\Domain\Model\SKU;
 use OpenLoyalty\Component\Core\Domain\SnapableEventSourcedAggregateRoot;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasBooked;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasUpdated;

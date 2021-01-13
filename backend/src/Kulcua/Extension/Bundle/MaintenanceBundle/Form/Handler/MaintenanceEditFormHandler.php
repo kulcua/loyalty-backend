@@ -27,12 +27,10 @@ class MaintenanceEditFormHandler
     /**
      * MaintenanceEditFormHandler constructor.
      *
-    //  param MaintenanceDetailsRepository $maintenanceDetailsRepository
      * @param CommandBus    $commandBus
      */
     public function __construct( CommandBus $commandBus)
     {
-        // $this->maintenanceDetailsRepository = $maintenanceDetailsRepository;
         $this->commandBus = $commandBus;
     }
 

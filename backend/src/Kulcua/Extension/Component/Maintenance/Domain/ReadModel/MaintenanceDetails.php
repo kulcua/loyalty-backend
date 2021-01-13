@@ -97,7 +97,9 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
         $customerData = $data['customerData'];
         $maintenance->customerData = CustomerBasicData::deserialize($customerData);
 
-        // $maintenance->customerId = new CustomerId($data['customerId']);
+        if (!empty($data['customerId'])) {
+            $maintenance->customerId = new CustomerId($data['customerId']);
+        }
 
         $maintenance->productSku = $data['productSku'];
         $maintenance->bookingDate = $data['bookingDate'];
@@ -115,6 +117,7 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
     public function serialize(): array
     {
         return [
+            'customerId' => $this->customerId ? (string) $this->customerId : null,
             'maintenanceId' => (string) $this->maintenanceId,
             'productSku' => $this->productSku,
             'bookingDate' => $this->getBookingDate() ? $this->getBookingDate()->getTimestamp() : null,

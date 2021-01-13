@@ -25,10 +25,10 @@ class MaintenanceSystemEvent
      * @param MaintenanceId $maintenanceId
      * @param array         $customerData
      */
-    public function __construct(MaintenanceId $maintenanceId, array $customerData)
+    public function __construct(MaintenanceId $maintenanceId)
     {
         $this->maintenanceId = $maintenanceId;
-        $this->customerData = $customerData;
+        // $this->customerData = $customerData;
     }
 
     /**

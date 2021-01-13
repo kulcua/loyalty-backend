@@ -1,13 +1,10 @@
-# imports:
-#    - { resource: 'services/forms.yml' }
+imports:
+   - { resource: 'services/forms.yml' }
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
-
-    # OpenLoyalty\Bundle\MaintenanceBundle\Validator\Constraints\:
-    #     resource: '../../Validator/Constraints/*'
 
     Kulcua\Extension\Bundle\MaintenanceBundle\Controller\:
             resource: '../../Controller'

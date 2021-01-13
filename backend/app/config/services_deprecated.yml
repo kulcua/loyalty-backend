@@ -1,9 +1,18 @@
 services:
     _defaults:
         public: true
-    # kc.maintenance.form_handler.book:
-    #     alias:  Kulcua\Extension\Bundle\MaintenanceBundle\Form\Handler\BookMaintenanceFormHandler
-    #     deprecated: The "%service_id%" service is deprecated since Kulcua
+
+    kc.maintenance.read_model.repository.maintenance_details:
+        alias: Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository
+        deprecated: The "%service_id%" service is deprecated since Kulcua
+
+    kc.maintenance.read_model.projector.maintenance_details:
+        alias: Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsProjector
+        deprecated: The "%service_id%" service is deprecated since Kulcua
+
+    kc.maintenance.voters.maintenance:
+        alias: Kulcua\Extension\Bundle\MaintenanceBundle\Security\Voter\MaintenanceVoter
+        deprecated: The "%service_id%" service is deprecated since Kulcua
 
     kc.maintenance.repository:
         alias: Kulcua\Extension\Component\Maintenance\Domain\MaintenanceRepository

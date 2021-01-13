@@ -26,7 +26,15 @@ interface MaintenanceDetailsRepository extends Repository
      *
      * @return MaintenanceDetails[]
      */
-    public function findByProductSku(string $productSku, $withCustomer = true): array;
+    public function findByProductSku(string $productSku, bool $withCustomer = true): array;
+
+    /**
+     * @param string $bookingTime
+     * @param bool  $withCustomer
+     *
+     * @return MaintenanceDetails[]
+     */
+    public function findByBookingTime(string $bookingTime, bool $withCustomer = true): array;
 
     /**
      * @param string $warrantyCenter

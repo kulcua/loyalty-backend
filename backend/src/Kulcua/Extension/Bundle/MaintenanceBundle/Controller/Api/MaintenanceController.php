@@ -17,11 +17,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\LabelsFilterFormType;
 use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceFormType;
 use Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceDetailsFormType;
-
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetails;
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository;
 use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
@@ -37,15 +34,16 @@ class MaintenanceController extends FOSRestController
      * Method will return complete list of all maintenances.
      *
      * @Route(name="kc.maintenance.list", path="/maintenance")
-    //   Route(name="kc.maintenance.customer.list", path="/customer/maintenance")
-    //   Route(name="kc.maintenance.maintenance.list", path="/maintenance/maintenance")
-    //   Security("is_granted('LIST_MAINTENANCES') or is_granted('LIST_CURRENT_CUSTOMER_MAINTENANCES') or is_granted('LIST_CURRENT_POS_MAINTENANCES')")
+     * @Route(name="kc.maintenance.customer.list", path="/customer/maintenance")
+     * @Route(name="kc.maintenance.seller.list", path="/seller/maintenance")
+     * @Security("is_granted('LIST_MAINTENANCES') or is_granted('LIST_CURRENT_CUSTOMER_TRANSACTIONS')")
      * @Method("GET")
      *
      * @ApiDoc(
      *     name="get maintenances list",
      *     section="Maintenance",
      *     parameters={
+     * {"name"="active", "dataType"="boolean", "required"=false, "description"="isActive"},
      *      {"name"="page", "dataType"="integer", "required"=false, "description"="Page number"},
      *      {"name"="perPage", "dataType"="integer", "required"=false, "description"="Number of elements per page"},
      *      {"name"="sort", "dataType"="string", "required"=false, "description"="Field to sort by"},
@@ -64,15 +62,13 @@ class MaintenanceController extends FOSRestController
      * @QueryParam(name="customerData_phone", nullable=true, description="customerPhone"))
      * @QueryParam(name="customerId", nullable=true, description="customerId"))
      * @QueryParam(name="productSku", nullable=true, description="maintenanceId"))
+     * @QueryParam(name="bookingTime", nullable=true, description="maintenanceId"))
+     * @QueryParam(name="warrantyCenter", nullable=true, description="maintenanceId"))
      */
     public function listAction(Request $request, ParamFetcher $paramFetcher): View
     {
-        $filterForm = $this->get('form.factory')->createNamed('', LabelsFilterFormType::class, null, ['method' => 'GET']);
-        $filterForm->handleRequest($request);
-        $params = $this->get('oloy.user.param_manager')->stripNulls($paramFetcher->all(), true, false);
-        if ($filterForm->isSubmitted() && $filterForm->isValid()) {
-            $params['labels'] = $filterForm->getData()['labels'];
-        }
+        $params = $this->get('oloy.user.param_manager')->stripNulls($paramFetcher->all());
+        // $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'createdAt', 'desc');
 
         /** @var User $user */
         $user = $this->getUser();
@@ -80,7 +76,7 @@ class MaintenanceController extends FOSRestController
         if ($this->isGranted('ROLE_PARTICIPANT')) {
             $params['customerId'] = $user->getId();
         }
-        $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'bookingDate', 'DESC');
+        $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'createdAt', 'DESC');
 
         /** @var MaintenanceDetailsRepository $repo */
         $repo = $this->get(MaintenanceDetailsRepository::class);
@@ -93,7 +89,7 @@ class MaintenanceController extends FOSRestController
             $pagination->getSort(),
             $pagination->getSortDirection()
         );
-        $total = $repo->countTotal($params, false);
+        $total = $repo->countTotal($params, $request->get('strict', false));;
 
         return $this->view([
             'maintenances' => $maintenances,
@@ -154,7 +150,7 @@ class MaintenanceController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @Route(name="kc.maintenance.edit", path="/maintenance/{maintenance}")
      * @Method("PUT")
-     * @Security("is_granted('EDIT', maintenance)")
+     * @Security("is_granted('EDIT_MAINTENANCE', maintenance)")
      * @ApiDoc(
      *     name="Edit Maintenance",
      *     section="Maintenance",
