@@ -75,10 +75,6 @@ class MaintenanceWasBooked extends MaintenanceEvent
 
         $maintenanceData = $this->maintenanceData;
 
-        // if ($maintenanceData['purchaseDate'] instanceof \DateTime) {
-        //     $maintenanceData['purchaseDate'] = $maintenanceData['purchaseDate']->getTimestamp();
-        // }
-
         return array_merge(parent::serialize(), [
             'maintenanceId' => $this->maintenanceId->__toString(),
             'maintenanceData' => $maintenanceData,
@@ -89,11 +85,7 @@ class MaintenanceWasBooked extends MaintenanceEvent
     public static function deserialize(array $data)
     {
         $maintenanceData = $data['maintenanceData'];
-        // if (is_numeric($maintenanceData['purchaseDate'])) {
-        //     $tmp = new \DateTime();
-        //     $tmp->setTimestamp($maintenanceData['purchaseDate']);
-        //     $maintenanceData['purchaseDate'] = $tmp;
-        // }
+
         $customerData = $data['customerData'];
 
         return new self(

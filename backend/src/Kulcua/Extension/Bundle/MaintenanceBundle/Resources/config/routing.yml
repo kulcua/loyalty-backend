@@ -1,4 +1,4 @@
-maintenance:
+maintenance_api:
     resource: "@MaintenanceBundle/Controller/Api/MaintenanceController.php"
     type:     annotation
     prefix:   /api

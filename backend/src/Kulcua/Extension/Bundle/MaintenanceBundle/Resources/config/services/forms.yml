@@ -1,0 +1,31 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    kc.maintenance.form_type.customer_details:
+        class: Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\CustomerDetailsFormType
+        tags:
+            - { name: form.type }
+
+    kc.maintenance.form_type.customer_address:
+        class: Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\CustomerAddressFormType
+        tags:
+            - { name: form.type }
+
+    kc.maintenance.form_type.maintenance_id:
+        class: Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceIdFormType
+        tags:
+            - { name: form.type }
+
+    kc.maintenance.form_type.customer_id:
+        class: Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\CustomerIdFormType
+        arguments:
+            - '@oloy.user.read_model.repository.customer_details'
+        tags:
+            - { name: form.type }
+
+    kc.maintenance.form_type.maintenance:
+        class: Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type\MaintenanceFormType
+        tags:
+            - { name: form.type }

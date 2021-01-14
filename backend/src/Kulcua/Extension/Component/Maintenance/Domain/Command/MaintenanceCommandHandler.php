@@ -5,7 +5,8 @@ namespace Kulcua\Extension\Component\Maintenance\Domain\Command;
 use Broadway\CommandHandling\SimpleCommandHandler;
 use Broadway\EventDispatcher\EventDispatcher;
 use Broadway\Repository\Repository;
-use Kulcua\Extension\Component\Maintenance\Domain\SystemEvent\MaintenanceBookedEvent;
+use Kulcua\Extension\Component\Maintenance\Domain\SystemEvent\MaintenanceBookedSystemEvent;
+use Kulcua\Extension\Component\Maintenance\Domain\SystemEvent\MaintenanceUpdatedSystemEvent;
 use Kulcua\Extension\Component\Maintenance\Domain\SystemEvent\MaintenanceSystemEvents;
 use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
 
@@ -53,7 +54,7 @@ class MaintenanceCommandHandler extends SimpleCommandHandler
 
         $this->eventDispatcher->dispatch(
             MaintenanceSystemEvents::MAINTENANCE_BOOKED,
-            [new MaintenanceBookedEvent(
+            [new MaintenanceBookedSystemEvent(
                 $command->getMaintenanceId(),
                 $command->getMaintenanceData(),
                 $command->getCustomerData()
@@ -61,40 +62,23 @@ class MaintenanceCommandHandler extends SimpleCommandHandler
         );
     }
 
-    // /**
-    //  * @param AppendLabelsToMaintenance $command
-    //  */
-    // public function handleAppendLabelsToMaintenance(AppendLabelsToMaintenance $command)
-    // {
-    //     /** @var Maintenance $maintenance */
-    //     $maintenance = $this->repository->load($command->getMaintenanceId()->__toString());
-    //     $maintenance->appendLabels($command->getLabels());
-    //     $this->repository->save($maintenance);
-    // }
+    /**
+     * @param UpdateMaintenance $command
+     */
+    public function handleUpdateMaintenance(UpdateMaintenance $command)
+    {
+        $maintenanceId = $command->getMaintenanceId();
+        $maintenanceData = $command->getMaintenanceData();
+        
+        /** @var Maintenance $maintenance */
 
-    // /**
-    //  * @param EditMaintenanceLabels $command
-    //  */
-    // public function handleEditMaintenanceLabels(EditMaintenanceLabels $command)
-    // {
-    //     /** @var Maintenance $maintenance */
-    //     $maintenance = $this->repository->load($command->getMaintenanceId()->__toString());
-    //     $maintenance->setLabels($command->getLabels());
-    //     $this->repository->save($maintenance);
-    // }
+        $maintenance = $this->repository->load((string) $maintenanceId);
+        $maintenance->updateMaintenanceDetails($maintenanceData);
+        $this->repository->save($maintenance);
 
-    // /**
-    //  * @param AssignCustomerToMaintenance $command
-    //  */
-    // public function handleAssignCustomerToMaintenance(AssignCustomerToMaintenance $command)
-    // {
-    //     /** @var Maintenance $maintenance */
-    //     $maintenance = $this->repository->load((string) $command->getMaintenanceId());
-    //     $maintenance->assignCustomerToMaintenance(
-    //         $command->getCustomerId(),
-    //         $command->getEmail(),
-    //         $command->getPhone()
-    //     );
-    //     $this->repository->save($maintenance);
-    // }
+        $this->eventDispatcher->dispatch(
+            MaintenanceSystemEvents::MAINTENANCE_UPDATED,
+            [new MaintenanceUpdatedSystemEvent($command->getMaintenanceId())]
+        );
+    }
 }

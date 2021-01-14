@@ -5,9 +5,9 @@ namespace Kulcua\Extension\Component\Maintenance\Domain\SystemEvent;
 use Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId;
 
 /**
- * Class MaintenanceBookedEvent.
+ * Class MaintenanceBookedSystemEvent.
  */
-class MaintenanceBookedEvent
+class MaintenanceBookedSystemEvent
 {
     /**
      * @var MaintenanceId
@@ -25,7 +25,7 @@ class MaintenanceBookedEvent
     protected $customerData;
 
     /**
-     * MaintenanceBookedEvent constructor.
+     * MaintenanceBookedSystemEvent constructor.
      *
      * @param MaintenanceId $maintenanceId
      * @param array         $maintenanceData

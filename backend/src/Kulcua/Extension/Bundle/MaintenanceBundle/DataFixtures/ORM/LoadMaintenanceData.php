@@ -36,8 +36,9 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
 
         $maintenanceData = [
             'productSku' => '11111',
-            'bookingDate' => (new \DateTime('+1 day'))->getTimestamp(),
-            'createdAt' => (new \DateTime('+3 day'))->getTimestamp(),
+            'bookingDate' => (new \DateTime('+3 day'))->getTimestamp(),
+            'bookingTime' => '9:00',
+            'createdAt' => (new \DateTime('+1 day'))->getTimestamp(),
             'active' => false,
             'warrantyCenter' => 'HCM',
         ];
@@ -94,6 +95,7 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
         );
 
         $maintenanceData['productSku'] = '333333';
+        $maintenanceData['bookingTime'] = '10:00';
         $maintenanceData['warrantyCenter'] = 'Vung Tau';
         $bus->dispatch(
             new BookMaintenance(
@@ -118,6 +120,7 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
         );
 
         $maintenanceData['productSku'] = '44444';
+        $maintenanceData['bookingTime'] = '10:30';
         $maintenanceData['warrantyCenter'] = 'Tra Vinh';
         $bus->dispatch(
             new BookMaintenance(
@@ -140,170 +143,7 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
                 ]
             )
         );
-
-        // $this->loadMaintenanceForCouponUsage($bus);
-        // $this->loadMaintenanceReturn($bus);
     }
-
-    // /**
-    //  * @param CommandBus $bus
-    //  */
-    // private function loadMaintenanceReturn(CommandBus $bus): void
-    // {
-    //     $maintenanceData = [
-    //         'documentNumber' => '20181101',
-    //         'purchasePlace' => 'New York',
-    //         'purchaseDate' => (new \DateTime('+1 day'))->getTimestamp(),
-    //         'documentType' => 'sell',
-    //     ];
-    //     $items = [
-    //         [
-    //             'sku' => ['code' => 'SKU1'],
-    //             'name' => 'item 1',
-    //             'quantity' => 1,
-    //             'grossValue' => 1,
-    //             'category' => 'aaa',
-    //             'maker' => 'sss',
-    //             'labels' => [
-    //                 [
-    //                     'key' => 'test',
-    //                     'value' => 'label',
-    //                 ],
-    //                 [
-    //                     'key' => 'test',
-    //                     'value' => 'label2',
-    //                 ],
-    //             ],
-    //         ],
-    //         [
-    //             'sku' => ['code' => 'SKU2'],
-    //             'name' => 'item 2',
-    //             'quantity' => 2,
-    //             'grossValue' => 2,
-    //             'category' => 'bbb',
-    //             'maker' => 'ccc',
-    //         ],
-    //     ];
-
-    //     /** @var CommandBus $bus */
-    //     $customerData = [
-    //         'name' => 'John Doe',
-    //         'email' => 'ol@oy.com',
-    //         'nip' => 'aaa',
-    //         'phone' => '',
-    //         'loyaltyCardNumber' => '222',
-    //         'address' => [
-    //             'street' => 'Oxford Street',
-    //             'address1' => '12',
-    //             'city' => 'New York',
-    //             'country' => 'US',
-    //             'province' => 'New York',
-    //             'postal' => '10001',
-    //         ],
-    //     ];
-
-    //     $bus->dispatch(
-    //         new RegisterMaintenance(
-    //             new MaintenanceId(self::MAINTENANCE8_ID),
-    //             $maintenanceData,
-    //             $customerData,
-    //             $items,
-    //             new PosId(LoadPosData::POS_ID),
-    //             null,
-    //             null,
-    //             null,
-    //             null,
-    //             [
-    //                 ['key' => 'scan_id', 'value' => 'abc123789def-abc123789def-abc123789def-abc123789def'],
-    //             ]
-    //         )
-    //     );
-
-    //     $maintenanceData2 = [
-    //         'documentNumber' => '201811011023',
-    //         'purchasePlace' => 'New York',
-    //         'purchaseDate' => (new \DateTime('+1 day'))->getTimestamp(),
-    //         'documentType' => 'return',
-    //     ];
-
-    //     $bus->dispatch(
-    //         new RegisterMaintenance(
-    //             new MaintenanceId(self::MAINTENANCE9_ID),
-    //             $maintenanceData2,
-    //             $customerData,
-    //             $items,
-    //             new PosId(LoadPosData::POS_ID),
-    //             null,
-    //             null,
-    //             null,
-    //             '20181101',
-    //             [
-    //                 ['key' => 'scan_id', 'value' => 'abc123789def-abc123789def-abc123789def-abc123789def'],
-    //             ]
-    //         )
-    //     );
-    // }
-
-    // /**
-    //  * @param CommandBus $bus
-    //  */
-    // private function loadMaintenanceForCouponUsage(CommandBus $bus): void
-    // {
-    //     $maintenanceData = [
-    //             'documentNumber' => '12355-coupons',
-    //             'documentType' => 'sell',
-    //             'purchaseDate' => (new \DateTime('2015-01-01'))->getTimestamp(),
-    //             'purchasePlace' => 'New York',
-    //     ];
-    //     $items = [
-    //             0 => [
-    //                 'sku' => ['code' => '123'],
-    //                 'name' => 'sku',
-    //                 'quantity' => 1,
-    //                 'grossValue' => 20,
-    //                 'category' => 'test',
-    //                 'maker' => 'company',
-    //             ],
-    //             1 => [
-    //                 'sku' => ['code' => '1123'],
-    //                 'name' => 'sku',
-    //                 'quantity' => 1,
-    //                 'grossValue' => 100,
-    //                 'category' => 'test',
-    //                 'maker' => 'company',
-    //             ],
-    //         ];
-    //     $customerData = [
-    //             'name' => 'John Doe',
-    //             'email' => LoadUserData::USER_COUPON_RETURN_USERNAME,
-    //             'nip' => 'aaa',
-    //             'phone' => '+48123123000',
-    //             'loyaltyCardNumber' => 'not-present-in-system',
-    //             'address' => [
-    //                 'street' => 'Oxford Street',
-    //                 'address1' => '12',
-    //                 'city' => 'New York',
-    //                 'country' => 'US',
-    //                 'province' => 'New York',
-    //                 'postal' => '10001',
-    //             ],
-    //     ];
-
-    //     $bus->dispatch(
-    //         new RegisterMaintenance(
-    //             new MaintenanceId(self::MAINTENANCE_COUPONS_USED_ID),
-    //             $maintenanceData,
-    //             $customerData,
-    //             $items,
-    //             null,
-    //             null,
-    //             null,
-    //             null,
-    //             null,
-    //             []
-    //         )
-    //     );
-    // }
 
     /**
      * Get the order of this fixture.

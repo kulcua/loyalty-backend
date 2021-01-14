@@ -12,6 +12,18 @@ use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRe
  */
 class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchRepository implements MaintenanceDetailsRepository
 {
+    protected $dynamicFields = [
+        [
+            'bookingTime' => [
+                'match' => 'bookingTime',
+                'match_mapping_type' => 'string',
+                'mapping' => [
+                    'type' => 'string',
+                    'analyzer' => 'small_letters',
+                ],
+            ],
+        ],
+    ];
     /**
      * {@inheritdoc}
      */
@@ -60,7 +72,7 @@ class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchReposit
     /**
      * {@inheritdoc}
      */
-    public function findByProductSku(string $productSku, $withCustomer = true): array
+    public function findByProductSku(string $productSku, bool $withCustomer = true): array
     {
         $query['bool']['must'][]['term'] = ['productSku' => $productSku];
 
@@ -68,9 +80,7 @@ class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchReposit
             $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
         }
 
-        $result = $this->query($query);
-
-        return $result[0] ?? null;
+        return $this->query($query);
     }
 
     /**
@@ -82,7 +92,7 @@ class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchReposit
         $page = 1,
         $perPage = 10,
         $sortField = null,
-        $direction = 'DESC'
+        $direction = 'ASC'
     ): array {
         return parent::findByParametersPaginated($params, $exact, $page, $perPage, $sortField, $direction);
     }
@@ -101,6 +111,20 @@ class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchReposit
         $result = $this->query($query);
 
         return $result[0] ?? null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findByBookingTime(string $bookingTime, bool $withCustomer = true): array
+    {
+        $query['bool']['must'][]['term'] = ['bookingTime' => $bookingTime];
+
+        if ($customer) {
+            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+        }
+
+        return $this->query($query);
     }
 
     /**

@@ -23,6 +23,7 @@ class BookMaintenance extends MaintenanceCommand
     private $requiredMaintenanceFields = [
         'productSku',
         'bookingDate',
+        'bookingTime',
         'warrantyCenter',
         'createdAt',
         'active'

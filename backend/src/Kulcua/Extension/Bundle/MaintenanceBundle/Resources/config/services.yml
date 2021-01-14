@@ -1,22 +1,19 @@
-# imports:
-#    - { resource: 'services/forms.yml' }
+imports:
+   - { resource: 'services/forms.yml' }
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
 
-    # OpenLoyalty\Bundle\MaintenanceBundle\Validator\Constraints\:
-    #     resource: '../../Validator/Constraints/*'
-
     Kulcua\Extension\Bundle\MaintenanceBundle\Controller\:
             resource: '../../Controller'
             tags: ['controller.service_arguments']
 
-    # oloy.maintenance.param_converter:
-    #     class: OpenLoyalty\Bundle\MaintenanceBundle\ParamConverter\MaintenanceParamConverter
-    #     tags:
-    #         - { name: request.param_converter, priority: -2, converter: maintenance_details_converter }
+    kc.maintenance.param_converter:
+        class: Kulcua\Extension\Bundle\MaintenanceBundle\ParamConverter\MaintenanceDetailsParamConverter
+        tags:
+            - { name: request.param_converter, priority: -2, converter: maintenance_details_converter }
 
     kc.maintenance.settings_based_customer_id_provider:
         class: Kulcua\Extension\Bundle\MaintenanceBundle\Service\SettingsBasedCustomerIdProvider
@@ -27,45 +24,8 @@ services:
     kc.maintenance.customer_id_provider:
         alias: kc.maintenance.settings_based_customer_id_provider
 
-    # oloy.maintenance.serialization_listener.maintenance:
-    #     class: OpenLoyalty\Bundle\MaintenanceBundle\Event\Listener\MaintenanceSerializationListener
-    #     arguments: ['@oloy.points.account.repository.points_transfer_details', '@ol.settings.manager', '@oloy.pos.repository']
-    #     public: true
-    #     tags:
-    #         - { name: jms_serializer.event_subscriber }
-
-    # OpenLoyalty\Bundle\MaintenanceBundle\Form\Handler\ManuallyAssignCustomerToMaintenanceFormHandler:
-    #     arguments:
-    #         $maintenanceRepository: '@oloy.maintenance.repository'
-    #         $customerDetailsRepository: '@oloy.user.read_model.repository.customer_details'
-    #         $commandBus: '@broadway.command_handling.command_bus'
-    #         $eventDispatcher: '@broadway.event_dispatcher'
-    #         $authorizationChecker: '@security.authorization_checker'
-
-    # OpenLoyalty\Bundle\MaintenanceBundle\Form\Handler\AppendLabelsToMaintenanceFormHandler:
-    #     arguments:
-    #         $commandBus: '@broadway.command_handling.command_bus'
-    #         $authorizationChecker: '@security.authorization_checker'
-
-    # OpenLoyalty\Bundle\MaintenanceBundle\Form\Handler\EditMaintenanceLabelsFormHandler:
-    #     arguments:
-    #         $commandBus: '@broadway.command_handling.command_bus'
-    #         $authorizationChecker: '@security.authorization_checker'
-
-    # OpenLoyalty\Bundle\MaintenanceBundle\Import\MaintenanceNodeStreamer: ~
-
-    # OpenLoyalty\Bundle\MaintenanceBundle\Import\MaintenanceImportProcessor:
-    #     arguments:
-    #             - "@broadway.command_handling.command_bus"
-
-    # OpenLoyalty\Bundle\MaintenanceBundle\Import\MaintenanceXmlImportConverter:
-    #     arguments:
-    #             - "@broadway.uuid.generator"
-
-    # OpenLoyalty\Bundle\MaintenanceBundle\Import\MaintenanceXmlImporter:
-    #     calls:
-    #         - [setProcessor, ['@OpenLoyalty\Bundle\MaintenanceBundle\Import\MaintenanceImportProcessor']]
-    #         - [setXmlStreamer, ['@OpenLoyalty\Bundle\MaintenanceBundle\Import\MaintenanceNodeStreamer']]
-    #         - [setConverter, ['@OpenLoyalty\Bundle\MaintenanceBundle\Import\MaintenanceXmlImportConverter']]
-
-#   Kulcua\Extension\Bundle\MaintenanceBundle\Command\MaintenanceImportCommand: ~
+    kc.maintenance.form_handler.edit:
+        class: Kulcua\Extension\Bundle\MaintenanceBundle\Form\Handler\MaintenanceEditFormHandler
+        arguments:
+            - '@broadway.command_handling.command_bus'
+            - '@doctrine.orm.entity_manager'

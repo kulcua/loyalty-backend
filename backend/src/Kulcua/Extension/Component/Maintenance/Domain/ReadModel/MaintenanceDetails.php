@@ -35,6 +35,11 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
     /**
      * @var string
      */
+    protected $bookingTime;
+
+    /**
+     * @var string
+     */
     protected $warrantyCenter;
 
     /**
@@ -67,21 +72,17 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
         $this->maintenanceId = $maintenanceId;
     }
 
-    /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return (string) $this->maintenanceId;
-    }
 
     /**
-     * {@inheritdoc}
+     * @param array $data
      *
-     * @return MaintenanceDetails
+     * @return mixed The object instance
      */
     public static function deserialize(array $data)
-    {
+    { 
+        $customerData = $data['customerData'];
+        $maintenance = new self(new MaintenanceId($data['maintenanceId']));
+
         if (is_numeric($data['bookingDate'])) {
             $tmp = new \DateTime();
             $tmp->setTimestamp($data['bookingDate']);
@@ -94,14 +95,15 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
             $data['createdAt'] = $tmp;
         }
 
-        $customerData = $data['customerData'];
-
-        $maintenance = new self(new MaintenanceId($data['maintenanceId']));
-
         $maintenance->customerData = CustomerBasicData::deserialize($customerData);
+
+        if (!empty($data['customerId'])) {
+            $maintenance->customerId = new CustomerId($data['customerId']);
+        }
 
         $maintenance->productSku = $data['productSku'];
         $maintenance->bookingDate = $data['bookingDate'];
+        $maintenance->bookingTime = $data['bookingTime'];
         $maintenance->warrantyCenter = $data['warrantyCenter'];
         $maintenance->createdAt = $data['createdAt'];
         $maintenance->active = $data['active'];
@@ -110,7 +112,7 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function serialize(): array
     {
@@ -118,12 +120,21 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
             'customerId' => $this->customerId ? (string) $this->customerId : null,
             'maintenanceId' => (string) $this->maintenanceId,
             'productSku' => $this->productSku,
-            'bookingDate' => $this->bookingDate->getTimestamp(),
+            'bookingDate' => $this->getBookingDate() ? $this->getBookingDate()->getTimestamp() : null,
+            'bookingTime' => $this->bookingTime,
             'warrantyCenter' => $this->warrantyCenter,
-            'createdAt' => $this->createdAt->getTimestamp(),
+            'createdAt' => $this->getCreatedAt() ? $this->getCreatedAt()->getTimestamp() : null,
             'active' => $this->active,
-            'customerData' => $this->customerData->serialize()
+            'customerData' => $this->getcustomerData()->serialize()
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return (string) $this->getMaintenanceId();
     }
 
     /**
@@ -164,6 +175,22 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
     public function setBookingDate(\DateTime $bookingDate): void
     {
         $this->bookingDate = $bookingDate;
+    }
+
+    /**
+     * @return string $bookingTime
+     */
+    public function getBookingTime(string $bookingTime): void
+    {
+        $this->bookingTime = $bookingTime;
+    }
+
+    /**
+     * @param string|null $bookingTime
+     */
+    public function setBookingTime(?string $bookingTime): void
+    {
+        $this->bookingTime = $bookingTime;
     }
 
     /**

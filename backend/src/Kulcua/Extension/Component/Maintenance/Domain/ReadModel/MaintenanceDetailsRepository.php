@@ -26,7 +26,15 @@ interface MaintenanceDetailsRepository extends Repository
      *
      * @return MaintenanceDetails[]
      */
-    public function findByProductSku(string $productSku, $withCustomer = true): array;
+    public function findByProductSku(string $productSku, bool $withCustomer = true): array;
+
+    /**
+     * @param string $bookingTime
+     * @param bool  $withCustomer
+     *
+     * @return MaintenanceDetails[]
+     */
+    public function findByBookingTime(string $bookingTime, bool $withCustomer = true): array;
 
     /**
      * @param string $warrantyCenter
@@ -64,11 +72,11 @@ interface MaintenanceDetailsRepository extends Repository
      */
     public function findByParametersPaginated(array $params, $exact = true, $page = 1, $perPage = 10, $sortField = null, $direction = 'DESC'): array;
 
-    // /**
-    //  * @param array $params
-    //  * @param bool  $exact
-    //  *
-    //  * @return int
-    //  */
-    // public function countTotal(array $params = [], $exact = true): int;
+    /**
+     * @param array $params
+     * @param bool  $exact
+     *
+     * @return int
+     */
+    public function countTotal(array $params = [], $exact = true): int;
 }

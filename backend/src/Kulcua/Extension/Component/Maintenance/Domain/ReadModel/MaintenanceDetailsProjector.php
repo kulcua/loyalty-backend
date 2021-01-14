@@ -6,6 +6,7 @@ use Broadway\ReadModel\Repository;
 use Broadway\Repository\Repository as AggregateRootRepository;
 use OpenLoyalty\Component\Core\Infrastructure\Projector\Projector;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasBooked;
+use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasUpdated;
 use Kulcua\Extension\Component\Maintenance\Domain\Model\CustomerBasicData;
 use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
 use Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId;
@@ -52,6 +53,7 @@ class MaintenanceDetailsProjector extends Projector
 
         $readModel->setProductSku($maintenanceData['productSku']);
         $readModel->setBookingDate($maintenanceData['bookingDate']);
+        $readModel->setBookingTime($maintenanceData['bookingTime']);
         $readModel->setWarrantyCenter($maintenanceData['warrantyCenter']);
         $readModel->setCreatedAt($maintenanceData['createdAt']);
         $readModel->setActive($maintenanceData['active']);
@@ -60,37 +62,40 @@ class MaintenanceDetailsProjector extends Projector
         $this->repository->save($readModel);
     }
 
-    // /**
-    //  * @param CustomerWasAssignedToMaintenance $event
-    //  */
-    // public function applyCustomerWasAssignedToMaintenance(CustomerWasAssignedToMaintenance $event): void
-    // {
-    //     $readModel = $this->getReadModel($event->getMaintenanceId());
-    //     $readModel->setCustomerId($event->getCustomerId());
-    //     $customerData = $readModel->getCustomerData();
-    //     $customerData->updateEmailAndPhone($event->getEmail(), $event->getPhone());
-    //     $this->repository->save($readModel);
-    // }
+    /**
+     * @param MaintenanceWasUpdated $event
+     */
+    protected function applyMaintenanceWasUpdated(MaintenanceWasUpdated $event): void
+    {
+        $readModel = $this->getReadModel($event->getMaintenanceId());
+        $data = $event->getMaintenanceData();
 
-    // /**
-    //  * @param LabelsWereAppendedToMaintenance $event
-    //  */
-    // public function applyLabelsWereAppendedToMaintenance(LabelsWereAppendedToMaintenance $event): void
-    // {
-    //     $readModel = $this->getReadModel($event->getMaintenanceId());
-    //     $readModel->appendLabels($event->getLabels());
-    //     $this->repository->save($readModel);
-    // }
+        if (isset($data['productSku'])) {
+            $readModel->setProductSku($data['productSku']);
+        }
 
-    // /**
-    //  * @param LabelsWereUpdated $event
-    //  */
-    // public function applyLabelsWereUpdated(LabelsWereUpdated $event): void
-    // {
-    //     $readModel = $this->getReadModel($event->getMaintenanceId());
-    //     $readModel->setLabels($event->getLabels());
-    //     $this->repository->save($readModel);
-    // }
+        if (isset($data['bookingDate'])) {
+            $readModel->setBookingDate($data['bookingDate']);
+        }
+
+        if (isset($data['bookingTime'])) {
+            $readModel->setBookingTime($data['bookingTime']);
+        }
+
+        if (isset($data['warrantyCenter'])) {
+            $readModel->setWarrantyCenter($data['warrantyCenter']);
+        }
+
+        if (isset($data['createdAt'])) {
+            $readModel->setCreatedAt($data['createdAt']);
+        }
+
+        if (isset($data['active'])) {
+            $readModel->setActive($data['active']);
+        }
+
+        $this->repository->save($readModel);
+    }
 
     /**
      * @param MaintenanceId $maintenanceId

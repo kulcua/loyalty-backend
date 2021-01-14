@@ -25,7 +25,8 @@ services:
             - '@OpenLoyalty\Bundle\CoreBundle\Repository\DBALSnapshotRepository'
             - '@Broadway\Snapshotting\Snapshot\Trigger\EventCountTrigger'
 
-    Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository:
+    # Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository:
+    kc.maintenance.read_model.repository.maintenance_details:
         class: 'Broadway\ReadModel\ReadModel'
         factory: ['@oloy.read_model.repository.factory', create]
         arguments:
@@ -38,6 +39,6 @@ services:
             - { name: broadway.domain.event_listener }
         arguments:
             $maintenanceRepository: '@kc.maintenance.repository'
-            $repository: '@Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository'
+            $repository: '@kc.maintenance.read_model.repository.maintenance_details'
 
-    Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository: '@Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository'
+    Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository: '@kc.maintenance.read_model.repository.maintenance_details'
