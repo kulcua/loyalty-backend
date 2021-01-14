@@ -80,6 +80,7 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
      */
     public static function deserialize(array $data)
     { 
+        $customerData = $data['customerData'];
         $maintenance = new self(new MaintenanceId($data['maintenanceId']));
 
         if (is_numeric($data['bookingDate'])) {
@@ -94,7 +95,6 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
             $data['createdAt'] = $tmp;
         }
 
-        $customerData = $data['customerData'];
         $maintenance->customerData = CustomerBasicData::deserialize($customerData);
 
         if (!empty($data['customerId'])) {
@@ -178,7 +178,7 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
     }
 
     /**
-     * @param string $bookingTime
+     * @return string $bookingTime
      */
     public function getBookingTime(string $bookingTime): void
     {

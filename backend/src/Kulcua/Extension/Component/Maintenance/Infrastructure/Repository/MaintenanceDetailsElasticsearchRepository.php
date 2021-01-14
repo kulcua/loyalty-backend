@@ -19,7 +19,7 @@ class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchReposit
                 'match_mapping_type' => 'string',
                 'mapping' => [
                     'type' => 'string',
-                    'index' => 'not_analyzed',
+                    'analyzer' => 'small_letters',
                 ],
             ],
         ],
@@ -92,7 +92,7 @@ class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchReposit
         $page = 1,
         $perPage = 10,
         $sortField = null,
-        $direction = 'DESC'
+        $direction = 'ASC'
     ): array {
         return parent::findByParametersPaginated($params, $exact, $page, $perPage, $sortField, $direction);
     }

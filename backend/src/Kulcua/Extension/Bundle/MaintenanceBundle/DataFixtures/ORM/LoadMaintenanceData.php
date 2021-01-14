@@ -95,6 +95,7 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
         );
 
         $maintenanceData['productSku'] = '333333';
+        $maintenanceData['bookingTime'] = '10:00';
         $maintenanceData['warrantyCenter'] = 'Vung Tau';
         $bus->dispatch(
             new BookMaintenance(
@@ -119,6 +120,7 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
         );
 
         $maintenanceData['productSku'] = '44444';
+        $maintenanceData['bookingTime'] = '10:30';
         $maintenanceData['warrantyCenter'] = 'Tra Vinh';
         $bus->dispatch(
             new BookMaintenance(

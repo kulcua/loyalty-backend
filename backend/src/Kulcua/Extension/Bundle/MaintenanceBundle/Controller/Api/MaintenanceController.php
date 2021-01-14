@@ -73,8 +73,9 @@ class MaintenanceController extends FOSRestController
         /** @var User $user */
         $user = $this->getUser();
 
+        //use email for role
         if ($this->isGranted('ROLE_PARTICIPANT')) {
-            $params['customerId'] = $user->getId();
+            $params['customerData.email'] = $user->getEmail();
         }
         $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'createdAt', 'DESC');
 
