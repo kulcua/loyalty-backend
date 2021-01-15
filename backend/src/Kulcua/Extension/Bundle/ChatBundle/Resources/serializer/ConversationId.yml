@@ -1,0 +1,6 @@
+Kulcua\Extension\Component\Conversation\Domain\ConversationId:
+  exlusion_policy: ALL
+  properties:
+    conversationId:
+      expose: true
+      serialized_name: conversationId

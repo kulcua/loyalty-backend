@@ -24,64 +24,64 @@ class ConversationDetailsElasticsearchRepository extends OloyElasticsearchReposi
     //         ],
     //     ],
     // ];
-    /**
-     * {@inheritdoc}
-     */
-    public function findInPeriod(\DateTime $from, \DateTime $to, $onlyWithCustomers = true): array
-    {
-        $filter = [];
-        $filter[] = ['range' => [
-            'bookingDate' => [
-                'gte' => $from->getTimestamp(),
-                'lte' => $to->getTimestamp(),
-            ],
-        ]];
-        $query = array(
-            'bool' => array(
-                'must' => [[
-                    'bool' => [
-                        'should' => $filter,
-                    ],
-                ]],
-            ),
-        );
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function findInPeriod(\DateTime $from, \DateTime $to, $onlyWithCustomers = true): array
+    // {
+    //     $filter = [];
+    //     $filter[] = ['range' => [
+    //         'bookingDate' => [
+    //             'gte' => $from->getTimestamp(),
+    //             'lte' => $to->getTimestamp(),
+    //         ],
+    //     ]];
+    //     $query = array(
+    //         'bool' => array(
+    //             'must' => [[
+    //                 'bool' => [
+    //                     'should' => $filter,
+    //                 ],
+    //             ]],
+    //         ),
+    //     );
 
-        if ($onlyWithCustomers) {
-            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
-        }
+    //     if ($onlyWithCustomers) {
+    //         $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+    //     }
 
-        return $this->query($query);
-    }
+    //     return $this->query($query);
+    // }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function findAllWithCustomer(): array
-    {
-        $query = array(
-            'bool' => array(
-                'must' => array(
-                    'exists' => ['field' => 'customerId'],
-                ),
-            ),
-        );
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function findAllWithCustomer(): array
+    // {
+    //     $query = array(
+    //         'bool' => array(
+    //             'must' => array(
+    //                 'exists' => ['field' => 'customerId'],
+    //             ),
+    //         ),
+    //     );
 
-        return $this->query($query);
-    }
+    //     return $this->query($query);
+    // }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function findByProductSku(string $productSku, bool $withCustomer = true): array
-    {
-        $query['bool']['must'][]['term'] = ['productSku' => $productSku];
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function findByProductSku(string $productSku, bool $withCustomer = true): array
+    // {
+    //     $query['bool']['must'][]['term'] = ['productSku' => $productSku];
 
-        if ($customer) {
-            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
-        }
+    //     if ($customer) {
+    //         $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+    //     }
 
-        return $this->query($query);
-    }
+    //     return $this->query($query);
+    // }
 
     /**
      * {@inheritdoc}
@@ -100,44 +100,44 @@ class ConversationDetailsElasticsearchRepository extends OloyElasticsearchReposi
     /**
      * {@inheritdoc}
      */
-    public function findByWarrantyCenter(string $warrantyCenter, bool $withCustomer = true): array
-    {
-        $query['bool']['must'][]['term'] = ['warrantyCenter' => $warrantyCenter];
+    // public function findByWarrantyCenter(string $warrantyCenter, bool $withCustomer = true): array
+    // {
+    //     $query['bool']['must'][]['term'] = ['warrantyCenter' => $warrantyCenter];
 
-        if ($customer) {
-            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
-        }
+    //     if ($customer) {
+    //         $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+    //     }
 
-        $result = $this->query($query);
+    //     $result = $this->query($query);
 
-        return $result[0] ?? null;
-    }
+    //     return $result[0] ?? null;
+    // }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function findByBookingTime(string $bookingTime, bool $withCustomer = true): array
-    {
-        $query['bool']['must'][]['term'] = ['bookingTime' => $bookingTime];
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function findByBookingTime(string $bookingTime, bool $withCustomer = true): array
+    // {
+    //     $query['bool']['must'][]['term'] = ['bookingTime' => $bookingTime];
 
-        if ($customer) {
-            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
-        }
+    //     if ($customer) {
+    //         $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+    //     }
 
-        return $this->query($query);
-    }
+    //     return $this->query($query);
+    // }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function findByActive(bool $active, bool $withCustomer = true): array
-    {
-        $query['bool']['must'][]['term'] = ['active' => $active];
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // public function findByActive(bool $active, bool $withCustomer = true): array
+    // {
+    //     $query['bool']['must'][]['term'] = ['active' => $active];
 
-        if ($customer) {
-            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
-        }
+    //     if ($customer) {
+    //         $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+    //     }
 
-        return $this->query($query);
-    }
+    //     return $this->query($query);
+    // }
 }

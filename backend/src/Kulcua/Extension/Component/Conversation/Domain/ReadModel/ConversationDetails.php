@@ -5,8 +5,6 @@ namespace Kulcua\Extension\Component\Conversation\Domain\ReadModel;
 use Broadway\ReadModel\SerializableReadModel;
 use OpenLoyalty\Component\Core\Domain\ReadModel\Versionable;
 use OpenLoyalty\Component\Core\Domain\ReadModel\VersionableReadModel;
-use Kulcua\Extension\Component\Conversation\Domain\CustomerId;
-use Kulcua\Extension\Component\Conversation\Domain\Model\CustomerBasicData;
 use Kulcua\Extension\Component\Conversation\Domain\Conversation;
 use Kulcua\Extension\Component\Conversation\Domain\ConversationId;
 

@@ -16,10 +16,10 @@ class CreateConversation extends ConversationCommand
     protected $conversationData;
 
     private $requiredConversationFields = [
-        'participant_ids',
-        'participant_names',
-        'last_message_snippet',
-        'last_message_timestamp'
+        'participantIds',
+        'participantNames',
+        'lastMessageSnippet',
+        'lastMessageTimestamp'
     ];
 
     public function __construct(

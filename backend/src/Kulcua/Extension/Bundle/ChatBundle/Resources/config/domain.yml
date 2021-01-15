@@ -31,7 +31,7 @@ services:
         arguments:
             - 'kc.conversations_details'
             - 'Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetails'
-            # - 'Kulcua\Extension\Component\Conversation\Infrastructure\Repository\ConversationDetailsElasticsearchRepository'
+            - 'Kulcua\Extension\Component\Conversation\Infrastructure\Repository\ConversationDetailsElasticsearchRepository'
 
     Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsProjector:
         tags:

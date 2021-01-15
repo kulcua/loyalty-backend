@@ -7,6 +7,7 @@ use OpenLoyalty\Component\Campaign\Domain\ReadModel\CampaignBoughtRepository;
 use OpenLoyalty\Component\Campaign\Domain\ReadModel\CampaignUsageRepository;
 use OpenLoyalty\Component\Transaction\Domain\ReadModel\TransactionDetailsRepository;
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository;
+use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -29,7 +30,8 @@ class OloyUserProjectionsIndexCreateCommand extends ContainerAwareCommand
         'oloy.campaign.read_model.repository.coupon_usage',
         CampaignBoughtRepository::class,
         CampaignUsageRepository::class,
-        MaintenanceDetailsRepository::class
+        MaintenanceDetailsRepository::class,
+        ConversationDetailsRepository::class,
     ];
 
     protected function configure()

@@ -51,11 +51,10 @@ class ConversationCommandHandler extends SimpleCommandHandler
         $this->repository->save($conversation);
 
         $this->eventDispatcher->dispatch(
-            ConversationSystemEvents::CONVERSATION_CREATEED,
+            ConversationSystemEvents::CONVERSATION_CREATED,
             [new ConversationCreatedSystemEvent(
                 $command->getConversationId(),
-                $command->getConversationData(),
-                $command->getCustomerData()
+                $command->getConversationData()
             )]
         );
     }

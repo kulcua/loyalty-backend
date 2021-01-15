@@ -3,7 +3,7 @@
 namespace Kulcua\Extension\Component\Conversation\Domain;
 
 use OpenLoyalty\Component\Core\Domain\SnapableEventSourcedAggregateRoot;
-use Kulcua\Extension\Component\Conversation\Domain\Event\ConversationWasBooked;
+use Kulcua\Extension\Component\Conversation\Domain\Event\ConversationWasCreated;
 use Kulcua\Extension\Component\Conversation\Domain\Event\ConversationWasUpdated;
 use Kulcua\Extension\Component\Conversation\Domain\Model\CustomerBasicData;
 
@@ -25,7 +25,7 @@ class Conversation extends SnapableEventSourcedAggregateRoot
      /**
      * @var string
      */
-    protected $bookingTime;
+    protected $creatingTime;
 
     /**
      * @var string
@@ -74,7 +74,7 @@ class Conversation extends SnapableEventSourcedAggregateRoot
         array $conversationData
     ): void {
         $this->apply(
-            new ConversationWasBooked(
+            new ConversationWasCreated(
                 $conversationId,
                 $conversationData
             )
@@ -85,18 +85,16 @@ class Conversation extends SnapableEventSourcedAggregateRoot
     //you have to find all services with tag broadway.domain.event_listener 
     //and with this method
     /**
-     * @param ConversationWasBooked $event
+     * @param ConversationWasCreated $event
      */
-    protected function applyConversationWasBooked(ConversationWasBooked $event): void
+    protected function applyConversationWasCreated(ConversationWasCreated $event): void
     {
         $conversationData = $event->getConversationData();
         $this->conversationId = $event->getConversationId();
-        $this->productSku = $conversationData['productSku'];
-        $this->bookingDate = $conversationData['bookingDate'];
-        $this->bookingTime = $conversationData['bookingTime'];
-        $this->warrantyCenter = $conversationData['warrantyCenter'];
-        $this->createdAt = $conversationData['createdAt'];
-        $this->customerData = CustomerBasicData::deserialize($event->getCustomerData());
+        $this->participantIds = $conversationData['participantIds'];
+        $this->participantNames = $conversationData['participantNames'];
+        $this->lastMessageSnippet = $conversationData['lastMessageSnippet'];
+        $this->lastMessageTimestamp = $conversationData['lastMessageTimestamp'];
     }
 
 

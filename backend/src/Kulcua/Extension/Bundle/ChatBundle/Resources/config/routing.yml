@@ -1,4 +1,4 @@
 chat_api:
     resource: "@ChatBundle/Controller/Api/ConversationController.php"
     type:     annotation
-    prefix:   /chat
+    prefix:   /api/chat

@@ -1,6 +1,6 @@
-# jms_serializer:
-#     metadata:
-#       directories:
-#         Maintenance:
-#           namespace_prefix: "Kulcua\\Extension\\Component\\Maintenance\\Domain"
-#           path: "@MaintenanceBundle/Resources/config/serializer"
+jms_serializer:
+    metadata:
+      directories:
+        Conversation:
+          namespace_prefix: "Kulcua\\Extension\\Component\\Conversation\\Domain"
+          path: "@ChatBundle/Resources/config/serializer"

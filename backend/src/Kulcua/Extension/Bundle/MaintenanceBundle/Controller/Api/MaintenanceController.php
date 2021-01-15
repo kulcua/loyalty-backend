@@ -68,7 +68,6 @@ class MaintenanceController extends FOSRestController
     public function listAction(Request $request, ParamFetcher $paramFetcher): View
     {
         $params = $this->get('oloy.user.param_manager')->stripNulls($paramFetcher->all());
-        // $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'createdAt', 'desc');
 
         /** @var User $user */
         $user = $this->getUser();

@@ -21,7 +21,7 @@ class ChatExtension extends Extension
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('domain.yml');
-        // $loader->load('services.yml');
+        $loader->load('services.yml');
         // $loader->load('voters.yml');
     }
 }

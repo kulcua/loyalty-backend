@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsProjector;
 
 /**
  * Class OloyUtilityReadModelsRecreateCommand.
@@ -32,6 +33,7 @@ class OloyUtilityReadModelsRecreateCommand extends ContainerAwareCommand
         'campaign_usage' => 'oloy.campaign.read_model.projector.campaign_usage',
         'campaign_bought' => 'oloy.campaign.read_model.projector.campaign_bought',
         'maintenance_details' => MaintenanceDetailsProjector::class,
+        'conversation_details' => ConversationDetailsProjector::class
     ];
 
     /**

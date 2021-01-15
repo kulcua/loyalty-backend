@@ -25,7 +25,7 @@ class ConversationCreatedSystemEvent
      * @param ConversationId $conversationId
      * @param array         $conversationData
      */
-    public function __construct(ConversationId $conversationId, array $conversationData, array $customerData)
+    public function __construct(ConversationId $conversationId, array $conversationData)
     {
         $this->conversationId = $conversationId;
         $this->conversationData = $conversationData;

@@ -1,28 +1,28 @@
 <?php
 
-namespace Kulcua\Extension\Bundle\MaintenanceBundle\Security\Voter;
+namespace Kulcua\Extension\Bundle\ChatBundle\Security\Voter;
 
 use OpenLoyalty\Bundle\UserBundle\Entity\User;
 use OpenLoyalty\Bundle\UserBundle\Security\PermissionAccess;
 use OpenLoyalty\Component\Customer\Domain\ReadModel\CustomerDetails;
 use OpenLoyalty\Component\Seller\Domain\ReadModel\SellerDetailsRepository;
-use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetails;
-use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
+use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetails;
+use Kulcua\Extension\Component\Conversation\Domain\Conversation;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
- * Class MaintenanceVoter.
+ * Class ConversationVoter.
  */
-class MaintenanceVoter extends Voter
+class ConversationVoter extends Voter
 {
-    const PERMISSION_RESOURCE = 'MAINTENANCE';
+    const PERMISSION_RESOURCE = 'CONVERSATION';
 
-    const LIST_MAINTENANCES = 'LIST_MAINTENANCES';
-    const LIST_CURRENT_CUSTOMER_MAINTENANCES = 'LIST_CURRENT_CUSTOMER_MAINTENANCES';
+    const LIST_CONVERSATIONS = 'LIST_CONVERSATIONS';
+    const LIST_CURRENT_CUSTOMER_CONVERSATIONS = 'LIST_CURRENT_CUSTOMER_CONVERSATIONS';
     const VIEW = 'VIEW';
-    const CREATE_MAINTENANCE = 'CREATE_MAINTENANCE';
-    const LIST_CUSTOMER_MAINTENANCES = 'LIST_CUSTOMER_MAINTENANCES';
+    const CREATE_CONVERSATION = 'CREATE_CONVERSATION';
+    const LIST_CUSTOMER_CONVERSATIONS = 'LIST_CUSTOMER_CONVERSATIONS';
 
     /**
      * @var SellerDetailsRepository
@@ -30,7 +30,7 @@ class MaintenanceVoter extends Voter
     private $sellerDetailsRepository;
 
     /**
-     * MaintenanceVoter constructor.
+     * ConversationVoter constructor.
      *
      * @param SellerDetailsRepository $sellerDetailsRepository
      */
@@ -45,9 +45,9 @@ class MaintenanceVoter extends Voter
     public function supports($attribute, $subject)
     {
         return $subject == null && in_array($attribute, [
-            self::LIST_MAINTENANCES, self::LIST_CURRENT_CUSTOMER_MAINTENANCES, self::CREATE_MAINTENANCE, self::EDIT_MAINTENANCE_LABELS,
+            self::LIST_CONVERSATIONS, self::LIST_CURRENT_CUSTOMER_CONVERSATIONS, self::CREATE_CONVERSATION, self::EDIT_CONVERSATION_LABELS,
         ]) || $subject instanceof CustomerDetails && in_array($attribute, [
-            self::LIST_CUSTOMER_MAINTENANCES,
+            self::LIST_CUSTOMER_CONVERSATIONS,
         ]);
     }
 
@@ -70,15 +70,15 @@ class MaintenanceVoter extends Voter
                      && $user->hasPermission(self::PERMISSION_RESOURCE, [PermissionAccess::VIEW, PermissionAccess::MODIFY]);
 
         switch ($attribute) {
-            case self::LIST_MAINTENANCES:
+            case self::LIST_CONVERSATIONS:
                 return $viewAdmin;
-            case self::CREATE_MAINTENANCE:
+            case self::CREATE_CONVERSATION:
                 return $fullAdmin;
-            case self::EDIT_MAINTENANCE:
+            case self::EDIT_CONVERSATION:
                 return $fullAdmin;
-            case self::LIST_CURRENT_CUSTOMER_MAINTENANCES:
+            case self::LIST_CURRENT_CUSTOMER_CONVERSATIONS:
                 return $user->hasRole('ROLE_PARTICIPANT');
-            case self::LIST_CUSTOMER_MAINTENANCES:
+            case self::LIST_CUSTOMER_CONVERSATIONS:
                 return $viewAdmin || $user->hasRole('ROLE_PARTICIPANT');
             case self::VIEW:
                 return $viewAdmin || $this->canSellerOrCustomerView($user, $subject);
@@ -89,18 +89,17 @@ class MaintenanceVoter extends Voter
 
     /**
      * @param User               $user
-     * @param MaintenanceDetails $subject
+     * @param ConversationDetails $subject
      *
      * @return bool
      */
-    protected function canSellerOrCustomerView(User $user, MaintenanceDetails $subject): bool
+    protected function canSellerOrCustomerView(User $user, ConversationDetails $subject): bool
     {
         if ($user->hasRole('ROLE_SELLER')) {
             return true;
         }
 
-        //get email instead of id
-        if ($user->hasRole('ROLE_PARTICIPANT') && $subject->getCustomerData()->getEmail() && (string) $subject->getCustomerData()->getEmail() == $user->getEmail()) {
+        if ($user->hasRole('ROLE_PARTICIPANT') && $subject->getCustomerData()->getId() && (string) $subject->getCustomerData()->getId() == $user->getId()) {
             return true;
         }
 
