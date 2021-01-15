@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository;
+use Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetailsRepository;
 use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsRepository;
 
 /**
@@ -28,7 +29,8 @@ class OloyUserProjectionsPurgeCommand extends ContainerAwareCommand
         'oloy.campaign.read_model.repository.campaign_usage',
         CampaignBoughtRepository::class,
         MaintenanceDetailsRepository::class,
-        ConversationDetailsRepository::class
+        ConversationDetailsRepository::class,
+        MessageDetailsRepository::class,
     ];
 
     protected function configure()

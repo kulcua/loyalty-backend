@@ -18,24 +18,24 @@ class Conversation extends SnapableEventSourcedAggregateRoot
     protected $conversationId;
 
     /**
-     * @var string
+     * @var array
      */
-    protected $productSku;
+    protected $participantIds;
 
      /**
-     * @var string
+     * @var array
      */
-    protected $creatingTime;
+    protected $participantNames;
 
     /**
      * @var string
      */
-    protected $warrantyCenter;
+    protected $lastMessageSnippet;
 
     /**
      * @var \DateTime
      */
-    protected $createdAt;
+    protected $lastMessageTimestamp;
 
     /**
      * @return string

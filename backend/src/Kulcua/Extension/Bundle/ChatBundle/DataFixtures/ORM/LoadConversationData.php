@@ -44,7 +44,7 @@ class LoadConversationData extends ContainerAwareFixture implements FixtureInter
         );
 
         $conversationData['participantIds'] = ['22200000-0000-474c-b092-b0dd880c07e2', '00000000-0000-474c-b092-b0dd880c07e1'];
-        $conversationData[participantNames] = ['admin', 'John Doe'];
+        $conversationData['participantNames'] = ['admin', 'John Doe'];
         $conversationData['lastMessageSnippet'] = 'john doe nek';
 
         $bus->dispatch(
@@ -55,7 +55,7 @@ class LoadConversationData extends ContainerAwareFixture implements FixtureInter
         );
 
         $conversationData['participantIds'] = ['22200000-0000-474c-b092-b0dd880c07e2', '11111111-0000-474c-b092-b0dd880c07e1'];
-        $conversationData[participantNames] = ['admin', 'John1 Doe1'];
+        $conversationData['participantNames'] = ['admin', 'John1 Doe1'];
         $conversationData['lastMessageSnippet'] = 'john1 doe1 hello world';
         $bus->dispatch(
             new CreateConversation(

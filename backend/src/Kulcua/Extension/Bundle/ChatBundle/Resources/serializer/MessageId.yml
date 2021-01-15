@@ -1,0 +1,6 @@
+Kulcua\Extension\Component\Message\Domain\MessageId:
+  exlusion_policy: ALL
+  properties:
+    messageId:
+      expose: true
+      serialized_name: messageId

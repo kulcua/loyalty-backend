@@ -41,3 +41,46 @@ services:
             $repository: '@kc.conversation.read_model.repository.conversation_details'
 
     Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsRepository: '@kc.conversation.read_model.repository.conversation_details'
+
+
+    kc.message.command_handler:
+        class: Kulcua\Extension\Component\Message\Domain\Command\MessageCommandHandler
+        arguments:
+            - '@kc.message.repository'
+            - '@broadway.event_dispatcher'
+        lazy: true
+        tags:
+            - { name: broadway.command_handler }
+
+    Kulcua\Extension\Component\Message\Domain\EventSourcedMessageRepository:
+        arguments:
+            - '@broadway.event_store'
+            - '@broadway.event_handling.event_bus'
+            - ['@broadway.metadata_enriching_event_stream_decorator']
+
+    Kulcua\Extension\Component\Message\Domain\MessageRepository:
+        arguments:
+            - '@Kulcua\Extension\Component\Message\Domain\EventSourcedMessageRepository'
+            - '@broadway.event_store'
+            - '@OpenLoyalty\Bundle\CoreBundle\Repository\DBALSnapshotRepository'
+            - '@Broadway\Snapshotting\Snapshot\Trigger\EventCountTrigger'
+
+    kc.message.read_model.repository.message_details:
+        class: 'Broadway\ReadModel\ReadModel'
+        factory: ['@oloy.read_model.repository.factory', create]
+        arguments:
+            - 'kc.messages_details'
+            - 'Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetails'
+            - 'Kulcua\Extension\Component\Message\Infrastructure\Repository\MessageDetailsElasticsearchRepository'
+
+    Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetailsProjector:
+        tags:
+            - { name: broadway.domain.event_listener }
+        arguments:
+            $messageRepository: '@kc.message.repository'
+            $repository: '@kc.message.read_model.repository.message_details'
+
+    Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetailsRepository: '@kc.message.read_model.repository.message_details'
+
+
+    
