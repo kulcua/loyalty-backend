@@ -58,6 +58,7 @@ class AppKernel extends Kernel
             new OpenLoyalty\Bundle\MarkDownBundle\OpenLoyaltyMarkDownBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Kulcua\Extension\Bundle\MaintenanceBundle\MaintenanceBundle(),
+            new Kulcua\Extension\Bundle\ChatBundle\ChatBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

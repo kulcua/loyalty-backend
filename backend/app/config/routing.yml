@@ -1,3 +1,6 @@
+chat:
+    resource: "@ChatBundle/Resources/config/routing.yml"
+
 maintenance:
     resource: "@MaintenanceBundle/Resources/config/routing.yml"
 

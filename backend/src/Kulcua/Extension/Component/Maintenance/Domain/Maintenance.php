@@ -175,7 +175,7 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     }
 
     /**
-     * @return string
+     * @return bool
      */
     public function getActive(): bool
     {
@@ -193,7 +193,7 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     /**
      * @return string
      */
-    public function getBookingTime(): bool
+    public function getBookingTime(): string
     {
         return $this->bookingTime;
     }

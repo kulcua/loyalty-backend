@@ -1,0 +1,6 @@
+# jms_serializer:
+#     metadata:
+#       directories:
+#         Maintenance:
+#           namespace_prefix: "Kulcua\\Extension\\Component\\Maintenance\\Domain"
+#           path: "@MaintenanceBundle/Resources/config/serializer"

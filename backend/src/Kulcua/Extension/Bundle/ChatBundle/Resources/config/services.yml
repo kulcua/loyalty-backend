@@ -1,0 +1,31 @@
+# imports:
+#    - { resource: 'services/forms.yml' }
+
+services:
+#     _defaults:
+#         autowire: true
+#         autoconfigure: true
+
+#     Kulcua\Extension\Bundle\MaintenanceBundle\Controller\:
+#             resource: '../../Controller'
+#             tags: ['controller.service_arguments']
+
+#     kc.maintenance.param_converter:
+#         class: Kulcua\Extension\Bundle\MaintenanceBundle\ParamConverter\MaintenanceDetailsParamConverter
+#         tags:
+#             - { name: request.param_converter, priority: -2, converter: maintenance_details_converter }
+
+#     kc.maintenance.settings_based_customer_id_provider:
+#         class: Kulcua\Extension\Bundle\MaintenanceBundle\Service\SettingsBasedCustomerIdProvider
+#         arguments:
+#             - '@ol.doctrine_settings.manager'
+#             - '@oloy.user.read_model.repository.customer_details'
+
+#     kc.maintenance.customer_id_provider:
+#         alias: kc.maintenance.settings_based_customer_id_provider
+
+#     kc.maintenance.form_handler.edit:
+#         class: Kulcua\Extension\Bundle\MaintenanceBundle\Form\Handler\MaintenanceEditFormHandler
+#         arguments:
+#             - '@broadway.command_handling.command_bus'
+#             - '@doctrine.orm.entity_manager'

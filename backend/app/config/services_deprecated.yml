@@ -6,9 +6,9 @@ services:
         alias: Kulcua\Extension\Component\Maintenance\Domain\MaintenanceRepository
         deprecated: The "%service_id%" service is deprecated since Kulcua
 
-    # kc.maintenance.read_model.repository.maintenance_details:
-    #     alias: Kulcua\Extension\Component\Maintenance\Infrastructure\Repository\MaintenanceDetailsElasticsearchRepository
-    #     deprecated: The "%service_id%" service is deprecated since Kulcua
+    kc.conversation.repository:
+        alias: Kulcua\Extension\Component\Conversation\Domain\ConversationRepository
+        deprecated: The "%service_id%" service is deprecated since Kulcua
 
     kc.maintenance.read_model.projector.maintenance_details:
         alias: Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsProjector
