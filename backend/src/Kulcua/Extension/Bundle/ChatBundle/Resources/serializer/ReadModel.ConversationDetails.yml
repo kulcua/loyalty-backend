@@ -1,0 +1,6 @@
+Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetails:
+  exlusion_policy: all
+  properties:
+    conversationId:
+      expose: true
+      inline: true

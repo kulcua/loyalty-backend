@@ -1,0 +1,6 @@
+Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetails:
+  exlusion_policy: all
+  properties:
+    messageId:
+      expose: true
+      inline: true

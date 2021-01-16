@@ -1,0 +1,22 @@
+# imports:
+#    - { resource: 'services/forms.yml' }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Kulcua\Extension\Bundle\ChatBundle\Controller\:
+            resource: '../../Controller'
+            tags: ['controller.service_arguments']
+
+    kc.conversation.param_converter:
+        class: Kulcua\Extension\Bundle\ChatBundle\ParamConverter\ConversationParamConverter
+        tags:
+            - { name: request.param_converter, priority: -2, converter: conversation_details_converter }
+
+    kc.conversation.form_handler.edit:
+        class: Kulcua\Extension\Bundle\ChatBundle\Form\Handler\ConversationEditFormHandler
+        arguments:
+            - '@broadway.command_handling.command_bus'
+            - '@doctrine.orm.entity_manager'

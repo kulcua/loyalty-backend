@@ -20,9 +20,7 @@ class MaintenanceVoter extends Voter
 
     const LIST_MAINTENANCES = 'LIST_MAINTENANCES';
     const LIST_CURRENT_CUSTOMER_MAINTENANCES = 'LIST_CURRENT_CUSTOMER_MAINTENANCES';
-    // const LIST_CURRENT_POS_MAINTENANCES = 'LIST_CURRENT_POS_MAINTENANCES';
     const VIEW = 'VIEW';
-    const EDIT_MAINTENANCE_LABELS = 'EDIT_MAINTENANCE_LABELS';
     const CREATE_MAINTENANCE = 'CREATE_MAINTENANCE';
     const LIST_CUSTOMER_MAINTENANCES = 'LIST_CUSTOMER_MAINTENANCES';
 
@@ -47,7 +45,7 @@ class MaintenanceVoter extends Voter
     public function supports($attribute, $subject)
     {
         return $subject == null && in_array($attribute, [
-            self::LIST_MAINTENANCES, self::LIST_CURRENT_CUSTOMER_MAINTENANCES, self::CREATE_MAINTENANCE, self::EDIT_MAINTENANCE_LABELS,
+            self::LIST_MAINTENANCES, self::LIST_CURRENT_CUSTOMER_MAINTENANCES, self::CREATE_MAINTENANCE
         ]) || $subject instanceof CustomerDetails && in_array($attribute, [
             self::LIST_CUSTOMER_MAINTENANCES,
         ]);

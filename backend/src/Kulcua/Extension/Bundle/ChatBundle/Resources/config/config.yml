@@ -1,0 +1,9 @@
+jms_serializer:
+    metadata:
+      directories:
+        Conversation:
+          namespace_prefix: "Kulcua\\Extension\\Component\\Conversation\\Domain"
+          path: "@ChatBundle/Resources/config/serializer"
+        Message:
+          namespace_prefix: "Kulcua\\Extension\\Component\\Message\\Domain"
+          path: "@ChatBundle/Resources/config/serializer"

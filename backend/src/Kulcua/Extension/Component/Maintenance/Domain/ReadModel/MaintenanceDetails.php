@@ -180,9 +180,9 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
     /**
      * @return string $bookingTime
      */
-    public function getBookingTime(string $bookingTime): void
+    public function getBookingTime(string $bookingTime): ?string
     {
-        $this->bookingTime = $bookingTime;
+        return $this->bookingTime;
     }
 
     /**
