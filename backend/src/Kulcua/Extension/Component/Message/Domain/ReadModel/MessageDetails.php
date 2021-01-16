@@ -41,6 +41,11 @@ class MessageDetails implements SerializableReadModel, VersionableReadModel
     protected $senderName;
 
     /**
+     * @var string
+     */
+    protected $message;
+
+    /**
      * @var \DateTime
      */
     protected $messageTimestamp;
@@ -91,7 +96,7 @@ class MessageDetails implements SerializableReadModel, VersionableReadModel
         return [
             'messageId' => (string) $this->messageId,
             'conversationId' => $this->conversationId,
-            'participantIds' => $this->participantIds ? json_encode($this->participantIds) : null,
+            'conversationParticipantIds' => $this->conversationParticipantIds ? json_encode($this->conversationParticipantIds) : null,
             'senderId' => $this->senderId,
             'senderName' => $this->senderName,
             'message' => $this->message,

@@ -7,6 +7,7 @@ use Broadway\EventDispatcher\EventDispatcher;
 use Broadway\Repository\Repository;
 use Kulcua\Extension\Component\Conversation\Domain\SystemEvent\ConversationCreatedSystemEvent;
 use Kulcua\Extension\Component\Conversation\Domain\SystemEvent\ConversationSystemEvents;
+use Kulcua\Extension\Component\Conversation\Domain\SystemEvent\ConversationUpdatedSystemEvent;
 use Kulcua\Extension\Component\Conversation\Domain\Conversation;
 
 /**
@@ -56,6 +57,26 @@ class ConversationCommandHandler extends SimpleCommandHandler
                 $command->getConversationId(),
                 $command->getConversationData()
             )]
+        );
+    }
+
+    /**
+     * @param UpdateConversation $command
+     */
+    public function handleUpdateConversation(UpdateConversation $command)
+    {
+        $conversationId = $command->getConversationId();
+        $conversationData = $command->getConversationData();
+        
+        /** @var Conversation $conversation */
+
+        $conversation = $this->repository->load((string) $conversationId);
+        $conversation->updateConversationDetails($conversationData);
+        $this->repository->save($conversation);
+
+        $this->eventDispatcher->dispatch(
+            ConversationSystemEvents::CONVERSATION_UPDATED,
+            [new ConversationUpdatedSystemEvent($command->getConversationId())]
         );
     }
 }

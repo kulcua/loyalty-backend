@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Kulcua\Extension\Bundle\ChatBundle\Form\Type\ConversationFormType;
+use Kulcua\Extension\Bundle\ChatBundle\Form\Type\ConversationEditFormType;
 use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetails;
 use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsRepository;
 use Kulcua\Extension\Component\Conversation\Domain\Conversation;
@@ -34,7 +35,7 @@ class ConversationController extends FOSRestController
      * @Route(name="kc.conversation.list", path="/conversation")
      * @Route(name="kc.conversation.customer.list", path="/customer/conversation")
      * @Route(name="kc.conversation.seller.list", path="/seller/conversation")
-     * @Security("is_granted('LIST_CONVERSATIONS') or is_granted('LIST_CURRENT_CUSTOMER_TRANSACTIONS')")
+     * @Security("is_granted('LIST_CONVERSATIONS')")
      * @Method("GET")
      *
      * @ApiDoc(
@@ -127,6 +128,47 @@ class ConversationController extends FOSRestController
             );
 
             return $this->view(['conversationId' => (string) $conversationId]);
+        }
+
+        return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * Method allows to update conversation details.
+     *
+     * @param Request       $request
+     * @param ConversationDetails $conversation
+     *
+     * @return \FOS\RestBundle\View\View
+     * @Route(name="kc.conversation.edit", path="/conversation/{conversation}")
+     * @Method("PUT")
+     * @Security("is_granted('EDIT_CONVERSATION', conversation)")
+     * @ApiDoc(
+     *     name="Edit Conversation",
+     *     section="Chat Conversation",
+     *     input={"class" = "Kulcua\Extension\Bundle\ChatBundle\Form\Type\ConversationEditFormType", "name" = "conversation"},
+     *     statusCodes={
+     *       200="Returned when successful",
+     *       400="Returned when form contains errors",
+     *     }
+     * )
+     */
+    public function editConversationAction(Request $request, ConversationDetails $conversation)
+    {
+        $form = $this->get('form.factory')->createNamed('conversation', ConversationEditFormType::class, [], [
+            'method' => 'PUT',
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            if ($this->get('kc.conversation.form_handler.edit')->onSuccess($conversation->getConversationId(), $form) === true) {
+                return $this->view([
+                    'conversationId' => (string) $conversation->getConversationId(),
+                ]);
+            } else {
+                return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
+            }
         }
 
         return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);

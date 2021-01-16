@@ -97,6 +97,12 @@ class Conversation extends SnapableEventSourcedAggregateRoot
         $this->lastMessageTimestamp = $conversationData['lastMessageTimestamp'];
     }
 
+    public function updateConversationDetails(array $conversationData): void
+    {
+        $this->apply(
+            new ConversationWasUpdated($this->getConversationId(), $conversationData)
+        );
+    }
 
     /**
      * @return string

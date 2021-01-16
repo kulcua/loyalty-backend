@@ -11,24 +11,12 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
- * Class ConversationFormType.
+ * Class ConversationEditFormType.
  */
-class ConversationFormType extends AbstractType
+class ConversationEditFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('participantIds', CollectionType::class, [
-            'entry_type' => TextType::class,
-            'required' => true,
-            'allow_add' => true,
-            'error_bubbling' => false
-        ]);
-        $builder->add('participantNames', CollectionType::class, [
-            'entry_type' => TextType::class,
-            'required' => true,
-            'allow_add' => true,
-            'error_bubbling' => false
-        ]);
         $builder->add('lastMessageSnippet', TextType::class, [
             'required' => true
         ]);

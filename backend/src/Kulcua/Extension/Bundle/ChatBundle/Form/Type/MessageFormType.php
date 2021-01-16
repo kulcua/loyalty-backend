@@ -11,28 +11,31 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
- * Class ConversationFormType.
+ * Class MessageDetailsFormType.
  */
-class ConversationFormType extends AbstractType
+class MessageFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('participantIds', CollectionType::class, [
-            'entry_type' => TextType::class,
-            'required' => true,
-            'allow_add' => true,
-            'error_bubbling' => false
-        ]);
-        $builder->add('participantNames', CollectionType::class, [
-            'entry_type' => TextType::class,
-            'required' => true,
-            'allow_add' => true,
-            'error_bubbling' => false
-        ]);
-        $builder->add('lastMessageSnippet', TextType::class, [
+        $builder->add('conversationId', TextType::class, [
             'required' => true
         ]);
-        $builder->add('lastMessageTimestamp', DateTimeType::class, [
+        $builder->add('conversationParticipantIds', CollectionType::class, [
+            'entry_type' => TextType::class,
+            'required' => true,
+            'allow_add' => true,
+            'error_bubbling' => false
+        ]);
+        $builder->add('senderId', TextType::class, [
+            'required' => true
+        ]);
+        $builder->add('senderName', TextType::class, [
+            'required' => true
+        ]);
+        $builder->add('message', TextType::class, [
+            'required' => true
+        ]);
+        $builder->add('messageTimestamp', DateTimeType::class, [
             'required' => true,
             'widget' => 'single_text',
             'format' => DateTimeType::HTML5_FORMAT,

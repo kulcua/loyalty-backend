@@ -36,7 +36,7 @@ class MaintenanceController extends FOSRestController
      * @Route(name="kc.maintenance.list", path="/maintenance")
      * @Route(name="kc.maintenance.customer.list", path="/customer/maintenance")
      * @Route(name="kc.maintenance.seller.list", path="/seller/maintenance")
-     * @Security("is_granted('LIST_MAINTENANCES') or is_granted('LIST_CURRENT_CUSTOMER_TRANSACTIONS')")
+     * @Security("is_granted('LIST_MAINTENANCES')")
      * @Method("GET")
      *
      * @ApiDoc(

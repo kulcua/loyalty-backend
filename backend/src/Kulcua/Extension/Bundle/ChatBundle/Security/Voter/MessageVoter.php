@@ -1,28 +1,27 @@
 <?php
 
-namespace Kulcua\Extension\Bundle\MaintenanceBundle\Security\Voter;
+namespace Kulcua\Extension\Bundle\ChatBundle\Security\Voter;
 
 use OpenLoyalty\Bundle\UserBundle\Entity\User;
 use OpenLoyalty\Bundle\UserBundle\Security\PermissionAccess;
 use OpenLoyalty\Component\Customer\Domain\ReadModel\CustomerDetails;
 use OpenLoyalty\Component\Seller\Domain\ReadModel\SellerDetailsRepository;
-use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetails;
-use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
+use Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetails;
+use Kulcua\Extension\Component\Message\Domain\Message;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 /**
- * Class MaintenanceVoter.
+ * Class MessageVoter.
  */
-class MaintenanceVoter extends Voter
+class MessageVoter extends Voter
 {
-    const PERMISSION_RESOURCE = 'MAINTENANCE';
+    const PERMISSION_RESOURCE = 'MESSAGE';
 
-    const LIST_MAINTENANCES = 'LIST_MAINTENANCES';
-    const LIST_CURRENT_CUSTOMER_MAINTENANCES = 'LIST_CURRENT_CUSTOMER_MAINTENANCES';
+    const LIST_MESSAGES = 'LIST_MESSAGES';
     const VIEW = 'VIEW';
-    const CREATE_MAINTENANCE = 'CREATE_MAINTENANCE';
-    const LIST_CUSTOMER_MAINTENANCES = 'LIST_CUSTOMER_MAINTENANCES';
+    const CREATE_MESSAGE = 'CREATE_MESSAGE';
+    const LIST_CUSTOMER_MESSAGES = 'LIST_CUSTOMER_MESSAGES';
 
     /**
      * @var SellerDetailsRepository
@@ -30,7 +29,7 @@ class MaintenanceVoter extends Voter
     private $sellerDetailsRepository;
 
     /**
-     * MaintenanceVoter constructor.
+     * MessageVoter constructor.
      *
      * @param SellerDetailsRepository $sellerDetailsRepository
      */
@@ -45,9 +44,9 @@ class MaintenanceVoter extends Voter
     public function supports($attribute, $subject)
     {
         return $subject == null && in_array($attribute, [
-            self::LIST_MAINTENANCES, self::LIST_CURRENT_CUSTOMER_MAINTENANCES, self::CREATE_MAINTENANCE
+            self::LIST_MESSAGES, self::CREATE_MESSAGE
         ]) || $subject instanceof CustomerDetails && in_array($attribute, [
-            self::LIST_CUSTOMER_MAINTENANCES,
+            self::LIST_CUSTOMER_MESSAGES,
         ]);
     }
 
@@ -70,15 +69,15 @@ class MaintenanceVoter extends Voter
                      && $user->hasPermission(self::PERMISSION_RESOURCE, [PermissionAccess::VIEW, PermissionAccess::MODIFY]);
 
         switch ($attribute) {
-            case self::LIST_MAINTENANCES:
+            case self::LIST_MESSAGES:
                 return $viewAdmin;
-            case self::CREATE_MAINTENANCE:
+            case self::CREATE_MESSAGE:
                 return $fullAdmin;
-            case self::EDIT_MAINTENANCE:
+            case self::EDIT_MESSAGE:
                 return $fullAdmin;
-            case self::LIST_CURRENT_CUSTOMER_MAINTENANCES:
+            case self::LIST_CURRENT_CUSTOMER_MESSAGES:
                 return $user->hasRole('ROLE_PARTICIPANT');
-            case self::LIST_CUSTOMER_MAINTENANCES:
+            case self::LIST_CUSTOMER_MESSAGES:
                 return $viewAdmin || $user->hasRole('ROLE_PARTICIPANT');
             case self::VIEW:
                 return $viewAdmin || $this->canSellerOrCustomerView($user, $subject);
@@ -89,18 +88,17 @@ class MaintenanceVoter extends Voter
 
     /**
      * @param User               $user
-     * @param MaintenanceDetails $subject
+     * @param MessageDetails $subject
      *
      * @return bool
      */
-    protected function canSellerOrCustomerView(User $user, MaintenanceDetails $subject): bool
+    protected function canSellerOrCustomerView(User $user, MessageDetails $subject): bool
     {
         if ($user->hasRole('ROLE_SELLER')) {
             return true;
         }
 
-        //get email instead of id
-        if ($user->hasRole('ROLE_PARTICIPANT') && $subject->getCustomerData()->getEmail() && (string) $subject->getCustomerData()->getEmail() == $user->getEmail()) {
+        if ($user->hasRole('ROLE_PARTICIPANT') && $subject->getCustomerData()->getId() && (string) $subject->getCustomerData()->getId() == $user->getId()) {
             return true;
         }
 

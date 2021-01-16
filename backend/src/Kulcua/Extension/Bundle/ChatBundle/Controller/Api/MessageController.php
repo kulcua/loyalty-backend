@@ -34,7 +34,7 @@ class MessageController extends FOSRestController
      * @Route(name="kc.message.list", path="/message")
      * @Route(name="kc.message.customer.list", path="/customer/message")
      * @Route(name="kc.message.seller.list", path="/seller/message")
-     * @Security("is_granted('LIST_MESSAGES') or is_granted('LIST_CURRENT_CUSTOMER_TRANSACTIONS')")
+     * @Security("is_granted('LIST_MESSAGES')")
      * @Method("GET")
      *
      * @ApiDoc(
@@ -69,7 +69,7 @@ class MessageController extends FOSRestController
         if ($this->isGranted('ROLE_PARTICIPANT')) {
             $params['participantIds'] = $user->getId();
         }
-        $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'lastMessageSnippet', 'DESC');
+        $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'messageTimestamp', 'DESC');
 
         /** @var MessageDetailsRepository $repo */
         $repo = $this->get(MessageDetailsRepository::class);

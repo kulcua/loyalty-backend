@@ -60,6 +60,25 @@ class ConversationDetailsProjector extends Projector
     }
 
     /**
+     * @param ConversationWasUpdated $event
+     */
+    protected function applyConversationWasUpdated(ConversationWasUpdated $event): void
+    {
+        $readModel = $this->getReadModel($event->getConversationId());
+        $data = $event->getConversationData();
+
+        if (isset($data['lastMessageSnippet'])) {
+            $readModel->setLastMessageSnippet($data['lastMessageSnippet']);
+        }
+
+        if (isset($data['lastMessageTimestamp'])) {
+            $readModel->setLastMessageTimestamp($data['lastMessageTimestamp']);
+        }
+
+        $this->repository->save($readModel);
+    }
+
+    /**
      * @param ConversationId $conversationId
      *
      * @return ConversationDetails
