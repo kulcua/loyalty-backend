@@ -1,0 +1,176 @@
+<box-loader
+  loading="MaintenanceCtrl.loaderStates.coverLoader"
+  cover="1"
+  class="cover"
+  delay="1000"
+></box-loader>
+
+<div class="heading" ng-init="MaintenanceCtrl.getData()">
+  <h1>Maintenances</h1>
+  <div class="action-buttons">
+    <button
+      ng-show="MaintenanceCtrl.AuthService.hasPermission('MAINTENANCE', 'MODIFY')"
+      class="medium button button-septenary-colorized"
+      ui-sref="admin.add-maintenance"
+    >
+      Add Maintenance
+    </button>
+  </div>
+</div>
+<div style="clear: both"></div>
+
+<div class="client-list box">
+  <div class="box-title">
+    <h1 class="text-left">Maintenances List</h1>
+  </div>
+  <div class="box-content">
+    <box-loader
+      loading="MaintenanceCtrl.loaderStates.maintenanceList"
+    ></box-loader>
+    <table
+      ng-table="MaintenanceCtrl.tableParams"
+      class="default"
+      template-pagination="templatePagination.html"
+    >
+      <tr ng-repeat="row in $data">
+        <td data-title="'maintenance.name'|translate" sortable="'name'">
+          <span ng-bind="row.name"></span>
+        </td>
+        <td
+          data-title="'maintenance.description'|translate"
+          sortable="'description'"
+        >
+          <span
+            ng-bind="row.description || ('global.not_set'|translate)"
+          ></span>
+        </td>
+        <td
+          data-title="'maintenance.condition_value'|translate"
+          sortable="'conditionValue'"
+        >
+          <span ng-bind="row.conditionValue"></span>
+        </td>
+        <td data-title="'maintenance.reward_name'|translate">
+          <span ng-bind="row.reward.name"></span>
+        </td>
+        <td data-title="'maintenance.reward_code'|translate">
+          <span ng-bind="row.reward.code"></span>
+        </td>
+        <td data-title="'maintenance.reward_value'|translate">
+          <span ng-bind="row.reward.value*100|number:2"></span>%
+        </td>
+        <td data-title="'maintenance.min_order'|translate">
+          <span ng-bind="row.minOrder || ('global.not_set'|translate)"></span>
+        </td>
+        <td
+          data-title="'maintenance.users'|translate"
+          sortable="'customersCount'"
+        >
+          <span ng-bind="row.customersCount"></span>
+
+          <button
+            ng-show="MaintenanceCtrl.AuthService.hasPermission('CUSTOMER', 'VIEW')"
+            class="button button-primary tiny pull-right"
+            ui-sref="admin.maintenance-users({maintenanceId: row.id, maintenanceName: row.name})"
+          >
+            {{ "global.show" | translate }}
+          </button>
+        </td>
+        <td data-title="'maintenance.active'|translate" sortable="'active'">
+          <span
+            ng-show="MaintenanceCtrl.AuthService.hasPermission('EARNING_RULE', 'MODIFY')"
+          >
+            <button
+              ng-if="row.active"
+              class="tiny button button-septenary-colorized"
+              ng-click="MaintenanceCtrl.setMaintenanceState(!row.active, row.id)"
+            >
+              {{'global.active'|translate}}
+            </button>
+            <button
+              ng-if="!row.active"
+              class="tiny button button-default"
+              ng-click="MaintenanceCtrl.setMaintenanceState(!row.active, row.id)"
+            >
+              {{'global.inactive'|translate}}
+            </button>
+          </span>
+          <span
+            ng-show="!MaintenanceCtrl.AuthService.hasPermission('EARNING_RULE', 'MODIFY')"
+          >
+            <span ng-if="row.active"> {{'global.active'|translate}} </span>
+            <span ng-if="!row.active"> {{'global.inactive'|translate}} </span>
+          </span>
+        </td>
+        <td data-title="'maintenance.special_rewards'|translate">
+          <span ng-if="row.specialRewards.length">
+            <a
+              class="tiny button button-primary"
+              data-modal-id="{{row.id}}"
+              ng-click="maintenances[$index].showModal=true"
+            >
+              {{ "global.show" | translate }}
+            </a>
+          </span>
+          <span ng-if="!row.specialRewards.length">
+            {{ "global.not_set" | translate }}
+          </span>
+        </td>
+        <td data-title="'Actions'">
+          <button
+            ng-show="MaintenanceCtrl.AuthService.hasPermission('MAINTENANCE', 'MODIFY')"
+            type="button"
+            class="button button-secondary tiny"
+            ui-sref="admin.edit-maintenance({maintenanceId: row.id})"
+          >
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+          <button
+            ng-show="MaintenanceCtrl.AuthService.hasPermission('SEGMENT_EXPORT', 'VIEW') && MaintenanceCtrl.AuthService.hasPermission('CUSTOMER', 'VIEW')"
+            class="button button-secondary tiny"
+            ng-click="MaintenanceCtrl.getMaintenanceCsvData(row.id, row.name)"
+          >
+            <i class="fa fa-download"></i>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<modal
+  ng-repeat="maintenance in maintenances"
+  show="maintenances[$index].showModal"
+  modalId="{{maintenance.id}}"
+  ng-if="maintenance.specialRewards.length"
+  modal-title="'maintenance.special_rewards'|translate"
+>
+  <table class="default">
+    <thead>
+      <tr>
+        <th>{{ "maintenance.name" | translate }}</th>
+        <th>{{ "maintenance.code" | translate }}</th>
+        <th>{{ "maintenance.value" | translate }}</th>
+        <th>{{ "maintenance.active" | translate }}</th>
+        <th>{{ "maintenance.start_at" | translate }}</th>
+        <th>{{ "maintenance.end_at" | translate }}</th>
+        <th>{{ "maintenance.created_at" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="special in maintenance.specialRewards">
+        <td><span ng-bind="special.name"></span></td>
+        <td><span ng-bind="special.code"></span></td>
+        <td><span ng-bind="special.value*100|number:2"></span>%</td>
+        <td><span ng-bind="special.active"></span></td>
+        <td>
+          <span ng-bind="special.startAt|date: 'yyyy-MM-dd HH:mm'"></span>
+        </td>
+        <td><span ng-bind="special.endAt|date: 'yyyy-MM-dd HH:mm'"></span></td>
+        <td>
+          <span ng-bind="special.createdAt|date: 'yyyy-MM-dd HH:mm'"></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</modal>

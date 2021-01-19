@@ -83,17 +83,6 @@
           </li>
         </ul>
       </li>
-      <li ng-show="RootCtrl.AuthService.hasPermission('LEVEL', 'VIEW')">
-        <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>Maintenance</a>
-        <ul class="menu vertical nested">
-          <li>
-            <a ui-sref="admin.maintenances-list">Maintenances list</a>
-          </li>
-          <li ng-show="RootCtrl.AuthService.hasPermission('LEVEL', 'MODIFY')">
-            <a ui-sref="admin.add-maintenance">Add maintenance</a>
-          </li>
-        </ul>
-      </li>
       <li ng-show="RootCtrl.AuthService.hasPermission('EARNING_RULE', 'VIEW')">
         <a href="#"
           ><i class="fa fa-heart" aria-hidden="true"></i>{{ "nav.earning_rules"
@@ -191,6 +180,19 @@
             <a ui-sref="admin.campaign-category-list"
               >{{ "nav.all_campaign_categories" | translate }}</a
             >
+          </li>
+        </ul>
+      </li>
+      <li ng-show="RootCtrl.AuthService.hasPermission('LEVEL', 'VIEW')">
+        <a href="#"
+          ><i class="fa fa-trophy" aria-hidden="true"></i>Maintenance</a
+        >
+        <ul class="menu vertical nested">
+          <li>
+            <a ui-sref="admin.maintenances-list">Maintenances list</a>
+          </li>
+          <li ng-show="RootCtrl.AuthService.hasPermission('LEVEL', 'MODIFY')">
+            <a ui-sref="admin.add-maintenance">Add maintenance</a>
           </li>
         </ul>
       </li>

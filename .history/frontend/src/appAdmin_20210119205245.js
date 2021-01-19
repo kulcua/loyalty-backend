@@ -107,7 +107,7 @@ require("./modules/admin.users/module.js");
 require("./modules/admin.roles/module.js");
 require("./modules/admin.emails/module.js");
 require("./modules/admin.logs/module.js");
-require("./modules/admin.maintenance/module.js");
+require("./modules/admin.maintenance/module");
 
 if (!window.OpenLoyaltyConfig.debug) {
   if (!window.console) window.console = {};
