@@ -25,7 +25,6 @@ class LoadMessageData extends ContainerAwareFixture implements FixtureInterface,
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        $phoneNumber = $faker->e164PhoneNumber;
 
         $messageData = [
             'conversationId' => '00000000-0000-3333-0000-000000000000',
