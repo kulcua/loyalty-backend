@@ -2,6 +2,8 @@ imports:
     - { resource: services_deprecated.yml }
 
 services:
+    # parameters:
+    #     MERCURE_SECRET_KEY: '%env(MERCURE_SECRET_KEY)%'
     _defaults:
         autowire: true
         autoconfigure: true

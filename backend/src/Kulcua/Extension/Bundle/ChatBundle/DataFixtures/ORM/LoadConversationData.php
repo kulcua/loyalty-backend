@@ -24,7 +24,6 @@ class LoadConversationData extends ContainerAwareFixture implements FixtureInter
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
-        $phoneNumber = $faker->e164PhoneNumber;
 
         $conversationData = [
             'participantIds' => ['22200000-0000-474c-b092-b0dd880c07e2', '00000000-0000-474c-b092-b0dd880c07e2'],

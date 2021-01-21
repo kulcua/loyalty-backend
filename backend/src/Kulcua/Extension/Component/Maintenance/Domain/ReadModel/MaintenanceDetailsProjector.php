@@ -7,6 +7,7 @@ use Broadway\Repository\Repository as AggregateRootRepository;
 use OpenLoyalty\Component\Core\Infrastructure\Projector\Projector;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasBooked;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasUpdated;
+use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasDeactivated;
 use Kulcua\Extension\Component\Maintenance\Domain\Model\CustomerBasicData;
 use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
 use Kulcua\Extension\Component\Maintenance\Domain\MaintenanceId;
@@ -94,6 +95,17 @@ class MaintenanceDetailsProjector extends Projector
             $readModel->setActive($data['active']);
         }
 
+        $this->repository->save($readModel);
+    }
+
+    /**
+     * @param MaintenanceWasDeactivated $event
+     */
+    protected function applyMaintenanceWasDeactivated(MaintenanceWasDeactivated $event): void
+    {
+        /** @var MaintenanceDetails $readModel */
+        $readModel = $this->getReadModel($event->getMaintenanceId());
+        $readModel->setActive(true);
         $this->repository->save($readModel);
     }
 

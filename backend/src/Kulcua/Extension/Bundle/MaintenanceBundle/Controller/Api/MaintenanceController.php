@@ -7,7 +7,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
-use FOS\RestBundle\View\View;
+use FOS\RestBundle\View\View as FosView;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -27,6 +27,7 @@ use OpenLoyalty\Bundle\UserBundle\Entity\User;
 use OpenLoyalty\Component\Customer\Domain\ReadModel\CustomerDetails;
 use Kulcua\Extension\Component\Maintenance\Domain\Command\BookMaintenance;
 use Kulcua\Extension\Component\Maintenance\Domain\Command\UpdateMaintenance;
+use Kulcua\Extension\Component\Maintenance\Domain\Command\DeactivateMaintenance;
 
 class MaintenanceController extends FOSRestController
 {
@@ -115,9 +116,9 @@ class MaintenanceController extends FOSRestController
      *
      * @param Request $request
      *
-     * @return View
+     * @return FosView
      */
-    public function bookAction(Request $request): View
+    public function bookAction(Request $request): FosView
     {
         $form = $this->get('form.factory')->createNamed('maintenance', MaintenanceFormType::class);
         $form->handleRequest($request);
@@ -180,5 +181,57 @@ class MaintenanceController extends FOSRestController
         }
 
         return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * Method will return maintenance details.
+     *
+     * @Route(name="kc.maintenance.get", path="/maintenance/{maintenance}")
+     * @Route(name="kc.maintenance.customer.get", path="/customer/maintenance/{maintenance}")
+     * @Method("GET")
+     * @Security("is_granted('VIEW', maintenance)")
+     * @ApiDoc(
+     *     name="get maintenance",
+     *     section="Maintenance",
+     * )
+     *
+     * @param MaintenanceDetails $maintenance
+     *
+     * @return View
+     */
+    public function getAction(MaintenanceDetails $maintenance): View
+    {
+        return $this->view($maintenance, 200);
+    }
+
+    /**
+     * Change maintenance state action to active or inactive.
+     *
+     * @Route(name="kc.maintenance.change_state", path="/maintenance/{maintenance}/{active}", requirements={"active":"active|inactive"})
+     * @Method("POST")
+     * @Security("is_granted('EDIT', maintenance)")
+     * @ApiDoc(
+     *     name="Change Maintenance state active",
+     *     section="Maintenance"
+     * )
+     *
+     * @param MaintenanceDetails $maintenance
+     * @param                    $active
+     *
+     * @return FosView
+     */
+    public function DeactivateAction(MaintenanceDetails $maintenance, $active) : FosView
+    {
+        if ('active' === $active) {
+            $maintenance->setActive(true);
+        } elseif ('inactive' === $active) {
+            $maintenance->setActive(false);
+        }
+
+        $this->get('broadway.command_handling.command_bus')->dispatch(
+            new DeactivateMaintenance($maintenance->getMaintenanceId(), $maintenance->isActive())
+        );
+
+        return $this->view(['maintenanceId' => (string) $maintenance->getMaintenanceId()]);
     }
 }

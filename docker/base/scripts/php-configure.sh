@@ -9,5 +9,5 @@ apt-get -qy update \
 
 docker-php-ext-configure pgsql --with-pgsql=/usr/include/postgresql/
 docker-php-ext-configure gd --with-jpeg-dir=/usr/include/
-docker-php-ext-install -j$(nproc) pdo pgsql pdo_pgsql pdo_mysql mysqli intl opcache bcmath zip curl gd
+docker-php-ext-install -j$(nproc) pdo pgsql pdo_pgsql pdo_mysql mysqli intl opcache bcmath unzip zip curl gd
 docker-php-ext-enable curl gd
