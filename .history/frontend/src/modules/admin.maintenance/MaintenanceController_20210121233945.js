@@ -40,26 +40,29 @@ export default class MaintenanceController {
     this.$scope.translatableFields = [
       {
         key: "name",
-        label: "maintenance.name",
-        prompt: "maintenance.name_prompt",
+        label: "Name",
         required: true,
       },
       {
-        key: "description",
-        label: "maintenance.description",
-        prompt: "maintenance.description_prompt",
+        key: "phone",
+        label: "Phone",
+        required: true,
+      },
+      {
+        key: "email",
+        label: "Email",
         required: false,
       },
     ];
     this.$scope.availableFrontendTranslations = this.DataService.getAvailableFrontendTranslations();
     this.active = [
       {
-        name: this.$filter("translate")("global.active"),
-        type: 1,
+        name: "this.$filter("translate")("global.active")",
+        type: true,
       },
       {
         name: this.$filter("translate")("global.inactive"),
-        type: 0,
+        type: false,
       },
     ];
     this.activeConfig = {
@@ -77,6 +80,10 @@ export default class MaintenanceController {
     };
   }
 
+  Ctrl($scope) {
+    $scope.date = new Date();
+  }
+
   getData() {
     let self = this;
 
@@ -87,7 +94,6 @@ export default class MaintenanceController {
       {
         getData: function (params) {
           let dfd = self.$q.defer();
-
           self.loaderStates.maintenanceList = true;
           self.MaintenanceService.getMaintenances(
             self.ParamsMap.params(params.url())
@@ -202,34 +208,6 @@ export default class MaintenanceController {
     }
   }
 
-  getMaintenanceCsvData(maintenanceId, maintenanceName) {
-    let self = this;
-    if (maintenanceId) {
-      self.MaintenanceService.getFile(maintenanceId).then(function (res) {
-        let date = new Date();
-        let filename =
-          maintenanceName.replace(" ", "-") +
-          "-" +
-          date.toISOString().substring(0, 10) +
-          ".csv";
-        let blob = new Blob([res], { type: "text/csv" });
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-          window.navigator.msSaveOrOpenBlob(blob);
-          return;
-        }
-
-        const data = window.URL.createObjectURL(blob);
-
-        let link = document.createElement("a");
-        link.href = data;
-        link.download = filename;
-        self.$timeout(function () {
-          link.dispatchEvent(new MouseEvent("click"));
-        }, 2000);
-      });
-    }
-  }
-
   addMaintenance(newMaintenance) {
     let self = this;
 
@@ -287,25 +265,35 @@ export default class MaintenanceController {
 
   editMaintenance(editedMaintenance) {
     let self = this;
-
-    self.MaintenanceService.putMaintenance(editedMaintenance).then(
-      (res) => {
-        let message = self.$filter("translate")(
-          "xhr.put_single_maintenance.success"
-        );
-        self.Flash.create("success", message);
-        self.$state.go("admin.maintenances-list");
-      },
-      (res) => {
-        self.$scope.validate = self.Validation.mapSymfonyValidation(res.data);
-        let message = self.$filter("translate")(
-          "xhr.put_single_maintenance.error"
-        );
-        self.Flash.create("danger", message);
-      }
+    let validateFields = angular.copy(self.$scope.frontValidate);
+    let frontValidation = self.Validation.frontValidation(
+      editedMaintenance,
+      validateFields
     );
+    if (_.isEmpty(frontValidation)) {
+      self.MaintenanceService.putMaintenance(
+        self.maintenanceId,
+        editedMaintenance
+      ).then(
+        (res) => {
+          let message = self.$filter("translate")(
+            "xhr.put_maintenance.success"
+          );
+          self.Flash.create("success", message);
+          self.$state.go("admin.maintenances-list");
+        },
+        (res) => {
+          self.$scope.validate = self.Validation.mapSymfonyValidation(res.data);
+          let message = self.$filter("translate")("xhr.put_maintenance.error");
+          self.Flash.create("danger", message);
+        }
+      );
+    } else {
+      self.$scope.validate = frontValidation;
+      let message = self.$filter("translate")("xhr.put_maintenance.error");
+      self.Flash.create("danger", message);
+    }
   }
-
   addSpecialReward(edit) {
     let self = this;
     let maintenance;

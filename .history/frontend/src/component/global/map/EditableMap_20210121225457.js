@@ -990,13 +990,21 @@ export default class EditableMap {
 
   maintenance(data) {
     let self = this;
-    let maintenance = angular.copy(data);
 
-    delete maintenance.maintenanceId;
-    delete maintenance.customerData;
-    delete maintenance.version;
-
-    return maintenance;
+    return {
+      maintenanceId: data.maintenanceId,
+      productSku: data.productSku,
+      bookingDate: data.bookingDate,
+      bookingTime: data.bookingTime,
+      warrantyCenter: data.warrantyCenter,
+      createdAt: data.createdAt,
+      active: data.active,
+      customerData: {
+        email: data.customerData.email,
+        name: data.customerData.name,
+        phone: data.customerData.phone,
+      },
+    };
   }
 }
 

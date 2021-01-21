@@ -992,9 +992,7 @@ export default class EditableMap {
     let self = this;
     let maintenance = angular.copy(data);
 
-    delete maintenance.maintenanceId;
     delete maintenance.customerData;
-    delete maintenance.version;
 
     return maintenance;
   }

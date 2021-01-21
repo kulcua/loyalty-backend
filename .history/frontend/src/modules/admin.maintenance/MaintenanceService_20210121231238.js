@@ -31,13 +31,11 @@ export default class MaintenanceService {
     return this.Restangular.one("csv").one("level", maintenanceId).get();
   }
 
-  putMaintenance(maintenanceId, editedMaintenance) {
+  putMaintenance(editedMaintenance) {
     let self = this;
 
-    return self.Restangular.one("maintenance", maintenanceId).customPUT({
-      maintenance: self.Restangular.stripRestangular(
-        self.EditableMap.maintenance(editedMaintenance)
-      ),
+    return editedMaintenance.customPUT({
+      maintenance: self.EditableMap.maintenance(editedMaintenance),
     });
   }
 

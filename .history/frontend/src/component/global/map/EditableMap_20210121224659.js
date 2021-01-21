@@ -985,18 +985,8 @@ export default class EditableMap {
     if (data.createdAt) {
       data.createdAt = moment(data.createdAt).format(self.config.dateFormat);
     }
+
     return data;
-  }
-
-  maintenance(data) {
-    let self = this;
-    let maintenance = angular.copy(data);
-
-    delete maintenance.maintenanceId;
-    delete maintenance.customerData;
-    delete maintenance.version;
-
-    return maintenance;
   }
 }
 
