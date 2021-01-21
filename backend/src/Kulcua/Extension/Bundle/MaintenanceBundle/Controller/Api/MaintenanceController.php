@@ -209,7 +209,7 @@ class MaintenanceController extends FOSRestController
      *
      * @Route(name="kc.maintenance.change_state", path="/maintenance/{maintenance}/{active}", requirements={"active":"active|inactive"})
      * @Method("POST")
-     * @Security("is_granted('EDIT', maintenance)")
+     * @Security("is_granted('EDIT_MAINTENANCE', maintenance)")
      * @ApiDoc(
      *     name="Change Maintenance state active",
      *     section="Maintenance"

@@ -31,6 +31,7 @@ class BookMaintenance extends MaintenanceCommand
 
     private $requiredCustomerFields = [
         'name',
+        'email'
     ];
 
     public function __construct(

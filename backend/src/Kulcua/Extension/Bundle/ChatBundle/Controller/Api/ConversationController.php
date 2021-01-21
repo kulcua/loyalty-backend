@@ -142,7 +142,7 @@ class ConversationController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @Route(name="kc.conversation.edit", path="/conversation/{conversation}")
      * @Method("PUT")
-     * @Security("is_granted('EDIT_CONVERSATION', conversation)")
+     //Security("is_granted('EDIT_CONVERSATION', conversation)")
      * @ApiDoc(
      *     name="Edit Conversation",
      *     section="Chat Conversation",

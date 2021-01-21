@@ -6,23 +6,6 @@ use Broadway\ReadModel\Repository;
 
 interface ConversationDetailsRepository extends Repository
 {
-    // /**
-    //  * @param \DateTime $from
-    //  * @param \DateTime $to
-    //  * @param bool      $onlyWithCustomers
-    //  *
-    //  * @return ConversationDetails[]
-    //  */
-    // public function findInPeriod(\DateTime $from, \DateTime $to, $onlyWithCustomers = true): array;
-
-    // /**
-    //  * @param string $productSku
-    //  * @param bool  $withCustomer
-    //  *
-    //  * @return ConversationDetails[]
-    //  */
-    // public function findByProductSku(string $productSku, bool $withCustomer = true): array;
-
     /**
      * @param array $params
      * @param bool  $exact
