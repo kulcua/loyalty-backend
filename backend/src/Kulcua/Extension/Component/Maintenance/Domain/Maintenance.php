@@ -5,6 +5,7 @@ namespace Kulcua\Extension\Component\Maintenance\Domain;
 use OpenLoyalty\Component\Core\Domain\SnapableEventSourcedAggregateRoot;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasBooked;
 use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasUpdated;
+use Kulcua\Extension\Component\Maintenance\Domain\Event\MaintenanceWasDeactivated;
 use Kulcua\Extension\Component\Maintenance\Domain\Model\CustomerBasicData;
 
 /**
@@ -125,12 +126,22 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     }
 
     /**
-     * @param array $customerData
+     * @param array $maintenanceData
      */
     public function updateMaintenanceDetails(array $maintenanceData): void
     {
         $this->apply(
             new MaintenanceWasUpdated($this->getMaintenanceId(), $maintenanceData)
+        );
+    }
+
+    /**
+     * Deactivate.
+     */
+    public function deactivate(): void
+    {
+        $this->apply(
+            new MaintenanceWasDeactivated($this->getMaintenanceId())
         );
     }
 
@@ -175,9 +186,17 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     }
 
     /**
+     * @param bool $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
      * @return bool
      */
-    public function getActive(): bool
+    public function isActive(): bool
     {
         return $this->active;
     }

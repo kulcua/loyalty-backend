@@ -260,7 +260,7 @@ class MaintenanceDetails implements SerializableReadModel, VersionableReadModel
     /**
      * @return bool
      */
-    public function getActive(): array
+    public function isActive(): bool
     {
         return $this->active;
     }
