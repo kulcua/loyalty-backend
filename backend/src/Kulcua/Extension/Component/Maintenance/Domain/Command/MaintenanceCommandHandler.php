@@ -7,6 +7,7 @@ use Broadway\EventDispatcher\EventDispatcher;
 use Broadway\Repository\Repository;
 use Kulcua\Extension\Component\Maintenance\Domain\SystemEvent\MaintenanceBookedSystemEvent;
 use Kulcua\Extension\Component\Maintenance\Domain\SystemEvent\MaintenanceUpdatedSystemEvent;
+use Kulcua\Extension\Component\Maintenance\Domain\SystemEvent\MaintenanceDeactivatedSystemEvent;
 use Kulcua\Extension\Component\Maintenance\Domain\SystemEvent\MaintenanceSystemEvents;
 use Kulcua\Extension\Component\Maintenance\Domain\Maintenance;
 
@@ -79,6 +80,25 @@ class MaintenanceCommandHandler extends SimpleCommandHandler
         $this->eventDispatcher->dispatch(
             MaintenanceSystemEvents::MAINTENANCE_UPDATED,
             [new MaintenanceUpdatedSystemEvent($command->getMaintenanceId())]
+        );
+    }
+
+    /**
+     * @param DeactivateMaintenance $command
+     */
+    public function handleDeactivateMaintenance(DeactivateMaintenance $command)
+    {
+        $maintenanceId = $command->getMaintenanceId();
+
+        /** @var Maintenance $maintenance */
+        $maintenance = $this->repository->load((string) $maintenanceId);
+        $maintenance->deactivate();
+        // $maintenance->setActive($command->isActive());
+        $this->repository->save($maintenance);
+
+        $this->eventDispatcher->dispatch(
+            MaintenanceSystemEvents::MAINTENANCE_DEACTIVATED,
+            [new MaintenanceDeactivatedSystemEvent($maintenanceId)]
         );
     }
 }
