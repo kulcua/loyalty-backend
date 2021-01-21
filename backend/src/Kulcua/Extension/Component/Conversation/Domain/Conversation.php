@@ -18,7 +18,7 @@ class Conversation extends SnapableEventSourcedAggregateRoot
     protected $conversationId;
 
     /**
-     * @var array
+     * @var UserId[]
      */
     protected $participantIds;
 
@@ -121,7 +121,7 @@ class Conversation extends SnapableEventSourcedAggregateRoot
     }
 
     /**
-     * @return array
+     * @return UserId[]
      */
     public function getParticipantIds(): array
     {
