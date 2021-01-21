@@ -21,7 +21,7 @@ class ConversationDetails implements SerializableReadModel, VersionableReadModel
     protected $conversationId;
 
     /**
-     * @var array
+     * @var UserId[]
      */
     protected $participantIds;
 

@@ -116,9 +116,9 @@ class MaintenanceController extends FOSRestController
      *
      * @param Request $request
      *
-     * @return View
+     * @return FosView
      */
-    public function bookAction(Request $request): View
+    public function bookAction(Request $request): FosView
     {
         $form = $this->get('form.factory')->createNamed('maintenance', MaintenanceFormType::class);
         $form->handleRequest($request);
