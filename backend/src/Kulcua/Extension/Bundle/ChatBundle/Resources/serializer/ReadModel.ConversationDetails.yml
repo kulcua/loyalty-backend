@@ -4,3 +4,6 @@ Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetails:
     conversationId:
       expose: true
       inline: true
+    accountId:
+      expose: true
+      inline: true
