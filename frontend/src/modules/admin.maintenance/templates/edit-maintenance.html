@@ -1,0 +1,140 @@
+<box-loader
+  loading="MaintenanceCtrl.loaderStates.coverLoader"
+  cover="1"
+  class="cover"
+  delay="1000"
+></box-loader>
+
+<div class="heading" ng-init="MaintenanceCtrl.getMaintenanceData()">
+  <h1>Edit maintenance register</h1>
+</div>
+<div style="clear: both"></div>
+
+<form novalidate ng-submit="MaintenanceCtrl.editMaintenance(editableFields)">
+  <div class="box-content">
+    <div class="row">
+      <div class="medium-12 columns">
+        <admin-fieldset-block fieldset-label="Basic Information">
+          <admin-fieldset-row
+            ng-repeat="field in translatableFields"
+            row-label="{{ field.label }}"
+            is-required="field.required "
+            input-model="editableFields.customerData[field.key]"
+            validate-by="validate.translations[language.code][field.key].errors"
+          >
+          </admin-fieldset-row>
+        </admin-fieldset-block>
+
+        <admin-fieldset-block fieldset-label="Detail Information">
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Active</label>
+            </div>
+            <div
+              class="medium-10 small-9 columns"
+              form-validation="validate.active.errors"
+            >
+              <selectize
+                config="MaintenanceCtrl.activeConfig"
+                options="MaintenanceCtrl.active"
+                ng-model="editableFields.active"
+              ></selectize>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Product SKU <span class="required">*</span></label>
+            </div>
+            <div
+              class="medium-10 small-9 columns"
+              form-validation="validate.conditionValue.errors"
+            >
+              <input
+                type="text"
+                ng-model="editableFields.maintenanceData.productSku"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Warranty center<span class="required">*</span></label>
+            </div>
+            <div
+              class="medium-10 small-9 columns"
+              form-validation="validate.reward.name.errors"
+            >
+              <input
+                type="text"
+                ng-model="editableFields.maintenanceData.warrantyCenter"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Booking date<span class="required">*</span></label>
+            </div>
+            <div class="medium-10 small-9 columns">
+              <input
+                type="text"
+                ng-model="editableFields.maintenanceData.bookingDate"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Booking time<span class="required">*</span></label>
+            </div>
+            <div class="medium-10 small-9 columns">
+              <input
+                type="text"
+                ng-model="editableFields.maintenanceData.bookingTime"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Create at<span class="required">*</span></label>
+            </div>
+            <div class="medium-10 small-9 columns">
+              <input
+                type="text"
+                ng-model="editableFields.maintenanceData.createdAt"
+                required
+              />
+            </div>
+          </div>
+        </admin-fieldset-block>
+      </div>
+    </div>
+  </div>
+  <div class="box-footer">
+    <div class="row">
+      <div class="columns small-12">
+        <button
+          class="button button-septenary-colorized float-left m-r-1"
+          type="submit"
+        >
+          {{ "global.save" | translate }}
+        </button>
+        <button
+          type="button"
+          ui-sref="admin.maintenances-list"
+          class="button button-default float-left"
+          href="#"
+        >
+          {{ "global.cancel" | translate }}
+        </button>
+      </div>
+      <div style="clear: both"></div>
+    </div>
+  </div>
+</form>
