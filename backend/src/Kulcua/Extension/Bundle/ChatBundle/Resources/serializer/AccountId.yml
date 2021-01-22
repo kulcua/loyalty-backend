@@ -4,3 +4,9 @@ Kulcua\Extension\Component\Conversation\Domain\AccountId:
     accountId:
       expose: true
       serialized_name: accountId
+Kulcua\Extension\Component\Message\Domain\AccountId:
+  exlusion_policy: ALL
+  properties:
+    accountId:
+      expose: true
+      serialized_name: accountId

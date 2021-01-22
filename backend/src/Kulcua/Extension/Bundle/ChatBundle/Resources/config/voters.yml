@@ -1,6 +1,11 @@
-# services:
-#     Kulcua\Extension\Bundle\MaintenanceBundle\Security\Voter\MaintenanceVoter:
-#         arguments:
-#             $sellerDetailsRepository: '@oloy.user.read_model.repository.seller_details'
-#         tags:
-#             - { name: security.voter }
+services:
+    Kulcua\Extension\Bundle\ChatBundle\Security\Voter\ConversationVoter:
+        arguments:
+            $sellerDetailsRepository: '@oloy.user.read_model.repository.seller_details'
+        tags:
+            - { name: security.voter }
+    Kulcua\Extension\Bundle\ChatBundle\Security\Voter\MessageVoter:
+      arguments:
+          $sellerDetailsRepository: '@oloy.user.read_model.repository.seller_details'
+      tags:
+          - { name: security.voter }

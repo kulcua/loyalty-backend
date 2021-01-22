@@ -35,7 +35,7 @@ class ConversationController extends FOSRestController
      * @Route(name="kc.conversation.list", path="/conversation")
      * @Route(name="kc.conversation.customer.list", path="/customer/conversation")
      * @Route(name="kc.conversation.seller.list", path="/seller/conversation")
-     * @Security("is_granted('LIST_CONVERSATIONS')")
+     //Security("is_granted('LIST_CONVERSATIONS')")
      * @Method("GET")
      *
      * @ApiDoc(
