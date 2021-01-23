@@ -4,3 +4,6 @@ Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetails:
     messageId:
       expose: true
       inline: true
+    accountId:
+      expose: true
+      inline: true

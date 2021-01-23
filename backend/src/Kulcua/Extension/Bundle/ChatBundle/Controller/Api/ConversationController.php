@@ -35,7 +35,7 @@ class ConversationController extends FOSRestController
      * @Route(name="kc.conversation.list", path="/conversation")
      * @Route(name="kc.conversation.customer.list", path="/customer/conversation")
      * @Route(name="kc.conversation.seller.list", path="/seller/conversation")
-     * @Security("is_granted('LIST_CONVERSATIONS')")
+     //Security("is_granted('LIST_CONVERSATIONS')")
      * @Method("GET")
      *
      * @ApiDoc(
@@ -142,7 +142,7 @@ class ConversationController extends FOSRestController
      * @return \FOS\RestBundle\View\View
      * @Route(name="kc.conversation.edit", path="/conversation/{conversation}")
      * @Method("PUT")
-     * @Security("is_granted('EDIT_CONVERSATION', conversation)")
+     //Security("is_granted('EDIT_CONVERSATION', conversation)")
      * @ApiDoc(
      *     name="Edit Conversation",
      *     section="Chat Conversation",

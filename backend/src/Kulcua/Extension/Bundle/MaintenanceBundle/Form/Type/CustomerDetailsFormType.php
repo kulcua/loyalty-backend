@@ -21,7 +21,8 @@ class CustomerDetailsFormType extends AbstractType
             'constraints' => [new NotBlank()],
         ]);
         $builder->add('email', EmailType::class, [
-            'required' => false,
+            'required' => true,
+            'constraints' => [new NotBlank()],
         ]);
         $builder->add('phone', TextType::class, [
             'required' => false,

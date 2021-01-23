@@ -27,11 +27,11 @@ class LoadMessageData extends ContainerAwareFixture implements FixtureInterface,
         $faker = Factory::create();
 
         $messageData = [
-            'conversationId' => '00000000-0000-3333-0000-000000000000',
-            'conversationParticipantIds' => ['22200000-0000-474c-b092-b0dd880c07e2', '00000000-0000-474c-b092-b0dd880c07e2'],
-            'senderId' => '00000000-0000-474c-b092-b0dd880c07e2',
-            'senderName' => 'Jane Doe',
-            'message' => 'hello admin, im jane',
+            'conversationId' => '00000000-0000-3333-0000-000000000002',
+            'conversationParticipantIds' => ['22200000-0000-474c-b092-b0dd880c07e2', '00000000-0000-474c-b092-b0dd880c07e1'],
+            'senderId' => '00000000-0000-474c-b092-b0dd880c07e1',
+            'senderName' => 'John Doe',
+            'message' => 'hello admin, im john',
             'messageTimestamp' => (new \DateTime('+1 day'))->getTimestamp(),
         ];
 
@@ -63,8 +63,8 @@ class LoadMessageData extends ContainerAwareFixture implements FixtureInterface,
             )
         );
 
-        $messageData['senderId'] = '00000000-0000-474c-b092-b0dd880c07e2';
-        $messageData['senderName'] = 'Jane Doe';
+        $messageData['senderId'] = '00000000-0000-474c-b092-b0dd880c07e1';
+        $messageData['senderName'] = 'John Doe';
         $messageData['message'] = 'bye admin';
 
         $bus->dispatch(

@@ -7,7 +7,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
-use FOS\RestBundle\View\View as FosView;
+use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -116,9 +116,9 @@ class MaintenanceController extends FOSRestController
      *
      * @param Request $request
      *
-     * @return FosView
+     * @return View
      */
-    public function bookAction(Request $request): FosView
+    public function bookAction(Request $request): View
     {
         $form = $this->get('form.factory')->createNamed('maintenance', MaintenanceFormType::class);
         $form->handleRequest($request);
@@ -209,7 +209,7 @@ class MaintenanceController extends FOSRestController
      *
      * @Route(name="kc.maintenance.change_state", path="/maintenance/{maintenance}/{active}", requirements={"active":"active|inactive"})
      * @Method("POST")
-     * @Security("is_granted('EDIT', maintenance)")
+     * @Security("is_granted('EDIT_MAINTENANCE', maintenance)")
      * @ApiDoc(
      *     name="Change Maintenance state active",
      *     section="Maintenance"
@@ -218,9 +218,9 @@ class MaintenanceController extends FOSRestController
      * @param MaintenanceDetails $maintenance
      * @param                    $active
      *
-     * @return FosView
+     * @return View
      */
-    public function DeactivateAction(MaintenanceDetails $maintenance, $active) : FosView
+    public function DeactivateAction(MaintenanceDetails $maintenance, $active) : View
     {
         if ('active' === $active) {
             $maintenance->setActive(true);

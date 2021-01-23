@@ -105,7 +105,7 @@ class MaintenanceDetailsProjector extends Projector
     {
         /** @var MaintenanceDetails $readModel */
         $readModel = $this->getReadModel($event->getMaintenanceId());
-        $readModel->setActive(true);
+        $readModel->setActive(false);
         $this->repository->save($readModel);
     }
 
