@@ -45,7 +45,7 @@ class ConversationVoter extends Voter
     public function supports($attribute, $subject)
     {
         return $subject == null && in_array($attribute, [
-            self::LIST_CONVERSATIONS, self::LIST_CURRENT_CUSTOMER_CONVERSATIONS, self::CREATE_CONVERSATION, self::EDIT_CONVERSATION_LABELS,
+            self::LIST_CONVERSATIONS, self::LIST_CURRENT_CUSTOMER_CONVERSATIONS, self::CREATE_CONVERSATION
         ]) || $subject instanceof CustomerDetails && in_array($attribute, [
             self::LIST_CUSTOMER_CONVERSATIONS,
         ]);

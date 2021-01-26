@@ -26,7 +26,7 @@ class MessageDetails implements SerializableReadModel, VersionableReadModel
     protected $conversationId;
 
     /**
-     * @var array
+     * @var AccountId[]
      */
     protected $conversationParticipantIds;
 
@@ -137,7 +137,7 @@ class MessageDetails implements SerializableReadModel, VersionableReadModel
     }
 
     /**
-     * @return array
+     * @return AccountId[]
      */
     public function getConversationParticipantIds(): array
     {
@@ -145,7 +145,7 @@ class MessageDetails implements SerializableReadModel, VersionableReadModel
     }
 
     /**
-     * @param array $conversationParticipantIds
+     * @param AccountId[] $conversationParticipantIds
      */
     public function setConversationParticipantIds(?array $conversationParticipantIds): void
     {
