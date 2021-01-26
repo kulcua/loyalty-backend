@@ -13,7 +13,6 @@ export default class MaintenanceService {
   }
 
   postMaintenance(newMaintenance) {
-    console.log(newMaintenance);
     return this.Restangular.one("maintenance").customPOST({
       maintenance: newMaintenance,
     });

@@ -998,6 +998,17 @@ export default class EditableMap {
 
     return maintenance;
   }
+
+  conversation(data) {
+    let self = this;
+    let conversation = angular.copy(data);
+
+    delete conversation.conversationId;
+    delete conversation.participantIds;
+    delete conversation.participantNames;
+
+    return conversation;
+  }
 }
 
 EditableMap.$inject = ["$filter", "DataService"];

@@ -1,0 +1,46 @@
+<box-loader
+  loading="ChatCtrl.loaderStates.coverLoader"
+  cover="1"
+  class="cover"
+  delay="1000"
+></box-loader>
+
+<div class="heading" ng-init="ChatCtrl.getData()">
+  <h1>Conversation</h1>
+</div>
+<div style="clear: both"></div>
+
+<div class="container" style="overflow-y: scroll; height: 500px">
+  <div class="row no-gutters">
+    <div class="medium-4 columns border-right">
+      <div class="search-box">
+        <div class="input-wrapper">
+          <input placeholder="Search here" type="text" />
+        </div>
+      </div>
+      <div data-ng-repeat="conversation in conversations track by $index">
+        <div
+          class="friend-drawer friend-drawer--onhover"
+          ui-sref="admin.chat-screen({conversation: conversation})"
+        >
+          <img
+            class="profile-image"
+            src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg"
+            alt=""
+          />
+          <div class="text-chat">
+            <h6>{{ conversation["participantNames"][1] }}</h6>
+            <p class="text-muted">{{conversation["lastMessageSnippet"] }}</p>
+          </div>
+          <span class="time text-muted small"
+            >{{ conversation["lastMessageTimestamp"]|date:'HH:mm' }}</span
+          >
+        </div>
+        <hr />
+      </div>
+    </div>
+    <div class="medium-8 columns">
+      <!-- <ng-include src="'./templates/chat-screen.html'"> </ng-include> -->
+    </div>
+  </div>
+</div>

@@ -96,8 +96,10 @@
           </li>
         </ul>
       </li>
-      <li ng-show="RootCtrl.AuthService.hasPermission('MAINTENANCE', 'MODIFY')">
-        <a href="#"
+      <li
+        ng-show="RootCtrl.AuthService.hasPermission('CONVERSATION', 'MODIFY')"
+      >
+        <a ui-sref="admin.chat"
           ><i class="fa fa-comments-o" aria-hidden="true"></i>Conversations</a
         >
       </li>
