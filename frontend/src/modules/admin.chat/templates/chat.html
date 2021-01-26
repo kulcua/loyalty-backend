@@ -21,7 +21,7 @@
       <div data-ng-repeat="conversation in conversations track by $index">
         <div
           class="friend-drawer friend-drawer--onhover"
-          ui-sref="admin.chat-screen({conversation: conversation})"
+          ui-sref="admin.chat.chat-screen({conversation: conversation})"
         >
           <img
             class="profile-image"
@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="medium-8 columns">
-      <!-- <ng-include src="'./templates/chat-screen.html'"> </ng-include> -->
+      <div ui-view="mess"></div>
     </div>
   </div>
 </div>

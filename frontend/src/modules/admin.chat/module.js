@@ -15,12 +15,12 @@ angular
             controller: "ChatController",
             controllerAs: "ChatCtrl",
           },
-        },
+        }
       })
-      .state("admin.chat-screen", {
+      .state("admin.chat.chat-screen", {
         url: "/chat-screen",
         views: {
-          "main@": {
+          "mess": {
             templateUrl: require("./templates/chat-screen.html"),
             controller: "ChatController",
             controllerAs: "ChatCtrl",

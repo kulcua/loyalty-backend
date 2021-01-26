@@ -1,5 +1,3 @@
-// import ChatService from "./ChatService";
-
 import moment from "moment";
 
 export default class ChatController {

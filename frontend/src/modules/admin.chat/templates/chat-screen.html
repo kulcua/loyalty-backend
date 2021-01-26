@@ -1,14 +1,7 @@
-<box-loader
-  loading="ChatCtrl.loaderStates.coverLoader"
-  cover="1"
-  class="cover"
-  delay="1000"
-></box-loader>
-
 <div
   class="chat-panel"
   ng-init="ChatCtrl.getMessages()"
-  style="overflow-y: scroll; height: 500px"
+  style="overflow-y: scroll; height: 400px;"
 >
   <div class="row no-gutters" data-ng-repeat="mess in messages track by $index">
     <div class="col-md-3 offset-md-9" ng-if="mess.senderId==loggedUserId">

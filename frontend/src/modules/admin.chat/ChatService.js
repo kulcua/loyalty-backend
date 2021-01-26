@@ -16,9 +16,7 @@ export default class ChatService {
       .get()
       .then(
         (res) => {
-          // self.conversations = res.conversations;
           self.conversations = self._toObject(res.conversations);
-          // $log.info(self.conversations);
           dfd.resolve();
         },
         () => {
@@ -42,9 +40,7 @@ export default class ChatService {
       })
       .then(
         (res) => {
-          // self.conversations = res.conversations;
           self.messages = self._toObject(res.messages);
-          // $log.info(self.conversations);
           dfd.resolve();
         },
         () => {
