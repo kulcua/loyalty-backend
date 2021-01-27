@@ -26,9 +26,9 @@ services:
         alias: Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsProjector
         deprecated: The "%service_id%" service is deprecated since Kulcua
 
-    kc.maintenance.voters.maintenance:
-        alias: Kulcua\Extension\Bundle\MaintenanceBundle\Security\Voter\MaintenanceVoter
-        deprecated: The "%service_id%" service is deprecated since Kulcua
+    # kc.maintenance.voters.maintenance:
+    #     alias: Kulcua\Extension\Bundle\MaintenanceBundle\Security\Voter\MaintenanceVoter
+    #     deprecated: The "%service_id%" service is deprecated since Kulcua
 
     oloy.pagination:
         alias: OpenLoyalty\Bundle\PaginationBundle\Service\Paginator
