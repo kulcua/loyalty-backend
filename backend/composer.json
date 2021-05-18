@@ -18,8 +18,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "divante-ltd/open-loyalty-framework": "^3.2",
-        "symfony/mercure": "^0.4.1"
+        "divante-ltd/open-loyalty-framework": "^3.2"
     },
     "scripts": {
         "post-install-cmd": [
