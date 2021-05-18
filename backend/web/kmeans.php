@@ -3,17 +3,52 @@
 require "vendor/autoload.php";
 
 $points = array();
-$customerIds =array();
+$customerIds = array();
 $credentials;
+$description = "automatically made by Kmeans";
+$list_segments = array();
+$segmentId_index = array();
 
 Login();
-ReadCustomerDataToCreatePoints();
+ReadSegmentData();
+ReadCustomerData();
 
-function ReadCustomerDataToCreatePoints()
+function ReadCustomerData()
+{
+    $url = '127.0.0.1/api/admin/customer';
+
+    $result = GetData($url);
+
+    CreatePoints($result);
+}
+
+function ReadSegmentData()
+{
+    global $description;
+    global $list_segments;
+    global $segmentId_index;
+
+    $index = 0;
+
+    $url = '127.0.0.1/api/segment';
+
+    $result = GetData($url)->segments;
+
+    foreach ($result as $s)
+    {
+        if ($s->description == $description){
+            $list_segments = array_push_assoc($list_segments, $s->segmentId, $s->name);
+            $segmentId_index = array_push_assoc($segmentId_index, $index, $s->segmentId);
+            $index++;
+        }
+    }
+
+    // var_dump($segmentId_index);
+}
+
+function GetData($url)
 {
     global $credentials;
-
-    $endpoint = '127.0.0.1/api/admin/customer';
 
     $headers = [];
     $headers[] = "Authorization: Bearer {$credentials}";
@@ -22,7 +57,7 @@ function ReadCustomerDataToCreatePoints()
     
     $ch = curl_init();
     
-    curl_setopt($ch, CURLOPT_URL, $endpoint);
+    curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -35,8 +70,7 @@ function ReadCustomerDataToCreatePoints()
     
     // Debug the result
     // var_dump($result);
-    $result = json_decode($result);
-    CreatePoints($result);
+    return $result = json_decode($result);
 }
 
 function CreatePoints($result)
@@ -79,8 +113,6 @@ printf("Segment result:\n");
 // display the cluster centers and attached points
 foreach ($clusters as $num => $cluster) {
     $coordinates = $cluster->getCoordinates();
-
-    $name = "Cluster ".$num;
     $customers = array();
 
     printf(
@@ -98,26 +130,59 @@ foreach ($clusters as $num => $cluster) {
         $year = $point[2];
         printf("[%d,%d,%d]\n", $gender, $transactionsAmount, $year);
         $key = (string)$gender.(string)$year.(string)$transactionsAmount;
-        $point = $space->addPoint([$x, $y, $z], $customerIds[$key]);
+        $point = $space->addPoint([$gender, $transactionsAmount, $year], $customerIds[$key]);
         $data = $space[$point];
         array_push($customers, $data);
     }
 
-    CreateSegment($name, $customers);
+    HandleSegment($num, $customers);
 }
 
-function array_push_assoc($array, $key, $value){
+function array_push_assoc($array, $key, $value)
+{
     $array[$key] = $value;
     return $array;
- }
+}
 
-function CreateSegment($name, array $customers)
+function Update($url, $data)
 {
+    global $credentials;
+    $authorization = "Authorization: Bearer ".$credentials;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json' , $authorization));
+    $json_response = curl_exec($ch);
+    curl_close($ch);
+    $response = json_decode($json_response);
+    var_dump($response);
+    return $response;
+}
+
+function HandleSegment($num, array $customers)
+{
+    global $description;
+    global $list_segments;
+    global $segmentId_index;
+
+    if ($num == 0)
+        $name = "Regular Customer";
+    else if ($num == 1)
+        $name = "Potential Customer";
+    else $name = "VIP Customer";
+
+    if (sizeof($list_segments) != 0)
+    {
+        $segmentId = $segmentId_index[$num];
+        $name = $list_segments[$segmentId];
+    }
+
     $data = array(
         "segment" => array (
-            "name" => "$name",
+            "name" => $name,
             "active" => "1",
-            "description" => "automatically made by Kmeans",
+            "description" => $description,
             "parts" =>  array ([
                 "criteria" => array ([
                     "type" => "customer_list",
@@ -128,8 +193,16 @@ function CreateSegment($name, array $customers)
     );
     
     $data = json_encode($data);
-    $url = "127.0.0.1/api/segment";
-    PostData($url, $data);
+
+    if (sizeof($list_segments) == 0)
+    {
+        $url = "127.0.0.1/api/segment";
+        Post($url, $data);
+    }
+    else {
+        $url = "127.0.0.1/api/segment/$segmentId";
+        Update($url, $data);
+    }
 }
 
 function Login()
@@ -141,13 +214,13 @@ function Login()
     
     $data = json_encode($data);
     $url = "127.0.0.1/api/admin/login_check";
-    $response = PostData($url, $data);
+    $response = Post($url, $data);
 
     global $credentials;
     $credentials = $response->token;
 }
 
-function PostData($url, $data)
+function Post($url, $data)
 {
     global $credentials;
     $authorization = "Authorization: Bearer ".$credentials;
