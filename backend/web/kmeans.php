@@ -42,8 +42,6 @@ function ReadSegmentData()
             $index++;
         }
     }
-
-    // var_dump($segmentId_index);
 }
 
 function GetData($url)
@@ -67,9 +65,7 @@ function GetData($url)
     echo 'Error:' . curl_error($ch);
     }
     curl_close($ch);
-    
-    // Debug the result
-    // var_dump($result);
+
     return $result = json_decode($result);
 }
 
@@ -78,6 +74,8 @@ function CreatePoints($result)
     global $points;
     global $customerIds;
 
+    $index = 0;
+
     $current_year = date("Y");
     foreach ($result->customers as $c)
     {
@@ -85,16 +83,16 @@ function CreatePoints($result)
             $gender = 1;
         else $gender = 2;
 
-        $transactionsAmount = rand(10,1000);
+        $transactionsAmount = rand(0, 1000);// $c->transactionsAmount;// 
         $customerId = $c->customerId;
 
-        $year = $current_year - date('Y', strtotime($c->birthDate));
+        $age = $current_year - date('Y', strtotime($c->birthDate));
 
-        array_push($points, [$gender, $transactionsAmount, $year]);
+        array_push($points, [$gender, $transactionsAmount, $age]);
 
-        $key = (string)$gender.(string)$year.(string)$transactionsAmount;
+        $customerIds = array_push_assoc($customerIds, $index, $customerId);
 
-        $customerIds = array_push_assoc($customerIds, $key, $customerId);
+        $index++;
     }
 }
 
@@ -103,7 +101,9 @@ $space = new KMeans\Space(3);
 
 // add points to space
 foreach ($points as $i => $coordinates) {
-    $space->addPoint($coordinates);
+    global $customerIds;
+
+    $space->addPoint( $coordinates, array('ID' => $customerIds[$i]));
 }
 
 // cluster these points in 3 clusters
@@ -127,15 +127,15 @@ foreach ($clusters as $num => $cluster) {
     foreach ($cluster as $point) {
         $gender = $point[0];
         $transactionsAmount = $point[1];
-        $year = $point[2];
-        printf("[%d,%d,%d]\n", $gender, $transactionsAmount, $year);
-        $key = (string)$gender.(string)$year.(string)$transactionsAmount;
-        $point = $space->addPoint([$gender, $transactionsAmount, $year], $customerIds[$key]);
-        $data = $space[$point];
-        array_push($customers, $data);
+        $age = $point[2];
+        printf("[%d,%d,%d]\n", $gender, $transactionsAmount, $age);
+
+        $data = $point->toArray();
+        $customerId = $data["data"]["ID"];
+        array_push($customers, $customerId);
     }
 
-    HandleSegment($num, $customers);
+    HandleSegment($num, $customers, $coordinates);
 }
 
 function array_push_assoc($array, $key, $value)
@@ -160,27 +160,32 @@ function Update($url, $data)
     return $response;
 }
 
-function HandleSegment($num, array $customers)
+function HandleSegment($num, array $customers, $coordinates)
 {
     global $description;
     global $list_segments;
     global $segmentId_index;
 
+    if ($coordinates[0] == 1)
+        $gender = "male";
+    else $gender = "female";
+
+    $transactionsAmount = number_format((float)$coordinates[1], 2, '.', '');
+
     if ($num == 0)
-        $name = "Regular Customer";
+        $name = "Group 1 ";
     else if ($num == 1)
-        $name = "Potential Customer";
-    else $name = "VIP Customer";
+        $name = "Group 2 ";
+    else $name = "Group 3 ";
 
     if (sizeof($list_segments) != 0)
     {
         $segmentId = $segmentId_index[$num];
-        $name = $list_segments[$segmentId];
     }
 
     $data = array(
         "segment" => array (
-            "name" => $name,
+            "name" => $name."[ gender: ".$gender.", transactions amount: ".$transactionsAmount.", age: ".$coordinates[2]." ]",
             "active" => "1",
             "description" => $description,
             "parts" =>  array ([
