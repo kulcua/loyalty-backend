@@ -18,7 +18,8 @@
     },
     "require": {
         "php": ">=7.1",
-        "divante-ltd/open-loyalty-framework": "^3.2"
+        "divante-ltd/open-loyalty-framework": "^3.2",
+        "cboden/ratchet": "^0.4.3"
     },
     "scripts": {
         "post-install-cmd": [
