@@ -112,56 +112,72 @@ export default class ChatController {
       self.config.dateFormat
     );
 
-    self.ChatService.postChat(newMess).then(
-      () => {
-        if (self.conversation.conversationId.conversationId) {
-          self.ChatService.putConversation(
-            self.conversation.conversationId.conversationId,
-            editedConversation
-          )
-            .then(
-              () => {
-                let message = self.$filter("translate")(
-                  "xhr.put_conversation.success"
-                );
-                self.Flash.create("success", message);
-                conn.send(JSON.stringify(newMess));
-              },
-              (res) => {
-                self.$scope.validate = self.Validation.mapSymfonyValidation(
-                  res.data
-                );
-                let message = self.$filter("translate")(
-                  "xhr.put_conversation.error"
-                );
-                self.Flash.create("danger", message);
-              }
+     if((newMess.message)&&(newMess.message.trim()!=''))
+     {
+      self.ChatService.postChat(newMess).then(
+        () => {
+          if (self.conversation.conversationId.conversationId) {
+            self.ChatService.putConversation(
+              self.conversation.conversationId.conversationId,
+              editedConversation
             )
-            .catch((err) => {
-              self.$scope.fileValidate = self.Validation.mapSymfonyValidation(
-                err.data
-              );
-              self.ChatService.storedFileError = self.$scope.fileValidate;
-
-              let message = self.$filter("translate")(
-                "xhr.post_single_chat.warning"
-              );
-              self.Flash.create("warning", message);
-            });
-        } else {
-          let message = self.$filter("translate")(
-            "xhr.post_single_chat.success"
-          );
-          self.Flash.create("success", message);
+              .then(
+                () => {
+                  // let message = self.$filter("translate")(
+                  //   "xhr.put_conversation.success"
+                  // );
+                  // self.Flash.create("success", message);
+                  conn.send(JSON.stringify(newMess));
+                  newMess.message = "";
+                },
+                (res) => {
+                  self.$scope.validate = self.Validation.mapSymfonyValidation(
+                    res.data
+                  );
+                  let message = self.$filter("translate")(
+                    "xhr.put_conversation.error"
+                  );
+                  self.Flash.create("danger", message);
+                }
+              )
+              .catch((err) => {
+                self.$scope.fileValidate = self.Validation.mapSymfonyValidation(
+                  err.data
+                );
+                self.ChatService.storedFileError = self.$scope.fileValidate;
+  
+                let message = self.$filter("translate")(
+                  "xhr.post_single_chat.warning"
+                );
+                self.Flash.create("warning", message);
+              });
+          } else {
+            let message = self.$filter("translate")(
+              "xhr.post_single_chat.success"
+            );
+            self.Flash.create("success", message);
+          }
+        },
+        (res) => {
+          self.$scope.validate = self.Validation.mapSymfonyValidation(res.data);
+          let message = self.$filter("translate")("xhr.post_single_chat.error");
+          self.Flash.create("danger", message);
         }
-      },
-      (res) => {
-        self.$scope.validate = self.Validation.mapSymfonyValidation(res.data);
-        let message = self.$filter("translate")("xhr.post_single_chat.error");
-        self.Flash.create("danger", message);
-      }
-    );
+      );
+     }
   }
+
+  appendJquery(content)
+  {
+    var classname = "chat-bubble chat-bubble--right";
+  if((content)&&(content.trim()!=''))
+      {
+        $('#phantudiv').append("<div class="+classname+"> "+content+" </div>");
+        $('#chat-panel').animate({scrollTop: $('#chat-panel')[0].scrollHeight}, 2000);
+        document.getElementById("chat-form").reset();
+      }
+  }
+
 }
 
 ChatController.$inject = [

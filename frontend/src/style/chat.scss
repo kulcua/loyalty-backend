@@ -136,7 +136,9 @@ hr {
 .chat-bubble {
     padding: 10px 14px;
     background: #eee;
-    margin: 10px 30px;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
     border-radius: 9px;
     position: relative;
     animation: fadeIn 1s ease-in;
@@ -153,31 +155,12 @@ hr {
     }
 
     &--left {
-        &:after {
-            left: 0;
-            border-right-color: #eee;
-            border-left: 0;
-            margin-left: -20px;
-        }
+        width: fit-content;
+        max-width: 400px;
+        border-right-color: #eee;
+        border-left: 0;
+           
     }
-
-    &--right {
-        &:after {
-            right: 0;
-            border-left-color: $blue;
-            border-right: 0;
-            margin-right: -20px;
-        }
-    }
-}
-
-#phantudiv {
-    background: #1d1e1f;
-    padding: 30px;
-}
-#phantudiv1 {
-    background: #3498db;
-    padding: 30px;
 }
 
 @keyframes fadeIn {
@@ -191,8 +174,11 @@ hr {
 }
 
 
-.offset-md-9 {
+.offset-md-4 {
     .chat-bubble {
+        width: fit-content;
+        max-width: 400px;
+        margin-left: auto;
         background: $blue;
         color: #fff;
     }
@@ -223,9 +209,3 @@ hr {
     }
 }
 
-p {
-    border: 1px dashed gray;
-    padding: 5px;
-    animation-name: keyframes1;
-    animation-duration: 2s;
-}
