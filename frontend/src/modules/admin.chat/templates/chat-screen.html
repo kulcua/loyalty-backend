@@ -1,0 +1,51 @@
+<div
+  class="chat-panel"
+  ng-init="ChatCtrl.getMessages()"
+  style="overflow-y: scroll; height: 400px;"
+>
+<div  class="row no-gutters" data-ng-repeat="mess in messages track by $index">
+  <div class="col-md-3 offset-md-9" ng-if="mess.senderId==loggedUserId">
+    <div class="chat-bubble chat-bubble--right">{{mess["message"]}}</div>
+  </div>
+  <div class="col-md-3" ng-if="mess.senderId!=loggedUserId">
+    <div  class="chat-bubble chat-bubble--left" style="color: black">
+      {{ mess["message"]}}
+    </div>
+  </div>
+</div>
+  <br />
+  <div id="phantudiv">
+    <p>ddas</p>
+  </div>
+  <br/>
+</div>
+<div class="row">
+  <div class="col-12">
+    <form ng-submit="ChatCtrl.addChat(newMess)">
+      <div class="chat-box-tray">
+        <input
+          type="text"
+          placeholder="Type your message here..."
+          ng-model="newMess.message"
+        />
+        <button type="submit" onclick="append_jquery()" class="fa fa-paper-plane-o"></button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+  var conn = new WebSocket('ws://localhost:8080');
+  conn.onopen = function(e) {
+        console.log("Connection established!");
+    };
+
+    conn.onmessage = function(e) {
+        console.log(e.data);
+    };
+
+    function append_jquery() {
+      $('#phantudiv').append("<p> dddd </p>");
+    }
+
+    conn.send("len ne");
+</script>
