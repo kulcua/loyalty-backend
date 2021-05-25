@@ -27,21 +27,11 @@
           placeholder="Type your message here..."
           ng-model="newMess.message"
         />
-        <button type="submit" ng-click="ChatCtrl.appendJquery(newMess.message)"  class="fa fa-paper-plane-o"></button>
+        <button type="submit" ng-click="ChatCtrl.appendJquery(newMess.message)" class="fa fa-paper-plane-o"></button>
       </div>
     </form>
   </div>
 </div>
-<script>
-  var conn = new WebSocket('ws://localhost:8080');
+<script> 
   $('#chat-panel').animate({scrollTop: $('#chat-panel')[0].scrollHeight}, 1000);
-  conn.onopen = function(e) {
-        console.log("Connection established!");
-    };
-
-    conn.onmessage = function(e) {
-        console.log(e.data);
-    };
-
-    conn.send("len ne");
 </script>

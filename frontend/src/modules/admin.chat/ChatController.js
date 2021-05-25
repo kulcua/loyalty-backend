@@ -1,8 +1,6 @@
 import moment from "moment";
 import * as $ from 'jquery' 
 
-var conn = new WebSocket('ws://localhost:8080');
-
 export default class ChatController {
   constructor(
     $scope,
@@ -104,12 +102,12 @@ export default class ChatController {
     newMess.senderName = "admin";
     newMess.senderId = self.$scope.loggedUserId;
     newMess.messageTimestamp = moment(Date.now()).format(
-      self.config.dateFormat
+      self.config.dateTimeFormat
     );
 
     editedConversation.lastMessageSnippet = newMess.message;
     editedConversation.lastMessageTimestamp = moment(Date.now()).format(
-      self.config.dateFormat
+      self.config.dateTimeFormat
     );
 
      if((newMess.message)&&(newMess.message.trim()!=''))
@@ -123,11 +121,6 @@ export default class ChatController {
             )
               .then(
                 () => {
-                  // let message = self.$filter("translate")(
-                  //   "xhr.put_conversation.success"
-                  // );
-                  // self.Flash.create("success", message);
-                  conn.send(JSON.stringify(newMess));
                   newMess.message = "";
                 },
                 (res) => {
@@ -169,16 +162,35 @@ export default class ChatController {
 
   appendJquery(content)
   {
-    var classname = "chat-bubble chat-bubble--right";
-  if((content)&&(content.trim()!=''))
-      {
-        $('#phantudiv').append("<div class="+classname+"> "+content+" </div>");
-        $('#chat-panel').animate({scrollTop: $('#chat-panel')[0].scrollHeight}, 2000);
-        document.getElementById("chat-form").reset();
-      }
-  }
+    let user_id = this.$scope.loggedUserId;
+    let mess = content;
 
+    let data = {
+        userId : user_id,
+        msg: mess
+    }
+
+    if((content)&&(content.trim()!=''))
+    {
+      conn.send(JSON.stringify(data));
+    }
+  }
 }
+
+var conn = new WebSocket('ws://localhost:8080');
+
+conn.onopen = function(e) {
+  console.log("Connection established!");
+};
+
+conn.onmessage = function(e) { 
+  console.log(e.data);
+  let data = JSON.parse(e.data);
+  var classname = "chat-bubble chat-bubble--right";
+  $('#phantudiv').append("<div class="+classname+"> "+data.msg+" </div>");
+  $('#chat-panel').animate({scrollTop: $('#chat-panel')[0].scrollHeight}, 2000);
+  document.getElementById("chat-form").reset();
+};
 
 ChatController.$inject = [
   "$scope",
