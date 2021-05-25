@@ -1,7 +1,7 @@
 <?php
 namespace Kulcua\Extension\Bundle\ChatBundle\WebSocket;
-use Kulcua\Extension\Component\Message\Domain\Message;
-use OpenLoyalty\Bundle\UserBundle\Entity\User;
+// use Kulcua\Extension\Component\Message\Domain\Message;
+// use OpenLoyalty\Bundle\UserBundle\Entity\User;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
@@ -26,33 +26,22 @@ class Chat implements MessageComponentInterface {
 
         $data = json_decode($msg, true);
 
-        // mess = new Message;
-        // $mess->setSenderId($data['userId']);
-        // $mess->setMessage($data['msg']);
-        // $mess->setLastMessageTimestamp(date("Y-m-d h:i:s"));
-        // if($objChatroom->saveChatRoom()) {
-        //     $objUser = new User;
-        //     $objUser->setId($data['userId']);
-        //     $user = $objUser->getUserById();
-        //     $data['from'] = $user['name'];
-        //     $data['msg']  = $data['msg'];
-        //     $data['dt']  = date("d-m-Y h:i:s");
-        // }
+        // $user_object = new User;
+        // $user_object->setUserId($data['userId']);
 
-        // foreach ($this->clients as $client) {
-        //     if ($from == $client) {
-        //         $data['from']  = "Me";
-        //     } else {
-        //         $data['from']  = $user['username'];
-        //     }
-        //     $client->send(json_encode($data));
-        // }
+        // $user_data = $user_object->get_user_data_by_id();
+        
+        // $user_name = $user_data['username'];
+
+        // $data['dt'] = date("d-m-Y h:i:s");
 
         foreach ($this->clients as $client) {
-            if ($from !== $client) {
-                // The sender is not the receiver, send to each client connected
-                $client->send($msg);
+            if ($from == $client) {
+                $data['from']  = "Me";
+            } else {
+                $data['from']  = "Another";
             }
+            $client->send(json_encode($data));
         }
     }
 
