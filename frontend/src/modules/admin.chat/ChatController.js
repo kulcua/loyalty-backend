@@ -1,9 +1,10 @@
 import moment from "moment";
-import * as $ from 'jquery' 
+import * as $ from 'jquery'
 
 export default class ChatController {
   constructor(
     $scope,
+    Ratchet,
     $state,
     $timeout,
     AuthService,
@@ -22,6 +23,7 @@ export default class ChatController {
       AuthService.logout();
     }
     this.$scope = $scope;
+    this.Ratchet = Ratchet;
     this.ChatService = ChatService;
     this.$state = $state;
     this.conversation = $stateParams.conversation || null;
@@ -44,6 +46,27 @@ export default class ChatController {
     this.loaderStates = {
       chatList: true,
       coverLoader: true,
+    };
+    this.settingWebServer();
+  }
+
+  settingWebServer() {
+    this.Ratchet.onopen = function (e) {
+      console.log("Connection established!");
+    };
+    this.Ratchet.onmessage = function (e) {
+      console.log(e.data);
+      let data = JSON.parse(e.data);
+      let customerId = data.customerId;
+     
+      var classname = "chat-bubble chat-bubble--right";
+      $('#phantudiv').append("<div class="+classname+"> "+data.msg+" </div>");
+      $('#chat-panel').animate({scrollTop: $('#chat-panel')[0].scrollHeight}, 2000);
+
+      $('#cusid_'+customerId).html('<span class="badge badge-danger badge-pill">2</span>');
+      $('#lastMess_'+customerId).html('<p class="text-muted">'+data.msg+'</p>');
+      $('#lastTime_'+customerId).html('<span class="time text-muted small">'+data.time +'</span');
+      document.getElementById("chat-form").reset();
     };
   }
 
@@ -110,8 +133,8 @@ export default class ChatController {
       self.config.dateTimeFormat
     );
 
-     if((newMess.message)&&(newMess.message.trim()!=''))
-     {
+
+    if ((newMess.message) && (newMess.message.trim() != '')) {
       self.ChatService.postChat(newMess).then(
         () => {
           if (self.conversation.conversationId.conversationId) {
@@ -138,7 +161,7 @@ export default class ChatController {
                   err.data
                 );
                 self.ChatService.storedFileError = self.$scope.fileValidate;
-  
+
                 let message = self.$filter("translate")(
                   "xhr.post_single_chat.warning"
                 );
@@ -157,43 +180,42 @@ export default class ChatController {
           self.Flash.create("danger", message);
         }
       );
-     }
+    }
   }
 
-  appendJquery(content)
-  {
-    let user_id = this.$scope.loggedUserId;
+  appendJquery(content) {
+    let self = this;
+    let user_id = this.$scope.loggedUserId;//truyen day ne
+    let cusId = this.conversation.participantIds[1];
     let mess = content;
+    let lastTime = moment(Date.now()).format(
+      "HH:mm"
+    );
 
     let data = {
-        userId : user_id,
-        msg: mess
+      userId: user_id,
+      customerId: cusId,
+      msg: mess,
+      time: lastTime
     }
 
-    if((content)&&(content.trim()!=''))
-    {
-      conn.send(JSON.stringify(data));
+    if ((content) && (content.trim() != '')) {
+      this.Ratchet.send(JSON.stringify(data));
     }
+  }
+
+
+  changeIndex(index, conversation) {
+    this.$scope.selectedIndex = index;
+    this.$scope.conversation = conversation;
+    this.$scope.customerName = conversation.participantNames[1];
+    $('#cusid_'+conversation.participantIds[1]).html('');
   }
 }
 
-var conn = new WebSocket('ws://localhost:8080');
-
-conn.onopen = function(e) {
-  console.log("Connection established!");
-};
-
-conn.onmessage = function(e) { 
-  console.log(e.data);
-  let data = JSON.parse(e.data);
-  var classname = "chat-bubble chat-bubble--right";
-  $('#phantudiv').append("<div class="+classname+"> "+data.msg+" </div>");
-  $('#chat-panel').animate({scrollTop: $('#chat-panel')[0].scrollHeight}, 2000);
-  document.getElementById("chat-form").reset();
-};
-
 ChatController.$inject = [
   "$scope",
+  "Ratchet",
   "$state",
   "$timeout",
   "AuthService",

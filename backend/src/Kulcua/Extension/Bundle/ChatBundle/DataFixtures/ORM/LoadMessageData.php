@@ -32,7 +32,7 @@ class LoadMessageData extends ContainerAwareFixture implements FixtureInterface,
             'senderId' => '00000000-0000-474c-b092-b0dd880c07e1',
             'senderName' => 'John Doe',
             'message' => 'hello admin, im john',
-            'messageTimestamp' => (new \DateTime('+1 day'))->getTimestamp(),
+            'messageTimestamp' => (new \DateTime())->getTimestamp(),
         ];
 
         /** @var CommandBus $bus */

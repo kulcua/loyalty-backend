@@ -5,6 +5,9 @@ const MODULE_NAME = "admin.chat";
 
 angular
   .module(MODULE_NAME, [])
+  .factory("Ratchet", function () {
+    return new WebSocket('ws://localhost:8080');
+})
   .config(($stateProvider) => {
     $stateProvider
       .state("admin.chat", {

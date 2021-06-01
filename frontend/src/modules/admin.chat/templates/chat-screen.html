@@ -1,37 +1,42 @@
-<div
-  id="chat-panel"
-  ng-init="ChatCtrl.getMessages()"
-  style="overflow-y: scroll; height: 400px; overflow-x: hidden;"
->
-<div  class="row no-gutters" data-ng-repeat="mess in messages track by $index">
-  <div class="col-md-3 offset-md-4" ng-if="mess.senderId==loggedUserId">
-    <div class="chat-bubble chat-bubble--right">{{mess["message"]}}</div>
+<div class="container">
+  <div style="background-color: white; height: 50px; padding: 15px">
+    <p style="color: black;">{{customerName}}</p>
   </div>
-  <div class="col-md-3" ng-if="mess.senderId!=loggedUserId">
-    <div  class="chat-bubble chat-bubble--left" style="color: black">
-      {{ mess["message"]}}
+  <div
+    id="chat-panel"
+    ng-init="ChatCtrl.getMessages()"
+    style="overflow-y: scroll; height: 420px; overflow-x: hidden; margin-top: 5px; background-color: whitesmoke;"
+  >
+  <div  class="row no-gutters" data-ng-repeat="mess in messages track by $index">
+    <div class="col-md-3 offset-md-4" ng-if="mess.senderId==loggedUserId">
+      <div class="chat-bubble chat-bubble--right">{{mess["message"]}}</div>
+    </div>
+    <div class="col-md-3" ng-if="mess.senderId!=loggedUserId">
+      <div  class="chat-bubble chat-bubble--left" style="color: black">
+        {{ mess["message"]}}
+      </div>
     </div>
   </div>
-</div>
-<div class="row no-gutters">
-  <div id="phantudiv" class="col-md-3 offset-md-4">
+  <div class="row no-gutters">
+    <div id="phantudiv" class="col-md-3 offset-md-4">
+    </div>
   </div>
-</div>
-</div>
-<div class="row">
-  <div class="col-12">
+  </div>
+  <div style="margin-top: 0px;">
     <form id="chat-form" ng-submit="ChatCtrl.addChat(newMess)">
       <div class="chat-box-tray">
         <input
           type="text"
           placeholder="Type your message here..."
           ng-model="newMess.message"
+          style="border-radius: 10px;"
         />
-        <button type="submit" ng-click="ChatCtrl.appendJquery(newMess.message)" class="fa fa-paper-plane-o"></button>
+        <button type="submit" ng-click="ChatCtrl.appendJquery(newMess.message)"  class="fa fa-paper-plane-o"></button>
       </div>
     </form>
-  </div>
 </div>
+</div>
+
 <script> 
   $('#chat-panel').animate({scrollTop: $('#chat-panel')[0].scrollHeight}, 1000);
 </script>

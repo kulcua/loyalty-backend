@@ -5,23 +5,28 @@
   delay="1000"
 ></box-loader>
 
-<div class="heading" ng-init="ChatCtrl.getData()">
-  <h1>Conversation</h1>
+<div id="block_container">
+    <div class="heading col-6" ng-init="ChatCtrl.getData()">
+      <h1>Conversations</h1>
+  </div>
+    <div class="search-box">
+      <div class="input-wrapper">
+        <input placeholder="Search here" type="text" style="border-radius: 10px;"  />
+      </div>
+    </div>
 </div>
 <div style="clear: both"></div>
 
-<div class="container" style="overflow-y: scroll; height: 500px">
-  <div class="row no-gutters">
-    <div class="medium-4 columns border-right">
-      <div class="search-box">
-        <div class="input-wrapper">
-          <input placeholder="Search here" type="text" />
-        </div>
-      </div>
+<div class="container" style="overflow-y: hidden; height: 100%;">
+  <div class="row">
+    <div class="medium-4 columns padding-0" style="background-color: #D8DAE5;">
+     <div style="height: 550px;">
       <div data-ng-repeat="conversation in conversations track by $index">
         <div
-          class="friend-drawer friend-drawer--onhover"
+          ng-class="{'friend-drawer-selected': selectedIndex==$index,'friend-drawer friend-drawer--onhover': selectedIndex!=$index}"
           ui-sref="admin.chat.chat-screen({conversation: conversation})"
+          style="margin-top: 10px; margin-left: 10px; margin-right: 10px;"
+          ng-click="ChatCtrl.changeIndex($index,conversation)"
         >
           <img
             class="profile-image"
@@ -29,17 +34,20 @@
             alt=""
           />
           <div class="text-chat">
-            <h6>{{ conversation["participantNames"][1] }}</h6>
-            <p class="text-muted">{{conversation["lastMessageSnippet"] }}</p>
-          </div>
-          <span class="time text-muted small"
+                <h6>{{ conversation["participantNames"][1] }}</h6>
+              <div ng-attr-id="{{ 'cusid_' + conversation.participantIds[1]}}">
+              </div>
+            <p ng-attr-id="{{ 'lastMess_' + conversation.participantIds[1]}}" class="text-muted">{{conversation["lastMessageSnippet"] }}</p>
+        
+          <span ng-attr-id="{{ 'lastTime_' + conversation.participantIds[1]}}" class="time text-muted small"
             >{{ conversation["lastMessageTimestamp"]|date:'HH:mm' }}</span
           >
         </div>
-        <hr />
       </div>
     </div>
-    <div class="medium-8 columns">
+    </div>
+</div>
+    <div class="medium-8 columns padding-0">
       <div ui-view="mess"></div>
     </div>
   </div>
