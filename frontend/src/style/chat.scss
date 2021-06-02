@@ -103,8 +103,8 @@ input {
     }
 
     .text-chat {
-        margin-left: 12px;
-        width: 70%;
+        margin-left: 16px;
+        width: 90%;
 
         h6 {
             margin-top: 6px;
@@ -158,8 +158,8 @@ hr {
     }
 
     .text-chat {
-        margin-left: 12px;
-        width: 70%;
+        margin-left: 16px;
+        width: 90%;
 
         h6 {
             margin-top: 6px;
@@ -253,9 +253,10 @@ hr {
 }
 
 .dot {
-    height: 25px;
-    width: 25px;
-    background-color: green;
+    margin-left:5px;
+    height: 10px;
+    width: 10px;
+    background-color: blue;
     border-radius: 50%;
-    display: inline-block;
+    display:inline-block;
   }

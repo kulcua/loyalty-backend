@@ -58,14 +58,18 @@ export default class ChatController {
       console.log(e.data);
       let data = JSON.parse(e.data);
       let customerId = data.customerId;
-     
-      var classname = "chat-bubble chat-bubble--right";
-      $('#phantudiv').append("<div class="+classname+"> "+data.msg+" </div>");
-      $('#chat-panel').animate({scrollTop: $('#chat-panel')[0].scrollHeight}, 2000);
 
-      $('#cusid_'+customerId).html('<span class="badge badge-danger badge-pill">2</span>');
-      $('#lastMess_'+customerId).html('<p class="text-muted">'+data.msg+'</p>');
-      $('#lastTime_'+customerId).html('<span class="time text-muted small">'+data.time +'</span');
+      //add text chat 
+      var classname = "chat-bubble chat-bubble--right";
+      $('#chat-text' + customerId).append("<div class=" + classname + "> " + data.msg + " </div>");
+      $('#chat-panel').animate({ scrollTop: $('#chat-panel')[0].scrollHeight }, 2000);
+
+      //update new mess
+      $('#cusid_' + customerId).html('<span class="dot"></span>');
+      $('#lastMess_' + customerId).html('<p class="text-muted">' + data.msg + '</p>');
+      $('#lastTime_' + customerId).html('<span class="time text-muted small">' + data.time + '</span');
+
+      //reset text box
       document.getElementById("chat-form").reset();
     };
   }
@@ -184,7 +188,6 @@ export default class ChatController {
   }
 
   appendJquery(content) {
-    let self = this;
     let user_id = this.$scope.loggedUserId;//truyen day ne
     let cusId = this.conversation.participantIds[1];
     let mess = content;
@@ -204,12 +207,12 @@ export default class ChatController {
     }
   }
 
-
-  changeIndex(index, conversation) {
+  highlightName(index, conversation) {
     this.$scope.selectedIndex = index;
     this.$scope.conversation = conversation;
     this.$scope.customerName = conversation.participantNames[1];
-    $('#cusid_'+conversation.participantIds[1]).html('');
+    this.$scope.customerId = conversation.participantIds[1];
+    $('#cusid_' + conversation.participantIds[1]).html('');
   }
 }
 
