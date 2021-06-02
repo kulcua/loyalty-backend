@@ -1,0 +1,49 @@
+<box-loader loading="ChatCtrl.loaderStates.coverLoader" cover="1" class="cover" delay="1000"></box-loader>
+
+<div id="block_container">
+  <div class="heading col-6" ng-init="ChatCtrl.getData()">
+    <h1>Conversations</h1>
+  </div>
+  <div class="search-box">
+    <div class="input-wrapper">
+      <input placeholder="Search here" type="text" style="border-radius: 10px;" />
+    </div>
+  </div>
+</div>
+<div style="clear: both"></div>
+
+<div class="container" style="overflow-y: hidden; height: 100%;">
+  <div class="row">
+    <div class="medium-4 columns padding-0" style="background-color: #D8DAE5;">
+      <div style="height: 550px;">
+        <div
+          data-ng-repeat="conversation in conversations track by $index">
+          <div
+          ng-attr-id="{{ 'converation_' + conversation.conversationIds}}"
+            ng-class="{'friend-drawer-selected': selectedIndex==$index,'friend-drawer friend-drawer--onhover': selectedIndex!=$index}"
+            ui-sref="admin.chat.chat-screen({conversation: conversation})"
+            style="margin-top: 10px; margin-left: 10px; margin-right: 10px;"
+            ng-click="ChatCtrl.highlightName($index,conversation)">
+            <img class="profile-image"
+              src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/optimus-prime.jpeg" alt="" />
+            <div class="text-chat">
+              <div style="display: flex;justify-content: start;">
+                <h6>{{ conversation["participantNames"][1] }}</h6>
+                <div ng-attr-id="{{ 'cusid_' + conversation.participantIds[1]}}">
+                </div>
+              </div>
+              <p ng-attr-id="{{ 'lastMess_' + conversation.participantIds[1]}}" class="text-muted">
+                {{conversation["lastMessageSnippet"] }}</p>
+            </div>
+            <span ng-attr-id="{{ 'lastTime_' + conversation.participantIds[1]}}" class="time text-muted small">{{
+              conversation["lastMessageTimestamp"]|date:'HH:mm' }}</span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="medium-8 columns padding-0">
+      <div ui-view="mess"></div>
+    </div>
+  </div>
+</div>

@@ -173,4 +173,19 @@ class Message extends SnapableEventSourcedAggregateRoot
     {
         return $this->lastMessageTimestamp;
     }
+
+    // public function setSenderId(string $senderId)
+    // {
+    //     return $this->senderId = $senderId;
+    // }
+
+    // public function setMessage(string $message)
+    // {
+    //     return $this->message = $message;
+    // }
+
+    // public function setLastMessageTimestamp(DateTime $time)
+    // {
+    //     return $this->lastMessageTimestamp = $time;
+    // }
 }

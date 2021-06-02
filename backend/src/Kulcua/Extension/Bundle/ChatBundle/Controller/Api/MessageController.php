@@ -69,20 +69,25 @@ class MessageController extends FOSRestController
         if ($this->isGranted('ROLE_PARTICIPANT')) {
             $params['conversationParticipantIds'] = $user->getId();
         }
-        $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'messageTimestamp', 'DESC');
+        $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'messageTimestamp', 'ASC');
 
         /** @var MessageDetailsRepository $repo */
         $repo = $this->get(MessageDetailsRepository::class);
+        $total = $repo->countTotal($params, $request->get('strict', false));
+        $perPage = 10;
+
+        $page = (int) $total / $perPage;
+        if($page == 0)
+            $page = 1;
 
         $messages = $repo->findByParametersPaginated(
             $params,
             false,
-            $pagination->getPage(),
-            $pagination->getPerPage(),
+            $page,
+            $perPage,
             $pagination->getSort(),
             $pagination->getSortDirection()
         );
-        $total = $repo->countTotal($params, $request->get('strict', false));;
 
         return $this->view([
             'messages' => $messages,

@@ -83,16 +83,25 @@
           </li>
         </ul>
       </li>
-      <li ng-show="RootCtrl.AuthService.hasPermission('LEVEL', 'VIEW')">
+      <li ng-show="RootCtrl.AuthService.hasPermission('MAINTENANCE', 'VIEW')">
         <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>Maintenance</a>
         <ul class="menu vertical nested">
           <li>
             <a ui-sref="admin.maintenances-list">Maintenances list</a>
           </li>
-          <li ng-show="RootCtrl.AuthService.hasPermission('LEVEL', 'MODIFY')">
+          <li
+            ng-show="RootCtrl.AuthService.hasPermission('MAINTENANCE', 'MODIFY')"
+          >
             <a ui-sref="admin.add-maintenance">Add maintenance</a>
           </li>
         </ul>
+      </li>
+      <li
+        ng-show="RootCtrl.AuthService.hasPermission('CONVERSATION', 'MODIFY')"
+      >
+        <a ui-sref="admin.chat"
+          ><i class="fa fa-comments-o" aria-hidden="true"></i>Conversations</a
+        >
       </li>
       <li ng-show="RootCtrl.AuthService.hasPermission('EARNING_RULE', 'VIEW')">
         <a href="#"
