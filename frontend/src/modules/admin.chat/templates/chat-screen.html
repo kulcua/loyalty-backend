@@ -5,7 +5,7 @@
   <div
     id="chat-panel"
     ng-init="ChatCtrl.getMessages()"
-    style="overflow-y: scroll; height: 420px; overflow-x: hidden; margin-top: 5px; background-color: whitesmoke;"
+    style="overflow-y: scroll; height: 420px; overflow-x: hidden; margin-top: 5px; padding-bottom: 15px; background-color: whitesmoke;"
   >
   <div  class="row no-gutters" data-ng-repeat="mess in messages track by $index">
     <div class="col-md-3 offset-md-4" ng-if="mess.senderId==loggedUserId">
@@ -17,9 +17,15 @@
       </div>
     </div>
   </div>
-  <div class="row no-gutters">
-    <div ng-attr-id="{{ 'chat-text' + customerId}}" class="col-md-3 offset-md-4">
+  <div class="row no-gutters" >
+    <div class="col-md-3 offset-md-4" >
+      <div ng-attr-id="{{ 'chat-text' + customerId}}"  >
+      </div>
     </div>
+    <!-- <div class="col-md-3">
+      <div ng-attr-id="{{ 'chat-text' + customerId}}"  >
+      </div>
+    </div> -->
   </div>
   </div>
   <div style="margin-top: 0px;">

@@ -47,27 +47,40 @@ export default class ChatController {
       chatList: true,
       coverLoader: true,
     };
-    this.settingWebServer();
+    this.settingWebServer(this.$scope.loggedUserId);
   }
 
-  settingWebServer() {
+  settingWebServer(loggedId) {
     this.Ratchet.onopen = function (e) {
       console.log("Connection established!");
     };
     this.Ratchet.onmessage = function (e) {
-      console.log(e.data);
       let data = JSON.parse(e.data);
-      let customerId = data.customerId;
+      let receiverId = data.customerId;
+      let senderId = data.userId;
 
-      //add text chat 
-      var classname = "chat-bubble chat-bubble--right";
-      $('#chat-text' + customerId).append("<div class=" + classname + "> " + data.msg + " </div>");
-      $('#chat-panel').animate({ scrollTop: $('#chat-panel')[0].scrollHeight }, 2000);
+      let classname;
+      let id;
 
-      //update new mess
-      $('#cusid_' + customerId).html('<span class="dot"></span>');
-      $('#lastMess_' + customerId).html('<p class="text-muted">' + data.msg + '</p>');
-      $('#lastTime_' + customerId).html('<span class="time text-muted small">' + data.time + '</span');
+      //add text chat
+      if (data.from == 'Me') {
+        classname = "chat-bubble chat-bubble--right";
+        id = receiverId;
+      } else {
+        classname = "chat-left";
+        id = senderId;
+
+        //update new mess
+        $('#cusid_' + senderId).html('<span class="dot"></span>');
+        $('#lastMess_' + senderId).html('<p class="text-muted">' + data.msg + '</p>');
+        $('#lastTime_' + senderId).html('<span class="time text-muted small">' + data.time + '</span');
+
+      }
+
+      $('#chat-text' + id).append("<div class=" + classname + "> " + data.msg + " </div>");
+      $('#chat-panel').animate({
+        scrollTop: $('#chat-panel')[0].scrollHeight
+      }, 2000);
 
       //reset text box
       document.getElementById("chat-form").reset();
@@ -143,9 +156,9 @@ export default class ChatController {
         () => {
           if (self.conversation.conversationId.conversationId) {
             self.ChatService.putConversation(
-              self.conversation.conversationId.conversationId,
-              editedConversation
-            )
+                self.conversation.conversationId.conversationId,
+                editedConversation
+              )
               .then(
                 () => {
                   newMess.message = "";
@@ -188,7 +201,7 @@ export default class ChatController {
   }
 
   appendJquery(content) {
-    let user_id = this.$scope.loggedUserId;//truyen day ne
+    let user_id = this.$scope.loggedUserId; //truyen day ne
     let cusId = this.conversation.participantIds[1];
     let mess = content;
     let lastTime = moment(Date.now()).format(
@@ -199,7 +212,8 @@ export default class ChatController {
       userId: user_id,
       customerId: cusId,
       msg: mess,
-      time: lastTime
+      time: lastTime,
+      from: 'Me'
     }
 
     if ((content) && (content.trim() != '')) {

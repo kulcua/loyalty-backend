@@ -17,6 +17,7 @@
     <div class="medium-4 columns padding-0" style="background-color: #D8DAE5;">
       <div style="height: 550px;">
         <div
+        id="list"
           data-ng-repeat="conversation in conversations track by $index">
           <div
           ng-attr-id="{{ 'converation_' + conversation.conversationIds}}"
@@ -47,3 +48,9 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(docmuent).ready(function () {
+    $('list:nth(0)').click();
+});
+</script>

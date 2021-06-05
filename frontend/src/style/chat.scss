@@ -190,7 +190,7 @@ hr {
 
     &:after {
         content: '';
-        position: absolute;
+        position: relative;
         top: 50%;
         width: 0;
         height: 0;
@@ -218,6 +218,32 @@ hr {
     }
 }
 
+.chat-left {
+    padding: 10px 14px;
+    background: #eee;
+    margin-top: 10px;
+    margin-left: 20px;
+    border-radius: 9px;
+    position: relative;
+    animation: fadeIn 1s ease-in;
+    width: fit-content;
+    max-width: 400px;
+    margin-right: auto;
+    color: black;
+
+    &:after {
+        content: '';
+        position: relative;
+        top: 50%;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-bottom: 0;
+        margin-top: -10px;
+    }
+
+
+}
 
 .offset-md-4 {
     .chat-bubble {
