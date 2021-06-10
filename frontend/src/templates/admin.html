@@ -26,10 +26,10 @@
 <section class="loader" ng-class="{'show': RootCtrl.loading }">
     <div class="loader-wrapper">
         <div class="logo">
-            <img id="openLoyaltyLogo" ng-src="{{RootCtrl.logo}}" style="display: inline-block;"/>
+            <b>MELODI</b>
         </div>
 
-        <div class="loader-icon">
+        <div class="loader-icon" style="margin-top: 5px;">
         </div>
     </div>
 </section>
@@ -68,10 +68,10 @@
                 ng-if="RootCtrl.loggedIn() && RootCtrl.isAdminPanel()">
     </ng-include>
 
-    <div ui-view="extendTop"></div>
-    <div ui-view="main"></div>
+    <div ui-view="extendTop" style="background-color: white;"></div>
+    <div ui-view="main" style="background-color: white;"></div>
     <div ui-view></div>
-    <div ui-view="extendBottom"></div>
+    <div ui-view="extendBottom"></div> 
 
     <ng-include src="'./templates/footer.html'"
                 ng-if="RootCtrl.loggedIn() && RootCtrl.isAdminPanel()">

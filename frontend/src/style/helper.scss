@@ -33,11 +33,11 @@
 }
 
 button, select, input, textarea, .button {
-  border-radius: 3px;
+  border-radius: 6px;
 }
 
 .whisper {
-  opacity: 0.43;
+  opacity: 0.2;
   font-size: 70%;
 }
 
@@ -190,6 +190,7 @@ span.error-msg {
     background-color: darken($gray, 5%);
     border: 2px solid darken($gray, 10%);
     color: $white;
+    border-radius: 15px;
   }
 }
 
@@ -266,7 +267,8 @@ button.button.square {
 }
 
 .heading {
-  margin: 15px;
+  //margin: 15px;
+  margin-left: 15px;
   h1 {
     font-size: 32px;
     color: $dark;
@@ -282,6 +284,12 @@ button.button.square {
 fieldset {
   .collection-remove {
     top: 10px !important;
+  }
+  border-radius: 15px;
+  box-shadow:  0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  legend{
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
   }
 }
 

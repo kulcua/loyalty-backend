@@ -12,9 +12,9 @@
 </div>
 <div style="clear: both"></div>
 
-<div class="container" style="overflow-y: hidden; height: 100%;">
+<div class="container " style="overflow-y: hidden; height: 100%;">
   <div class="row">
-    <div class="medium-4 columns padding-0" style="background-color: #D8DAE5;">
+    <div class="medium-4 columns padding-0" style="background-color: white;">
       <div style="height: 550px;">
         <div
         id="list"
@@ -50,7 +50,5 @@
 </div>
 
 <script>
-  $(docmuent).ready(function () {
-    $('list:nth(0)').click();
-});
+  ChatCtrl.highlightName(0,self.conversation);
 </script>

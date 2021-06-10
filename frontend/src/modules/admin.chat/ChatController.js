@@ -1,5 +1,6 @@
 import moment from "moment";
 import * as $ from 'jquery'
+import RootController from "../../component/global/root/RootController";
 
 export default class ChatController {
   constructor(
@@ -29,8 +30,10 @@ export default class ChatController {
     this.conversation = $stateParams.conversation || null;
     this.AuthService = AuthService;
     this.$scope.loggedUserId = AuthService.getLoggedUserId() || null;
+    this.$scope.firstSelected = null;
     this.Flash = Flash;
     this.NgTableParams = NgTableParams;
+    this.$scope.selectedIndex = 0;
     this.ParamsMap = ParamsMap;
     this.EditableMap = EditableMap;
     this.$q = $q;
@@ -48,6 +51,7 @@ export default class ChatController {
       coverLoader: true,
     };
     this.settingWebServer(this.$scope.loggedUserId);
+
   }
 
   settingWebServer(loggedId) {
@@ -76,7 +80,7 @@ export default class ChatController {
         $('#lastTime_' + senderId).html('<span class="time text-muted small">' + data.time + '</span');
 
       }
-
+      
       $('#chat-text' + id).append("<div class=" + classname + "> " + data.msg + " </div>");
       $('#chat-panel').animate({
         scrollTop: $('#chat-panel')[0].scrollHeight
@@ -96,6 +100,7 @@ export default class ChatController {
     self.ChatService.getCustomerConversation().then(
       () => {
         self.$scope.conversations = self.ChatService.getConversations();
+        self.$scope.firstSelected = self.$scope.conversations[0];
         self.loaderStates.chatList = false;
         self.loaderStates.coverLoader = false;
       },
@@ -112,12 +117,17 @@ export default class ChatController {
 
   getMessages() {
     let self = this;
+    this.$scope.customerName = self.conversation.participantNames[1];
+
     if (self.conversation.lastMessageSnippet) {
       self.ChatService.getMessages(
         self.conversation.conversationId.conversationId
       ).then(
         () => {
           self.$scope.messages = self.ChatService.messages;
+          $('#chat-panel').animate({
+            scrollTop: $('#chat-panel')[0].scrollHeight
+          }, 2000);
           self.loaderStates.coverLoader = false;
         },
         () => {
@@ -213,7 +223,6 @@ export default class ChatController {
       customerId: cusId,
       msg: mess,
       time: lastTime,
-      from: 'Me'
     }
 
     if ((content) && (content.trim() != '')) {

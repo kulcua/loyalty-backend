@@ -10,8 +10,8 @@
         <div class="row">
             <div class="medium-12 columns">
 
-                <admin-fieldset-block ng-repeat="language in availableFrontendTranslations | orderBy: 'order'" fieldset-label="{{ ('level.basic_info' | translate) + ' (' + language.name + ')' }}" togglable="true" togglable-active="{{ language.default }}">
-                    <admin-fieldset-row
+                <admin-fieldset-block   ng-repeat="language in availableFrontendTranslations | orderBy: 'order'" fieldset-label="{{ ('level.basic_info' | translate) + ' (' + language.name + ')' }}" togglable="true" togglable-active="{{ language.default }}">
+                    <admin-fieldset-row >
                         ng-repeat="field in translatableFields" 
                         row-label="{{ field.label }}" 
                         row-prompt="{{ field.prompt }}" 
@@ -21,7 +21,8 @@
                     </admin-fieldset-row>
                 </admin-fieldset-block>
 
-                <admin-fieldset-block fieldset-label="level.reward_details">
+                <admin-fieldset-block fieldset-label="level.reward_details"  style="border-top-left-radius: 15px;
+                border-top-right-radius: 15px;">
                     <div class="row">
                         <div class="medium-2 small-3 columns">
                             <label>{{ "level.active" | translate }}</label>

@@ -6,7 +6,7 @@ nav {
         cursor: pointer;
       }
       li:hover,li.is-active {
-        background-color: $lightgray;
+        color: $senary;
       }
       li > a {
         outline: none;
@@ -22,25 +22,29 @@ nav {
 .top-navigation {
   &.admin {
     .js-dropdown-active.settings {
-      right: 10px !important;
+      right: 1px !important;
     }
     .js-dropdown-active {
-      z-index: 10000 !important;
+      z-index: 5000 !important;
     }
     .menu:not(.submenu) > li > a {
-      padding: 17px !important;
+      padding: 23px !important;
     }
     .top-bar {
       padding: 0;
       height: 55px;
       background-color: $white;
       margin-top: -1px;
-      border-bottom: 1px solid $gray;
       ul {
         background-color: $white;
-        li, a, span {
+        li,a,span {
           background-color: transparent;
-          color: $dark;
+          color: $senary;
+        }
+        li,a {
+          &:hover {
+            color: yellow;
+          }
         }
       }
       .top-bar-right {
@@ -86,16 +90,17 @@ nav {
             }
           }
           ul.menu.submenu.is-dropdown-submenu {
-
             -webkit-box-shadow: 0px -5px 14px -1px #e2e2e2;
             -moz-box-shadow: 0px -5px 14px -1px #e2e2e2;
             box-shadow: 0px -5px 14px -1px #e2e2e2;
             margin-top: 10px;
             min-width: 165px;
             border-color: rgb(226, 226, 226);
+            border-radius: 15px;
             li[role="menuitem"] > a {
               font-weight: normal !important;
-              font-size: 13px;
+              font-size: 14px;
+              color: $senary;
             }
             li.b-t {
               border-top: 1px solid rgb(226, 226, 226);
@@ -110,7 +115,6 @@ nav {
             height: 0;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
-
             border-bottom: 5px solid black;
           }
         }

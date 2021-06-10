@@ -1,11 +1,11 @@
 <div class="container" >
-  <div style="background-color: white; height: 50px; padding: 15px">
-    <p style="color: black;">{{customerName}}</p>
+  <div class="chat-round">
+    <p id="cusName" style="color: black;">{{customerName}}</p>
   </div>
   <div
     id="chat-panel"
     ng-init="ChatCtrl.getMessages()"
-    style="overflow-y: scroll; height: 420px; overflow-x: hidden; margin-top: 5px; padding-bottom: 15px; background-color: whitesmoke;"
+    class="chat-content-round"
   >
   <div  class="row no-gutters" data-ng-repeat="mess in messages track by $index">
     <div class="col-md-3 offset-md-4" ng-if="mess.senderId==loggedUserId">
@@ -29,7 +29,7 @@
   </div>
   </div>
   <div style="margin-top: 0px;">
-    <form id="chat-form" ng-submit="ChatCtrl.addChat(newMess)">
+    <form id="chat-form" ng-submit="ChatCtrl.addChat(newMess)" style="margin-top: 0 !important;">
       <div class="chat-box-tray">
         <input
           type="text"

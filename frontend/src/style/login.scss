@@ -17,7 +17,8 @@ body.forgot-password-request-admin,
 body.forgot-password-reset-customer,
 body.forgot-password-reset-seller,
 body.forgot-password-reset-admin {
-  background-color: $darkest;
+  background-color: $sidebar-bg;
+  background-image:  url(https://images.pexels.com/photos/1029618/pexels-photo-1029618.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
 }
 
 section {
@@ -39,16 +40,16 @@ section {
 
   &.login {
     &.admin {
-      margin-top: 0;
+      margin-top: 55px;
       h1 {
-        color: $dark;
         font-size: 20px;
         margin-bottom: 24px;
       }
       .logo {
         display: block;
         text-align: center;
-        font-size: 30px;
+        font-size: 26px;
+        color: $senary;
         .logo-part {
           font-family: 'Open Sans', sans-serif;
           text-transform: uppercase;
@@ -59,6 +60,13 @@ section {
         }
         .logo-part-2 {
           @extend .logo-part;
+        }
+        h1{
+          color: grey;
+          text-align: center;
+          font-weight: 400;
+          margin-bottom: 10px;
+          font-size: 18px;
         }
         #openLoyaltyLogo {
           max-width: 313px;
@@ -72,6 +80,8 @@ section {
         padding: 30px 30px 20px;
         background-color: $white;
         border: $default-border solid darken($senary, 5%);
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
         checkbox.checked span.fi {
           top: -3px;
           left: 1px;

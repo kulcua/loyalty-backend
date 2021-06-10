@@ -22,6 +22,11 @@ export default class RootController {
 
         this.activationMethod = null;
 
+
+        
+        this.firstConversation = null;
+
+
         this.$rootScope.$on('$includeContentLoaded', () => {
             $(document).foundation();
         });
@@ -46,6 +51,8 @@ export default class RootController {
                 }
             }
         });
+        
+        this.setUpConversation();
 
         this.$rootScope.$on('$stateChangeError', () => {
             //this.loadingParts.stateChanged = true;
@@ -90,6 +97,19 @@ export default class RootController {
             this.activationMethod = method;
         });
     }
+
+    setUpConversation()
+    { 
+        let data = {
+            conversationId: "00000000-0000-3333-0000-000000000003",
+            participantIds: ["22200000-0000-474c-b092-b0dd880c07e2","11111111-0000-474c-b092-b0dd880c07e1"],
+            participantNames: ["admin","John1 Doe1"],
+            lastMessageSnippet: "john1 doe1 hello world",
+            lastMessageTimestamp: "2021-06-10T17:33:48+0200"
+          }
+          this.firstConversation = data;
+    }
+
 
     _allTrue(obj) {
         for (var o in obj) {

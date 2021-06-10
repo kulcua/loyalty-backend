@@ -347,10 +347,10 @@ form {
   }
   .collection {
     position: relative;
-    border-left: 2px solid lighten($gray, 5%);
+    border-left: 2px solid #FFF6EB;
     padding: 25px;
     margin-bottom: 15px;
-    background-color: lighten($gray, 5%);
+    background-color: #FFF6EB;
     .fa-trash-o {
       color: $dark;
     }

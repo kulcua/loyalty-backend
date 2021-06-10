@@ -1,12 +1,12 @@
-<section class="login admin text-center">
+<section class="login admin text-center" >
     <form class="login-form" novalidate>
         <div class="row">
             <div class="small-12 large-4 small-centered columns">
                 <div class="logo text-center">
-                    <img id="openLoyaltyLogo" ng-src="{{RootCtrl.logo}}" style="display: inline-block;"/>
+                    <p style="margin-bottom: 5px;">Hey, glad to see you again!</a>
+                    <h1>Log in to get started</h1>
                 </div>
                 <div class="form-box text-left">
-                    <h1>{{"login.heading"|translate}}</h1>
                     <div class="alert callout" ng-show="showError">
                         <p>{{ errorMsg }}</p>
                     </div>
@@ -38,7 +38,7 @@
                             </label>
                         </div>
                     </div>
-                    <button class="expanded button button-septenary-colorized square login-button"
+                    <button class="expanded button button-septenary-colorized login-button"
                             ng-click="LoginCtrl.submit()">
                         <b>{{ "login.log_in"|translate }}</b>
                     </button>
@@ -47,9 +47,11 @@
                     </div>
                 </div>
                 <p class="text-center">
-                    <small class="whisper">{{ "login.copyrights" | translate }}</small>
+                    <small class="whisper">2021 Melodi</small>
                 </p>
             </div>
         </div>
     </form>
 </section>
+
+

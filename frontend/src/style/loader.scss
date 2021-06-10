@@ -61,6 +61,11 @@
 }
 
 .loader-wrapper {
+  b{
+    color: $senary;
+    font-size: 42px;
+    margin: 20px;
+  }
   #openLoyaltyLogo {
     max-width: 313px;
   }
@@ -95,7 +100,7 @@
   width: 100vw;
   height: 100vh;
   transition: opacity 0.1s;
-  background-color: $loader-bg;
+  background-color: $sidebar-bg;
   z-index: -1000;
   &.show {
     opacity: 1;
@@ -111,7 +116,7 @@
     top: calc(50vh - 102.5px);
     .logo-part {
       font-family: 'Open Sans', sans-serif;
-      text-transform: uppercase;
+      //text-transform: uppercase;
     }
     .logo-part-1 {
       @extend .logo-part;
@@ -379,7 +384,7 @@ box-loader {
 }
 
 #loading-bar .bar {
-  background: #bb343b !important;
+  background: $septenary !important;
   height: 5px !important;
 }
 

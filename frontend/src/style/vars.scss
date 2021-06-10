@@ -3,8 +3,8 @@ $secondary: #ed833f;
 $tertiary: #ffe560;
 $quaternary: #ecf5fa;
 $quinary: #40A967;
-$senary: #f9f7f4;
-$septenary: #BB343B;
+$senary: #011627;
+$septenary: rgba(255, 159, 28, 1);
 $octonary: #8E44AD;
 $nonary: #a48334;
 
@@ -28,10 +28,10 @@ $default-font: 'Open Sans', sans-serif;
 $page-title: rgb(54, 54, 54);
 
 $sidebar-width: 225px;
-$sidebar-bg: #333;
-$sidebar-nested-items: #242424;
-$sidebar-expanded-item: #2b2b2b;
-$sidebar-font-size: 13px;
+$sidebar-bg: #edf2fb;
+$sidebar-nested-items: #e2eafc;
+$sidebar-expanded-item:  #e2eafc;
+$sidebar-font-size: 14px;
 $sidebar-item-padding: 16px 12px;
 $sidebar-chevron-size: 11px;
 
@@ -40,13 +40,14 @@ $logo-height: 75px;
 $logo-font-size: 21px;
 
 $loader-bg: #242424;
-$loader-first-color: #bb343b;
-$loader-second-color: rgba(187, 52, 59, 0.2);
+$loader-first-color: lighten($secondary,10%);
+$loader-second-color: darken($secondary,5%);
+$tiffany-blue: rgba(46, 196, 182, 1);
 
 $box-border: '';
 $box-title-size: 16px;
 $box-title-color: $darkest;
-$box-title-bg: #f9f9f9;
+$box-title-bg: #edf2fb;
 $box-footer-bg: #f9f9f9;
 
 $form-label-color:$box-title-color;
@@ -59,8 +60,8 @@ $customer-header-color: #2b2b2b;
 
 $gray-font:rgb(153, 153, 153);
 
-$menu-icon-inactive: rgb(234, 237, 241);
-$menu-icon-active: white;
+$menu-icon-inactive: rgb(153, 153, 153);
+$menu-icon-active: #FF9F1C;
 
 $client-base-dark: rgb(51, 51, 51);
 $client-base-light: rgb(153, 153, 153);

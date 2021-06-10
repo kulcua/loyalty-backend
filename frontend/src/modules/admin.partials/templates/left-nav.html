@@ -1,7 +1,7 @@
 <section class="sidebar-left">
   <div class="row">
     <div class="logo">
-      <img ng-src="{{RootCtrl.logo}}" style="display: inline-block" />
+      <a class="logo-part">Melodi</a>
     </div>
     <ul class="vertical menu" data-accordion-menu>
       <li ng-show="RootCtrl.AuthService.hasPermission('ANALYTICS', 'VIEW')">
@@ -96,10 +96,28 @@
           </li>
         </ul>
       </li>
+      <li ng-show="RootCtrl.AuthService.hasPermission('SEGMENT', 'VIEW')">
+        <a href="#"
+          ><i class="fa fa-tags" aria-hidden="true"></i>{{ "nav.segments" |
+          translate }}</a
+        >
+        <ul class="menu vertical nested">
+          <li>
+            <a ui-sref="admin.segment-list"
+              >{{ "nav.all_segments" | translate }}</a
+            >
+          </li>
+          <li ng-show="RootCtrl.AuthService.hasPermission('SEGMENT', 'MODIFY')">
+            <a ui-sref="admin.add-segment"
+              >{{ "nav.add_segment" | translate }}</a
+            >
+          </li>
+        </ul>
+      </li>
       <li
         ng-show="RootCtrl.AuthService.hasPermission('CONVERSATION', 'MODIFY')"
       >
-        <a ui-sref="admin.chat"
+        <a ui-sref="admin.chat.chat-screen({conversation: RootCtrl.firstConversation})"
           ><i class="fa fa-comments-o" aria-hidden="true"></i>Conversations</a
         >
       </li>
@@ -150,24 +168,6 @@
           </li>
           <li ng-show="RootCtrl.AuthService.hasPermission('SELLER', 'MODIFY')">
             <a ui-sref="admin.add-seller">{{ "nav.add_seller" | translate }}</a>
-          </li>
-        </ul>
-      </li>
-      <li ng-show="RootCtrl.AuthService.hasPermission('SEGMENT', 'VIEW')">
-        <a href="#"
-          ><i class="fa fa-tags" aria-hidden="true"></i>{{ "nav.segments" |
-          translate }}</a
-        >
-        <ul class="menu vertical nested">
-          <li>
-            <a ui-sref="admin.segment-list"
-              >{{ "nav.all_segments" | translate }}</a
-            >
-          </li>
-          <li ng-show="RootCtrl.AuthService.hasPermission('SEGMENT', 'MODIFY')">
-            <a ui-sref="admin.add-segment"
-              >{{ "nav.add_segment" | translate }}</a
-            >
           </li>
         </ul>
       </li>

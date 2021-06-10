@@ -37,9 +37,11 @@
   }
 
   padding: 0 10px;
-  margin: 15px 15px 0 15px;
+  margin: 50px 15px 50px 15px;
   background-color: $white;
   border: 1px solid $gray;
+  box-shadow:  0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border-radius: 15px;
   &.no-margin {
     margin: 15px 0 0;
   }
@@ -48,6 +50,8 @@
     border-bottom: 1px solid $gray;
     overflow: hidden;
     position: relative;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     .fa {
       padding-right: 10px;
     }
@@ -68,7 +72,7 @@
   }
   .box-footer {
     clear: both;
-    margin: 0 -15px 0 -15px;
+    margin: 15px -15px 15px -15px;
     padding: 15px 15px 0 15px;
     border-top: 1px solid darken($senary, 5%);
     &.gray {

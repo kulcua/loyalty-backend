@@ -101,12 +101,12 @@
   "admin": {
     "dashboard": {
       "heading": "Dashboard",
-      "total_points_spent": "Points spent",
+      "total_points_spent": "Points Spent",
       "total_customers_registered": "Customers",
       "spending": "Spending",
       "orders": "Orders",
-      "daily_registrations": "New members",
-      "registrations_label": "New members"
+      "daily_registrations": "New Members",
+      "registrations_label": "New Members"
     },
     "translations": {
       "actions": "Actions",
@@ -126,15 +126,15 @@
       "key": "Key",
       "subject": "Subject",
       "content": "Content",
-      "sender_name": "Sender name",
-      "sender_email": "Sender email",
+      "sender_name": "Sender Name",
+      "sender_email": "Sender Email",
       "variables": "Variables",
       "heading": "Emails",
-      "edit_heading": "Edit email",
-      "list": "Emails list",
+      "edit_heading": "Edit Email",
+      "list": "Emails List",
       "prompt": "",
       "preview": "Preview",
-      "updated_at": "Updated at",
+      "updated_at": "Updated At",
       "edit": "Edit"
     },
     "logs": {
@@ -512,7 +512,7 @@
     "password": "Password",
     "log_in": "Sign in",
     "forgot": "Forgot password?",
-    "heading": "Login to your account"
+    "heading": "Login to get going"
   },
   "pos": {
     "transactions_amount": "Transactions value",

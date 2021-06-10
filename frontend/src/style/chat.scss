@@ -15,7 +15,7 @@ body {
 
 .container {
     margin: 2px auto;
-    background: #fff;
+    background: white;
     padding: 0px;
 }
 
@@ -95,8 +95,9 @@ input {
     padding: 10px 15px;
     display: flex;
     vertical-align: baseline;
-    background: #fff;
+    background: white;
     transition: .3s ease;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
     &--grey {
         background: #eee;
@@ -109,12 +110,15 @@ input {
         h6 {
             margin-top: 6px;
             margin-bottom: 0;
-            color: black
+            color: $senary;
+            font-weight: 500;
+            font-size: 18px;
         }
 
         p {
             color: grey;
             margin: 0;
+            font-weight: 400;
         }
     }
 
@@ -124,11 +128,11 @@ input {
 
 
     &--onhover:hover {
-        background: lightskyblue;
         cursor: pointer;
-
-        p,
-        h6,
+        h6{
+            color: $septenary;
+            font-weight: 700;
+        }
         .time {
             color: #fff !important;
         }
@@ -146,13 +150,13 @@ hr {
 
 
 .friend-drawer-selected {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 10px;
     padding: 10px 15px;
     display: flex;
     vertical-align: baseline;
     background: #fff;
     transition: .3s ease;
-    background-color: lightskyblue;
     &--grey {
         background: #eee;
     }
@@ -164,7 +168,8 @@ hr {
         h6 {
             margin-top: 6px;
             margin-bottom: 0;
-            color: black
+            color: $septenary;
+            font-weight: 700;
         }
 
         p {
@@ -184,7 +189,7 @@ hr {
     margin-top: 10px;
     margin-left: 20px;
     margin-right: 20px;
-    border-radius: 9px;
+    border-radius: 14px;
     position: relative;
     animation: fadeIn 1s ease-in;
 
@@ -223,7 +228,7 @@ hr {
     background: #eee;
     margin-top: 10px;
     margin-left: 20px;
-    border-radius: 9px;
+    border-radius: 14px;
     position: relative;
     animation: fadeIn 1s ease-in;
     width: fit-content;
@@ -250,17 +255,21 @@ hr {
         width: fit-content;
         max-width: 400px;
         margin-left: auto;
-        background: $blue;
+        background: $septenary;
         color: #fff;
     }
 }
 
 .chat-box-tray {
-    background: #eee;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     display: flex;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
     align-items: baseline;
     padding: 10px 15px;
     align-items: center;
+    border: 1px solid $gray;
     bottom: 0;
     input {
         margin: 0 10px;
@@ -282,7 +291,27 @@ hr {
     margin-left:5px;
     height: 10px;
     width: 10px;
-    background-color: blue;
+    background-color: $senary;
     border-radius: 50%;
     display:inline-block;
   }
+
+.chat-round {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    background-color: white;
+    height: 50px; padding: 15px ; 
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border: 1px solid $gray;
+}
+
+.chat-content-round {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    overflow-y: scroll; 
+    height: 450px;
+    overflow-x: hidden; 
+    padding-bottom: 15px; 
+    background-color: white; 
+    border: 1px solid $gray;
+    margin-bottom: 0;
+}
