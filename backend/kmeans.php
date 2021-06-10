@@ -15,7 +15,7 @@ ReadCustomerData();
 
 function ReadCustomerData()
 {
-    $url = '40.74.248.193/api/admin/customer';
+    $url = '127.0.0.1/api/admin/customer';
 
     $result = GetData($url);
 
