@@ -74,12 +74,12 @@ export default class ChatController {
         classname = "chat-left";
         id = senderId;
 
-        //update new mess
-        $('#cusid_' + senderId).html('<span class="dot"></span>');
-        $('#lastMess_' + senderId).html('<p class="text-muted">' + data.msg + '</p>');
-        $('#lastTime_' + senderId).html('<span class="time text-muted small">' + data.time + '</span');
-
+        $('#cusid_' + id).html('<span class="dot"></span>');
       }
+
+       //update new mess
+       $('#lastMess_' + id).html('<p class="text-muted">' + data.msg + '</p>');
+       $('#lastTime_' + id).html('<span class="time text-muted small">' + data.time + '</span');
       
       $('#chat-text' + id).append("<div class=" + classname + "> " + data.msg + " </div>");
       $('#chat-panel').animate({
