@@ -15,7 +15,7 @@ ReadCustomerData();
 
 function ReadCustomerData()
 {
-    $url = '127.0.0.1/api/admin/customer';
+    $url = '40.74.248.193/api/admin/customer';
 
     $result = GetData($url);
 
@@ -30,7 +30,7 @@ function ReadSegmentData()
 
     $index = 0;
 
-    $url = '127.0.0.1/api/segment';
+    $url = '40.74.248.193/api/segment';
 
     $result = GetData($url)->segments;
 
@@ -201,11 +201,11 @@ function HandleSegment($num, array $customers, $coordinates)
 
     if (sizeof($list_segments) == 0)
     {
-        $url = "127.0.0.1/api/segment";
+        $url = "40.74.248.193/api/segment";
         Post($url, $data);
     }
     else {
-        $url = "127.0.0.1/api/segment/$segmentId";
+        $url = "40.74.248.193/api/segment/$segmentId";
         Update($url, $data);
     }
 }
@@ -218,7 +218,7 @@ function Login()
     );
     
     $data = json_encode($data);
-    $url = "127.0.0.1/api/admin/login_check";
+    $url = "40.74.248.193/api/admin/login_check";
     $response = Post($url, $data);
 
     global $credentials;
