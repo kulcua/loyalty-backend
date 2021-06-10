@@ -1,0 +1,14 @@
+Setup crontab on linux:
+
+- get link file: 
+readlink -f demo.php
+
+- start cron:
+sudo service cron start
+
+- test (number mean was started):
+pgrep cron
+
+- write cron: https://crontab.guru/
+crontab -e
+39 14 * * * php /home/nha/loyalty-backend/backend/kmeans.php

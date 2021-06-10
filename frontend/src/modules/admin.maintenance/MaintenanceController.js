@@ -265,59 +265,35 @@ export default class MaintenanceController {
 
   editMaintenance(editedMaintenance) {
     let self = this;
-
-    self.MaintenanceService.putMaintenance(editedMaintenance).then(
-      (res) => {
-        if (self.$scope.maintenanceImage) {
-          self.$scope.fileValidate = {};
-
-          self.MaintenanceService.postMaintenanceImage(
-            self.maintenanceId,
-            self.$scope.maintenanceImage
-          )
-            .then((res2) => {
-              self.$state.go("admin.maintenances-list", {
-                maintenanceId: self.maintenanceId,
-              });
-              let message = self.$filter("translate")(
-                "xhr.put_single_maintenance.success"
-              );
-              self.Flash.create("success", message);
-            })
-            .catch((err) => {
-              self.$scope.fileValidate = self.Validation.mapSymfonyValidation(
-                err.data
-              );
-              self.MaintenanceService.storedFileError =
-                self.$scope.fileValidate;
-
-              let message = self.$filter("translate")(
-                "xhr.put_single_maintenance.warning"
-              );
-              self.Flash.create("warning", message);
-
-              self.$state.go("admin.edit-maintenance", {
-                maintenanceId: self.maintenanceId,
-              });
-            });
-        } else {
+    let validateFields = angular.copy(self.$scope.frontValidate);
+    let frontValidation = self.Validation.frontValidation(
+      editedMaintenance,
+      validateFields
+    );
+    if (_.isEmpty(frontValidation)) {
+      self.MaintenanceService.putMaintenance(
+        self.maintenanceId,
+        editedMaintenance
+      ).then(
+        (res) => {
           let message = self.$filter("translate")(
-            "xhr.put_single_maintenance.success"
+            "xhr.put_maintenance.success"
           );
           self.Flash.create("success", message);
           self.$state.go("admin.maintenances-list");
+        },
+        (res) => {
+          self.$scope.validate = self.Validation.mapSymfonyValidation(res.data);
+          let message = self.$filter("translate")("xhr.put_maintenance.error");
+          self.Flash.create("danger", message);
         }
-      },
-      (res) => {
-        self.$scope.validate = self.Validation.mapSymfonyValidation(res.data);
-        let message = self.$filter("translate")(
-          "xhr.put_single_maintenance.error"
-        );
-        self.Flash.create("danger", message);
-      }
-    );
+      );
+    } else {
+      self.$scope.validate = frontValidation;
+      let message = self.$filter("translate")("xhr.put_maintenance.error");
+      self.Flash.create("danger", message);
+    }
   }
-
   addSpecialReward(edit) {
     let self = this;
     let maintenance;

@@ -13,7 +13,6 @@ export default class MaintenanceService {
   }
 
   postMaintenance(newMaintenance) {
-    console.log(newMaintenance);
     return this.Restangular.one("maintenance").customPOST({
       maintenance: newMaintenance,
     });
@@ -30,11 +29,14 @@ export default class MaintenanceService {
   getFile(maintenanceId) {
     return this.Restangular.one("csv").one("level", maintenanceId).get();
   }
-  putMaintenance(editedMaintenance) {
+
+  putMaintenance(maintenanceId, editedMaintenance) {
     let self = this;
 
-    return editedMaintenance.customPUT({
-      maintenance: self.EditableMap.maintenance(editedMaintenance),
+    return self.Restangular.one("maintenance", maintenanceId).customPUT({
+      maintenance: self.Restangular.stripRestangular(
+        self.EditableMap.maintenance(editedMaintenance)
+      ),
     });
   }
 
@@ -43,8 +45,8 @@ export default class MaintenanceService {
 
     return this.Restangular.one("maintenance")
       .one(maintenanceId)
-      .one("activate")
-      .customPOST({ active: state });
+      .one(state ? "active" : "inactive")
+      .customPOST();
   }
 
   /**

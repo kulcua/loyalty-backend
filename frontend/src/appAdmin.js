@@ -108,6 +108,7 @@ require("./modules/admin.roles/module.js");
 require("./modules/admin.emails/module.js");
 require("./modules/admin.logs/module.js");
 require("./modules/admin.maintenance/module.js");
+require("./modules/admin.chat/module.js");
 
 if (!window.OpenLoyaltyConfig.debug) {
   if (!window.console) window.console = {};
@@ -153,6 +154,7 @@ angular
     "admin.users",
     "admin.emails",
     "admin.maintenance",
+    "admin.chat",
     "admin.logs",
     "simplemde",
     "ng-showdown",
