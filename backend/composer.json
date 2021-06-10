@@ -19,7 +19,8 @@
     "require": {
         "php": ">=7.1",
         "divante-ltd/open-loyalty-framework": "^3.2",
-        "cboden/ratchet": "^0.4.3"
+        "cboden/ratchet": "^0.4.3",
+        "bdelespierre/php-kmeans": "^1.0"
     },
     "scripts": {
         "post-install-cmd": [

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e581968e80f858c7d0e7102d0ac3fee",
+    "content-hash": "bd852b5cb5c576fe8fe4ba5b0b1b8d09",
     "packages": [
         {
             "name": "a2lix/auto-form-bundle",
@@ -154,6 +154,48 @@
                 "translation"
             ],
             "time": "2018-07-02T19:19:03+00:00"
+        },
+        {
+            "name": "bdelespierre/php-kmeans",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bdelespierre/php-kmeans.git",
+                "reference": "32fd509033059a6a10931894cdd7286366f22271"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bdelespierre/php-kmeans/zipball/32fd509033059a6a10931894cdd7286366f22271",
+                "reference": "32fd509033059a6a10931894cdd7286366f22271",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "KMeans": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Delespierre",
+                    "email": "benjamin.delespierre@gmail.com"
+                }
+            ],
+            "description": "K-Means algorithm for PHP",
+            "keywords": [
+                "kmeans",
+                "kmeans plus plus",
+                "php",
+                "utility"
+            ],
+            "time": "2018-02-18T13:59:51+00:00"
         },
         {
             "name": "beberlei/DoctrineExtensions",

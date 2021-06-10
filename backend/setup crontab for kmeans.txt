@@ -11,4 +11,4 @@ pgrep cron
 
 - write cron: https://crontab.guru/
 crontab -e
-39 14 * * * php /home/nha/php-kmeans/demo.php
+39 14 * * * php /home/nha/loyalty-backend/backend/kmeans.php
