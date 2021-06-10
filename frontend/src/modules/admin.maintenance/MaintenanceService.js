@@ -45,7 +45,7 @@ export default class MaintenanceService {
 
     return this.Restangular.one("maintenance")
       .one(maintenanceId)
-      .one(state ? "active" : "inactive")
+      .one(state?"active":"inactive")
       .customPOST();
   }
 

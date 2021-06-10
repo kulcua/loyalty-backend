@@ -65,14 +65,14 @@
             <button
               ng-if="row.active"
               class="tiny button button-septenary-colorized"
-              ng-click="MaintenanceCtrl.setMaintenanceState(!row.active, row.id)"
+              ng-click="MaintenanceCtrl.setMaintenanceState(!row.active, row.maintenanceId)"
             >
               active
             </button>
             <button
               ng-if="!row.active"
               class="tiny button button-default"
-              ng-click="MaintenanceCtrl.setMaintenanceState(!row.active, row.id)"
+              ng-click="MaintenanceCtrl.setMaintenanceState(!row.active, row.maintenanceId)"
             >
               inactive
             </button>
