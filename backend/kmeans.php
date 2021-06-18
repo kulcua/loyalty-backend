@@ -15,7 +15,7 @@ ReadCustomerData();
 
 function ReadCustomerData()
 {
-    $url = '40.74.248.193/api/admin/customer';
+    $url = '127.0.0.1/api/admin/customer';
 
     $result = GetData($url);
 
@@ -30,7 +30,7 @@ function ReadSegmentData()
 
     $index = 0;
 
-    $url = '40.74.248.193/api/segment';
+    $url = '127.0.0.1/api/segment';
 
     $result = GetData($url)->segments;
 
@@ -53,6 +53,7 @@ function GetData($url)
     $headers[] = 'Content-Type: application/x-www-form-urlencoded';
     $headers[] = 'Cache-Control: no-cache';
     
+    // get total result
     $ch = curl_init();
     
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -65,8 +66,28 @@ function GetData($url)
     echo 'Error:' . curl_error($ch);
     }
     curl_close($ch);
+    
+    $result = json_decode($result);
 
-    return $result = json_decode($result);
+    $total = $result->total;
+    
+    // get all data after have total result
+    $ch = curl_init();
+    $url = "$url?perPage=$total";
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+    }
+    curl_close($ch);
+
+    $result = json_decode($result);
+
+    return $result;
 }
 
 function CreatePoints($result)
@@ -77,11 +98,12 @@ function CreatePoints($result)
     $index = 0;
 
     $current_year = date("Y");
+
     foreach ($result->customers as $c)
     {
         if ($c->gender == "male")
-            $gender = 1;
-        else $gender = 2;
+            $gender = 0;
+        else $gender = 1;
 
         $transactionsAmount = rand(0, 1000);// $c->transactionsAmount;// 
         $customerId = $c->customerId;
@@ -107,7 +129,7 @@ foreach ($points as $i => $coordinates) {
 }
 
 // cluster these points in 3 clusters
-$clusters = $space->solve(3);
+$clusters = $space->solve(4);
 
 printf("Segment result:\n");
 // display the cluster centers and attached points
@@ -166,17 +188,23 @@ function HandleSegment($num, array $customers, $coordinates)
     global $list_segments;
     global $segmentId_index;
 
-    if ($coordinates[0] == 1)
-        $gender = "male";
-    else $gender = "female";
+    // if ($coordinates[0] == 1)
+    //     $gender = "male";
+    // else $gender = "female";
+
+    $gender = number_format((float)$coordinates[0], 2, '.', '');
 
     $transactionsAmount = number_format((float)$coordinates[1], 2, '.', '');
+
+    $age = number_format((float)$coordinates[2], 2, '.', '');
 
     if ($num == 0)
         $name = "Group 1 ";
     else if ($num == 1)
         $name = "Group 2 ";
-    else $name = "Group 3 ";
+    else if ($num == 2)
+        $name = "Group 3 ";
+    else $name = "Group 4 ";
 
     if (sizeof($list_segments) != 0)
     {
@@ -185,7 +213,7 @@ function HandleSegment($num, array $customers, $coordinates)
 
     $data = array(
         "segment" => array (
-            "name" => $name."[ gender: ".$gender.", transactions amount: ".$transactionsAmount.", age: ".$coordinates[2]." ]",
+            "name" => $name."[ gender: ".$gender.", transactions amount: ".$transactionsAmount.", age: ".$age." ]",
             "active" => "1",
             "description" => $description,
             "parts" =>  array ([
@@ -201,11 +229,11 @@ function HandleSegment($num, array $customers, $coordinates)
 
     if (sizeof($list_segments) == 0)
     {
-        $url = "40.74.248.193/api/segment";
+        $url = "127.0.0.1/api/segment";
         Post($url, $data);
     }
     else {
-        $url = "40.74.248.193/api/segment/$segmentId";
+        $url = "127.0.0.1/api/segment/$segmentId";
         Update($url, $data);
     }
 }
@@ -218,7 +246,7 @@ function Login()
     );
     
     $data = json_encode($data);
-    $url = "40.74.248.193/api/admin/login_check";
+    $url = "127.0.0.1/api/admin/login_check";
     $response = Post($url, $data);
 
     global $credentials;
