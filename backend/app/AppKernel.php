@@ -59,6 +59,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Kulcua\Extension\Bundle\MaintenanceBundle\MaintenanceBundle(),
             new Kulcua\Extension\Bundle\ChatBundle\ChatBundle(),
+            new Kulcua\Extension\Bundle\WarrantyBundle\WarrantyBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

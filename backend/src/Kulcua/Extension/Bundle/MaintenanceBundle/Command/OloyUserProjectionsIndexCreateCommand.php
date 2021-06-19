@@ -8,6 +8,7 @@ use OpenLoyalty\Component\Campaign\Domain\ReadModel\CampaignUsageRepository;
 use OpenLoyalty\Component\Transaction\Domain\ReadModel\TransactionDetailsRepository;
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository;
 use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsRepository;
+use Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetailsRepository;
 use Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetailsRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,6 +35,7 @@ class OloyUserProjectionsIndexCreateCommand extends ContainerAwareCommand
         MaintenanceDetailsRepository::class,
         ConversationDetailsRepository::class,
         MessageDetailsRepository::class,
+        WarrantyDetailsRepository::class,
     ];
 
     protected function configure()

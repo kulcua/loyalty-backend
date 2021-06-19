@@ -1,0 +1,6 @@
+Kulcua\Extension\Component\Warranty\Domain\WarrantyId:
+  exlusion_policy: ALL
+  properties:
+    warrantyId:
+      expose: true
+      serialized_name: warrantyId

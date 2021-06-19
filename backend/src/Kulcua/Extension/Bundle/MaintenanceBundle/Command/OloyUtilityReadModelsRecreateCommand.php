@@ -16,7 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsProjector;
 use Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetailsProjector;
-
+use Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetailsProjector;
 /**
  * Class OloyUtilityReadModelsRecreateCommand.
  */

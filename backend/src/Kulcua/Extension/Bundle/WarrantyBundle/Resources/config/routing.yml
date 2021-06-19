@@ -1,0 +1,4 @@
+warranty_api:
+    resource: "@WarrantyBundle/Controller/Api/WarrantyController.php"
+    type:     annotation
+    prefix:   /api

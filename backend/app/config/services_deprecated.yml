@@ -1,7 +1,14 @@
 services:
     _defaults:
         public: true
+    kc.warranty.repository:
+        alias: Kulcua\Extension\Component\Warranty\Domain\WarrantyRepository
+        deprecated: The "%service_id%" service is deprecated since Kulcua
 
+    kc.warranty.read_model.projector.warranty_details:
+        alias: Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetailsProjector
+        deprecated: The "%service_id%" service is deprecated since Kulcua    
+    
     kc.message.repository:
         alias: Kulcua\Extension\Component\Message\Domain\MessageRepository
         deprecated: The "%service_id%" service is deprecated since Kulcua

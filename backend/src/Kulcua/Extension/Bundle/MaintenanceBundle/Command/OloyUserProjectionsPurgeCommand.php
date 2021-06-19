@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetailsRepository;
 use Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetailsRepository;
 use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsRepository;
+use Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetailsRepository;
 
 /**
  * Class OloyUserProjectionsPurgeCommand.
@@ -31,6 +32,7 @@ class OloyUserProjectionsPurgeCommand extends ContainerAwareCommand
         MaintenanceDetailsRepository::class,
         ConversationDetailsRepository::class,
         MessageDetailsRepository::class,
+        WarrantyDetailsRepository::class,
     ];
 
     protected function configure()
