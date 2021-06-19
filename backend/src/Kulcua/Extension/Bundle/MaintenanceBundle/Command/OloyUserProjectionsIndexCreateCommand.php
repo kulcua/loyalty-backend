@@ -35,7 +35,7 @@ class OloyUserProjectionsIndexCreateCommand extends ContainerAwareCommand
         MaintenanceDetailsRepository::class,
         ConversationDetailsRepository::class,
         MessageDetailsRepository::class,
-        WarrantyDetailsRepository::class,
+        WarrantyDetailsRepository::class
     ];
 
     protected function configure()

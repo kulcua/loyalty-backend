@@ -25,7 +25,6 @@ services:
             - '@OpenLoyalty\Bundle\CoreBundle\Repository\DBALSnapshotRepository'
             - '@Broadway\Snapshotting\Snapshot\Trigger\EventCountTrigger'
 
-    # Kulcua\Extension\Component\Warranty\Infrastructure\Repository\WarrantyDetailsElasticsearchRepository:
     kc.warranty.read_model.repository.warranty_details:
         class: 'Broadway\ReadModel\ReadModel'
         factory: ['@oloy.read_model.repository.factory', create]

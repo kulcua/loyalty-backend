@@ -35,7 +35,8 @@ class OloyUtilityReadModelsRecreateCommand extends ContainerAwareCommand
         'campaign_bought' => 'oloy.campaign.read_model.projector.campaign_bought',
         'maintenance_details' => MaintenanceDetailsProjector::class,
         'conversation_details' => ConversationDetailsProjector::class,
-        'message_details' => MessageDetailsProjector::class
+        'message_details' => MessageDetailsProjector::class,
+        'warantty_details' => WarrantyDetailsProjector::class
     ];
 
     /**
