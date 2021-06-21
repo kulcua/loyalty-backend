@@ -53,6 +53,21 @@ class WarrantyDetails implements SerializableReadModel, VersionableReadModel
     protected $active;
 
     /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var string
+     */
+    protected $cost;
+
+    /**
+     * @var string
+     */
+    protected $paymentStatus;
+
+    /**
      * @var CustomerId|null
      */
     protected $customerId;
@@ -107,6 +122,9 @@ class WarrantyDetails implements SerializableReadModel, VersionableReadModel
         $warranty->warrantyCenter = $data['warrantyCenter'];
         $warranty->createdAt = $data['createdAt'];
         $warranty->active = $data['active'];
+        $warranty->description = $data['description'];
+        $warranty->cost = $data['cost'];
+        $warranty->paymentStatus = $data['paymentStatus'];
 
         return $warranty;
     }
@@ -125,6 +143,9 @@ class WarrantyDetails implements SerializableReadModel, VersionableReadModel
             'warrantyCenter' => $this->warrantyCenter,
             'createdAt' => $this->getCreatedAt() ? $this->getCreatedAt()->getTimestamp() : null,
             'active' => $this->active,
+            'description' => $this->description,
+            'cost' => $this->cost,
+            'paymentStatus' => $this->paymentStatus,
             'customerData' => $this->getcustomerData()->serialize()
         ];
     }
@@ -271,5 +292,53 @@ class WarrantyDetails implements SerializableReadModel, VersionableReadModel
     public function setActive(?bool $active): void
     {
         $this->active = $active;
+    }
+
+     /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCost(): string
+    {
+        return $this->cost;
+    }
+
+    /**
+     * @param string $cost
+     */
+    public function setCost(string $cost): void
+    {
+        $this->cost = $cost;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentStatus(): string
+    {
+        return $this->paymentStatus;
+    }
+
+    /**
+     * @param string $paymentStatus
+     */
+    public function setPaymentStatus(string $paymentStatus): void
+    {
+        $this->paymentStatus = $paymentStatus;
     }
 }

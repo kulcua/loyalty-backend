@@ -26,7 +26,10 @@ class BookWarranty extends WarrantyCommand
         'bookingTime',
         'warrantyCenter',
         'createdAt',
-        'active'
+        'active',
+        'description',
+        'cost',
+        'paymentStatus'
     ];
 
     private $requiredCustomerFields = [

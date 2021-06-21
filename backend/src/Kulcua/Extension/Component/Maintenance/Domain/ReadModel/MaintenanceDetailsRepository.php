@@ -29,6 +29,30 @@ interface MaintenanceDetailsRepository extends Repository
     public function findByProductSku(string $productSku, bool $withCustomer = true): array;
 
     /**
+     * @param string $description
+     * @param bool  $withCustomer
+     *
+     * @return MaintenanceDetails[]
+     */
+    public function findByDescription(string $description, bool $withCustomer = true): array;
+
+    /**
+     * @param string $cost
+     * @param bool  $withCustomer
+     *
+     * @return MaintenanceDetails[]
+     */
+    public function findByCost(string $cost, bool $withCustomer = true): array;
+
+    /**
+     * @param string $paymentStatus
+     * @param bool  $withCustomer
+     *
+     * @return MaintenanceDetails[]
+     */
+    public function findByPaymentStatus(string $paymentStatus, bool $withCustomer = true): array;
+
+    /**
      * @param string $bookingTime
      * @param bool  $withCustomer
      *

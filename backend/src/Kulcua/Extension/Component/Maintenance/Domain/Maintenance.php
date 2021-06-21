@@ -54,6 +54,21 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     protected $active;
 
     /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var string
+     */
+    protected $cost;
+
+    /**
+     * @var bool
+     */
+    protected $paymentStatus;
+
+    /**
      * @var CustomerBasicData
      */
     protected $customerData;
@@ -122,6 +137,9 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
         $this->bookingTime = $maintenanceData['bookingTime'];
         $this->warrantyCenter = $maintenanceData['warrantyCenter'];
         $this->createdAt = $maintenanceData['createdAt'];
+        $this->description = $maintenanceData['description'];
+        $this->cost = $maintenanceData['cost'];
+        $this->paymentStatus = $maintenanceData['paymentStatus'];
         $this->customerData = CustomerBasicData::deserialize($event->getCustomerData());
     }
 
@@ -223,5 +241,29 @@ class Maintenance extends SnapableEventSourcedAggregateRoot
     public function getCustomerData(): CustomerBasicData
     {
         return $this->customerData;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCost(): string
+    {
+        return $this->cost;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentStatus(): string
+    {
+        return $this->paymentStatus;
     }
 }

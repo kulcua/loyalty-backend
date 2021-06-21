@@ -54,6 +54,21 @@ class Warranty extends SnapableEventSourcedAggregateRoot
     protected $active;
 
     /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var string
+     */
+    protected $cost;
+
+    /**
+     * @var string
+     */
+    protected $paymentStatus;
+
+    /**
      * @var CustomerBasicData
      */
     protected $customerData;

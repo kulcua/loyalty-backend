@@ -34,6 +34,9 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
             'createdAt' => (new \DateTime('+1 day'))->getTimestamp(),
             'active' => false,
             'warrantyCenter' => 'HCM',
+            'description' => 'no description',
+            'cost' => '10.000',
+            'paymentStatus' => 'paid'
         ];
 
         /** @var CommandBus $bus */
@@ -64,6 +67,7 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
 
         $maintenanceData['productSku'] = '22222';
         $maintenanceData['active'] = true;
+        $maintenanceData['paymentStatus'] = 'unpaid';
 
         $bus->dispatch(
             new BookMaintenance(
@@ -90,6 +94,8 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
         $maintenanceData['productSku'] = '333333';
         $maintenanceData['bookingTime'] = '10:00';
         $maintenanceData['warrantyCenter'] = 'Vung Tau';
+        $maintenanceData['paymentStatus'] = 'unpaid';
+
         $bus->dispatch(
             new BookMaintenance(
                 new MaintenanceId(self::MAINTENANCE4_ID),
@@ -115,6 +121,8 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
         $maintenanceData['productSku'] = '44444';
         $maintenanceData['bookingTime'] = '10:30';
         $maintenanceData['warrantyCenter'] = 'Tra Vinh';
+        $maintenanceData['paymentStatus'] = 'paid';
+
         $bus->dispatch(
             new BookMaintenance(
                 new MaintenanceId(self::MAINTENANCE3_ID),

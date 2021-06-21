@@ -58,6 +58,9 @@ class WarrantyDetailsProjector extends Projector
         $readModel->setWarrantyCenter($warrantyData['warrantyCenter']);
         $readModel->setCreatedAt($warrantyData['createdAt']);
         $readModel->setActive($warrantyData['active']);
+        $readModel->setDescription($warrantyData['description']);
+        $readModel->setCost($warrantyData['cost']);
+        $readModel->setPaymentStatus($warrantyData['paymentStatus']);
         $readModel->setCustomerData(CustomerBasicData::deserialize($event->getCustomerData()));
 
         $this->repository->save($readModel);
@@ -93,6 +96,18 @@ class WarrantyDetailsProjector extends Projector
 
         if (isset($data['active'])) {
             $readModel->setActive($data['active']);
+        }
+
+        if (isset($data['description'])) {
+            $readModel->setProductSku($data['description']);
+        }
+
+        if (isset($data['cost'])) {
+            $readModel->setProductSku($data['cost']);
+        }
+
+        if (isset($data['paymentStatus'])) {
+            $readModel->setProductSku($data['paymentStatus']);
         }
 
         $this->repository->save($readModel);

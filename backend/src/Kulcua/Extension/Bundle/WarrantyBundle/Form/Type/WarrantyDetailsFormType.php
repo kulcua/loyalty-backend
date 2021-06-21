@@ -48,5 +48,14 @@ class WarrantyDetailsFormType extends AbstractType
                 'required' => false,
             ]
         );
+        $builder->add('description', TextType::class, [
+            'required' => true
+        ]);
+        $builder->add('cost', TextType::class, [
+            'required' => true
+        ]);
+        $builder->add('paymentStatus', TextType::class, [
+            'required' => true
+        ]);
     }
 }
