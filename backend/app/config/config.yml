@@ -143,3 +143,17 @@ a2lix_translation_form:
 
 doctrine_migrations:
     namespace: OpenLoyalty\Migrations
+
+knp_gaufrette:
+  adapters:
+    message_photos_local:
+      local:
+        directory: "%kernel.root_dir%/uploads/"
+        create:     true
+  filesystems:
+    message_photos:
+    #   adapter: "%kc.message.photos_adapter%"
+    #   alias: message_photos_filesystem
+    message_photos:
+      adapter: "message_photos_local"
+      alias: message_photos_filesystem

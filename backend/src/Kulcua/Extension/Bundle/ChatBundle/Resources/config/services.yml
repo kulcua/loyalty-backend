@@ -1,10 +1,10 @@
-# imports:
-#    - { resource: 'services/forms.yml' }
-
 services:
     _defaults:
         autowire: true
         autoconfigure: true
+
+    Kulcua\Extension\Bundle\ChatBundle\Command\:
+        resource: '../../Command'
 
     Kulcua\Extension\Bundle\ChatBundle\Controller\:
             resource: '../../Controller'
@@ -20,3 +20,13 @@ services:
         arguments:
             - '@broadway.command_handling.command_bus'
             - '@doctrine.orm.entity_manager'
+
+    kc.message.photos_filesystem:
+        public: true
+        class:     Gaufrette\Filesystem
+        factory:   ['@knp_gaufrette.filesystem_map', get]
+        arguments: ['message_photos']
+
+    Kulcua\Extension\Bundle\ChatBundle\Service\MessagePhotoUploader:
+        arguments:
+            $filesystem: "@kc.message.photos_filesystem"

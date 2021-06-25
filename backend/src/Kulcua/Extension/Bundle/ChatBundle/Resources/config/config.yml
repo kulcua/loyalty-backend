@@ -7,3 +7,14 @@ jms_serializer:
         Message:
           namespace_prefix: "Kulcua\\Extension\\Component\\Message\\Domain"
           path: "@ChatBundle/Resources/config/serializer"
+
+doctrine:
+    dbal:
+        types:
+            photo_id: Kulcua\Extension\Component\Message\Infrastructure\Doctrine\Type\PhotoIdDoctrineType
+
+chat:
+  photos_adapter: "%message_photos_adapter%"
+  photos_adapter_env: "%message_photos_adapter_env%"
+  photos_min_width: 600
+  photos_min_height: 600

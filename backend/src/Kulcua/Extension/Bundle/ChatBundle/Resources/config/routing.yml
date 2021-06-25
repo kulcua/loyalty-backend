@@ -1,9 +1,14 @@
-conversation_api:
+conversation:
     resource: "@ChatBundle/Controller/Api/ConversationController.php"
     type:     annotation
     prefix:   /api/chat
 
-message_api:
+message:
     resource: "@ChatBundle/Controller/Api/MessageController.php"
+    type:     annotation
+    prefix:   /api/chat
+
+message_photo:
+    resource: "@ChatBundle/Controller/Api/MessagePhotoController.php"
     type:     annotation
     prefix:   /api/chat
