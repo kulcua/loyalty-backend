@@ -19,21 +19,21 @@ class ChatExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        // $configuration = new Configuration();
+        // $config = $this->processConfiguration($configuration, $configs);
 
-        $value = $config['photos_adapter_env'];
-        if (!$value || !getenv($value)) {
-            $value = $config['photos_adapter'];
-            if (!$value) {
-                throw new \LogicException('photos_adapter_env or photos_adapter must be configured');
-            }
-        } else {
-            $value = getenv($value);
-        }
-        $container->setParameter('kc.message.photos_adapter', $value);
-        $container->setParameter('kc.message.photos_min_width', $config['photos_min_width']);
-        $container->setParameter('kc.message.photos_min_height', $config['photos_min_height']);
+        // $value = $config['photos_adapter_env'];
+        // if (!$value || !getenv($value)) {
+        //     $value = $config['photos_adapter'];
+        //     if (!$value) {
+        //         throw new \LogicException('photos_adapter_env or photos_adapter must be configured');
+        //     }
+        // } else {
+        //     $value = getenv($value);
+        // }
+        // $container->setParameter('kc.message.photos_adapter', $value);
+        // $container->setParameter('kc.message.photos_min_width', $config['photos_min_width']);
+        // $container->setParameter('kc.message.photos_min_height', $config['photos_min_height']);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         $loader->load('domain.yml');
