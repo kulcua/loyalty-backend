@@ -84,15 +84,15 @@
         </ul>
       </li>
       <li ng-show="RootCtrl.AuthService.hasPermission('MAINTENANCE', 'VIEW')">
-        <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>Maintenance</a>
+        <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>Đăng ký bảo trì</a>
         <ul class="menu vertical nested">
           <li>
-            <a ui-sref="admin.maintenances-list">Maintenances list</a>
+            <a ui-sref="admin.maintenances-list">Danh sách đăng ký bảo trì</a>
           </li>
           <li
             ng-show="RootCtrl.AuthService.hasPermission('MAINTENANCE', 'MODIFY')"
           >
-            <a ui-sref="admin.add-maintenance">Add maintenance</a>
+            <a ui-sref="admin.add-maintenance">Thêm đăng ký bảo trì</a>
           </li>
         </ul>
       </li>
@@ -112,13 +112,18 @@
               >{{ "nav.add_segment" | translate }}</a
             >
           </li>
+          <li ng-show="RootCtrl.AuthService.hasPermission('SEGMENT', 'MODIFY')">
+            <a ui-sref="admin.auto-segment"
+              >Tự động phân loại khách hàng</a
+            >
+          </li>
         </ul>
       </li>
       <li
         ng-show="RootCtrl.AuthService.hasPermission('CONVERSATION', 'MODIFY')"
       >
         <a ui-sref="admin.chat.chat-screen({conversation: RootCtrl.firstConversation})"
-          ><i class="fa fa-comments-o" aria-hidden="true"></i>Conversations</a
+          ><i class="fa fa-comments-o" aria-hidden="true"></i>Hỗ trợ khách hàng</a
         >
       </li>
       <li ng-show="RootCtrl.AuthService.hasPermission('EARNING_RULE', 'VIEW')">

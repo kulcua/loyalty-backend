@@ -11,6 +11,8 @@ export default class SegmentController {
         this.$scope.newSegment = {parts: [{criteria: []}]};
         this.$scope.editableFields = {};
         this.$scope.validate = {};
+        this.$scope.barChartLabels = {};
+        this.$scope.barChartData = {};
         this.segmentId = $stateParams.segmentId || null;
         this.$scope.segmentName = $stateParams.segmentName || false;
         this.NgTableParams = NgTableParams;
@@ -56,6 +58,25 @@ export default class SegmentController {
             coverLoader: true,
             removeSegment: false
         }
+   
+    }
+
+    getStats()
+    {
+        let self = this;
+        self.loaderStates.coverLoader = false;
+        // self.testChart.barChartOptions = {
+        //     scaleShowVerticalLines : false,
+        //     responsive : true
+        // };
+
+        self.barChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+        // self.testChart.barChartType = 'bar';
+        // self.testChart.barChartLegend = true;
+          self.barChartData = [
+           {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+           {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+         ];
     }
 
     getData() {

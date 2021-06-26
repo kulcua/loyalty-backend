@@ -1,7 +1,7 @@
 <box-loader loading="false" cover="1" class="cover" delay="1000"></box-loader>
 
 <div class="heading" ng-init="newMaintenance={}">
-  <h1>Maintenance Register</h1>
+  <h1>Đăng ký bảo trì</h1>
 </div>
 <div style="clear: both"></div>
 
@@ -9,7 +9,7 @@
   <div class="box-content">
     <div class="row">
       <div class="medium-12 columns">
-        <admin-fieldset-block fieldset-label="Basic Information">
+        <admin-fieldset-block fieldset-label="Thông tin cơ bản">
           <admin-fieldset-row
             ng-repeat="field in translatableFields"
             row-label="{{ field.label }}"
@@ -20,10 +20,10 @@
           </admin-fieldset-row>
         </admin-fieldset-block>
 
-        <admin-fieldset-block fieldset-label="Detail Information">
+        <admin-fieldset-block fieldset-label="Thông tin chi tiết">
           <div class="row">
             <div class="medium-2 small-3 columns">
-              <label>Active</label>
+              <label>Trạng thái đơn đăng ký</label>
             </div>
             <div
               class="medium-10 small-9 columns"
@@ -37,10 +37,9 @@
               ></selectize>
             </div>
           </div>
-
           <div class="row">
             <div class="medium-2 small-3 columns">
-              <label>Product SKU <span class="required">*</span></label>
+              <label>Mã sản phẩm<span class="required">*</span></label>
             </div>
             <div
               class="medium-10 small-9 columns"
@@ -55,7 +54,7 @@
           </div>
           <div class="row">
             <div class="medium-2 small-3 columns">
-              <label>Warranty center <span class="required">*</span></label>
+              <label>Trung tâm bảo hành <span class="required">*</span></label>
             </div>
             <div
               class="medium-10 small-9 columns"
@@ -70,7 +69,37 @@
           </div>
           <div class="row">
             <div class="medium-2 small-3 columns">
-              <label>Booking date <span class="required">*</span></label>
+              <label>Phí bảo trì <span class="required">*</span></label>
+            </div>
+            <div
+              class="medium-10 small-9 columns"
+              form-validation="validate.reward.name.errors"
+            >
+              <input
+                type="text"
+                ng-model="newMaintenance.maintenanceData.cost"
+                required
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Mô tả <span class="required">*</span></label>
+            </div>
+            <div
+              class="medium-10 small-9 columns"
+              form-validation="validate.reward.name.errors"
+            >
+              <input
+                type="text"
+                ng-model="newMaintenance.maintenanceData.discription"
+                required
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Ngày đến <span class="required">*</span></label>
             </div>
             <div class="medium-10 small-9 columns">
               <input
@@ -82,7 +111,7 @@
           </div>
           <div class="row">
             <div class="medium-2 small-3 columns">
-              <label>Booking time <span class="required">*</span></label>
+              <label>Thời gian <span class="required">*</span></label>
             </div>
             <div class="medium-10 small-9 columns">
               <input
@@ -94,7 +123,35 @@
           </div>
           <div class="row">
             <div class="medium-2 small-3 columns">
-              <label>Create at <span></span></label>
+              <label>Trạng thái thanh toán <span class="required">*</span></label>
+            </div>
+            <div class="medium-10 small-9 columns">
+              <input
+                type="text"
+                ng-model="newMaintenance.maintenanceData.paymentStatus"
+                required
+              />
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Trạng thái thanh toán</label>
+            </div>
+            <div
+              class="medium-10 small-9 columns"
+              form-validation="validate.active.errors"
+            >
+              <selectize
+                config="MaintenanceCtrl.activePaymentConfig"
+                options="MaintenanceCtrl.activePayment"
+                ng-model="newMaintenance.maintenanceData.paymentStatus"
+                ng-init="newMaintenance.maintenanceData.paymentStatus=0"
+              ></selectize>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="medium-2 small-3 columns">
+              <label>Ngày tạo <span></span></label>
             </div>
             <div class="medium-10 small-9 columns">
               <div ng-app ng-controller="MaintenanceCtrl.Ctrl" color="black">

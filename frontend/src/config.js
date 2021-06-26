@@ -1,5 +1,5 @@
 const config = {
-    "apiUrl": "http://40.74.248.193/api",
+    "apiUrl": "http://70.37.66.47/api",
     "dateFormat": "YYYY-MM-DD",
     "dateTimeFormat": "YYYY-MM-DD HH:mm",
     "perPage": 20,
@@ -7,7 +7,7 @@ const config = {
     "modules": []
 };
 window.OpenLoyaltyConfig = {
-    "apiUrl": "http://40.74.248.193/api",
+    "apiUrl": "http://70.37.66.47/api",
     "dateFormat": "YYYY-MM-DD",
     "dateTimeFormat": "YYYY-MM-DD HH:mm",
     "perPage": 20,

@@ -40,12 +40,12 @@ export default class MaintenanceController {
     this.$scope.translatableFields = [
       {
         key: "name",
-        label: "Name",
+        label: "Tên khách hàng",
         required: true,
       },
       {
         key: "phone",
-        label: "Phone",
+        label: "Số điện thoại",
         required: true,
       },
       {
@@ -57,15 +57,32 @@ export default class MaintenanceController {
     this.$scope.availableFrontendTranslations = this.DataService.getAvailableFrontendTranslations();
     this.active = [
       {
-        name: this.$filter("translate")("global.active"),
+        name: "Có hiêụ lực",
         type: true,
       },
       {
-        name: this.$filter("translate")("global.inactive"),
+        name: "Hết hiệu lực",
         type: false,
       },
     ];
     this.activeConfig = {
+      valueField: "type",
+      labelField: "name",
+      create: false,
+      sortField: "name",
+      maxItems: 1,
+    };
+    this.activePayment = [
+      {
+        name: "Đã thanh toán",
+        type: true,
+      },
+      {
+        name: "Chưa thanh toán",
+        type: false,
+      },
+    ];
+    this.activePaymentConfig = {
       valueField: "type",
       labelField: "name",
       create: false,

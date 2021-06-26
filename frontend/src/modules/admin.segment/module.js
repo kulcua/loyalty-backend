@@ -88,6 +88,26 @@ angular.module(MODULE_NAME, [])
                     }
                 }
             })
+            .state('admin.auto-segment', {
+                url: "/auto-segment",
+                views: {
+                    'extendTop@': {
+                        templateUrl: 'templates/add-segment-extend-top.html',
+                        controller: 'SegmentController',
+                        controllerAs: 'SegmentCtrl'
+                    },
+                    'main@': {
+                        templateUrl: require('./templates/auto-segment.html'),
+                        controller: 'SegmentController',
+                        controllerAs: 'SegmentCtrl'
+                    },
+                    'extendBottom@': {
+                        templateUrl: 'templates/add-segment-extend-bottom.html',
+                        controller: 'SegmentController',
+                        controllerAs: 'SegmentCtrl'
+                    }
+                }
+            })
     })
     .run(($templateCache, $http) => {
         let catchErrorTemplate = () => {
@@ -137,6 +157,14 @@ angular.module(MODULE_NAME, [])
                 }
             )
             .catch(catchErrorTemplate);
+
+        $http.get(`templates/auto-segment.html`)
+        .then(
+            response => {
+                $templateCache.put('templates/auto-segment.html', response.data);
+            }
+        )
+        .catch(catchErrorTemplate);
 
         $templateCache.put('templates/anniversary.html', require('./templates/partials/anniversary.html'));
         $templateCache.put('templates/average_transaction_amount.html', require('./templates/partials/average_transaction_amount.html'));

@@ -1,0 +1,27 @@
+<box-loader loading="SegmentCtrl.loaderStates.coverLoader" cover="1" class="cover" delay="1000"></box-loader>
+
+<div class="heading" ng-init="SegmentCtrl.getStats()">
+    <h1>Automatic Segment</h1>
+    <!-- <div class="action-buttons">
+        <button ng-show="SegmentCtrl.AuthService.hasPermission('SEGMENT', 'MODIFY')" class="medium button button-septenary-colorized" ui-sref="admin.add-segment">
+            {{ "segment.add" | translate }}
+        </button>
+    </div> -->
+</div>
+<div style="clear:both;"></div>
+
+<div class="client-list box" style="background-color: white;">
+    <div class="box-title">
+        <h1 class="text-left">Ages Frequency</h1>
+    </div>
+    <div class="box-content">
+        <canvas id="line"
+                class="chart chart-bar"
+                chart-data="SegmentCtrl.barChartData"
+                chart-labels="SegmentCtrl.barChartLabels"
+        >
+        </canvas>
+    </div>
+</div>
+
+

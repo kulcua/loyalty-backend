@@ -6,14 +6,14 @@
 ></box-loader>
 
 <div class="heading" ng-init="MaintenanceCtrl.getData()">
-  <h1>Maintenances</h1>
+  <h1>Danh sách đăng ký bảo trì</h1>
   <div class="action-buttons">
     <button
       ng-show="MaintenanceCtrl.AuthService.hasPermission('MAINTENANCE', 'MODIFY')"
       class="medium button button-septenary-colorized"
       ui-sref="admin.add-maintenance"
     >
-      Add Maintenance
+      Thêm mới
     </button>
   </div>
 </div>
@@ -21,7 +21,7 @@
 
 <div class="client-list box">
   <div class="box-title">
-    <h1 class="text-left">Maintenances List</h1>
+    <h1 class="text-left">Danh sách đăng ký bảo trì</h1>
   </div>
   <div class="box-content">
     <box-loader
@@ -32,33 +32,40 @@
       class="default"
       template-pagination="templatePagination.html"
     >
+ 
       <tr ng-repeat="row in $data">
         <td data-title="'ID'" sortable="'id'">
           <span ng-bind="row.maintenanceId"></span>
         </td>
-        <td data-title="'Product SKU'">
+        <td data-title="'Mã sản phẩm'">
           <span ng-bind="row.productSku"></span>
         </td>
-        <td data-title="'Booking date'">
-          <span ng-bind="row.bookingDate|date: 'yyyy-MM-dd HH:mm'"></span>
+        <td data-title="'Ngày đến'">
+          <span ng-bind="row.bookingDate|date: 'yyyy-MM-dd'"></span>
         </td>
-        <td data-title="'Booking time'">
+        <td data-title="'Thời gian'">
           <span ng-bind="row.bookingTime"></span>
         </td>
-        <td data-title="'Warranty center'">
+        <td data-title="'Trung tâm bảo hành'">
           <span ng-bind="row.warrantyCenter"></span>
         </td>
-        <td data-title="'Customer name'">
+        <td data-title="'Phí bảo trì'">
+          <span ng-bind="row.cost"></span>
+        </td>
+        <td data-title="'Trạng thái thanh toán'">
+          <span ng-bind="row.paymentStatus"></span>
+        </td>
+        <td data-title="'Ghi chú'">
+          <span ng-bind="row.discription"></span>
+        </td>
+        <td data-title="'Tên khách hàng'">
           <span ng-bind="row.customerData.name"></span>
         </td>
-        <td data-title="'Customer phone'">
+        <td data-title="'Số điện thoại'">
           <span ng-bind="row.customerData.phone"></span>
         </td>
-        <td data-title="'Customer email'">
-          <span ng-bind="row.customerData.email"></span>
-        </td>
 
-        <td data-title="'Active'" sortable="'active'">
+        <td data-title="'Trạng thái'" sortable="'active'">
           <span
             ng-show="MaintenanceCtrl.AuthService.hasPermission('EARNING_RULE', 'MODIFY')"
           >
@@ -67,14 +74,14 @@
               class="tiny button button-septenary-colorized"
               ng-click="MaintenanceCtrl.setMaintenanceState(!row.active, row.maintenanceId)"
             >
-              active
+             Active
             </button>
             <button
               ng-if="!row.active"
               class="tiny button button-default"
               ng-click="MaintenanceCtrl.setMaintenanceState(!row.active, row.maintenanceId)"
             >
-              inactive
+             Inactive
             </button>
           </span>
           <span
@@ -84,7 +91,7 @@
             <span ng-if="!row.active"> inactive </span>
           </span>
         </td>
-        <td data-title="'Actions'">
+        <td data-title="'Chỉnh sửa'">
           <button
             ng-show="MaintenanceCtrl.AuthService.hasPermission('MAINTENANCE', 'MODIFY')"
             type="button"
@@ -108,13 +115,14 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Product sku</th>
-        <th>Booking date</th>
-        <th>Booking time</th>
-        <th>Warranty center</th>
-        <th>Customer name</th>
-        <th>Customer phone</th>
-        <th>Customer email</th>
+        <th>Mã sản phẩm/th>
+        <th>Ngày đến</th>
+        <th>Thời gian</th>
+        <th>Trung tâm bảo hành</th>
+        <th>Phí bảo trì</th>
+        <th>Trạng thái thanh toán</th>
+        <th>Tên khách hàng</th>
+        <th>Số điện thoại</th>
       </tr>
     </thead>
     <!-- <tbody>
