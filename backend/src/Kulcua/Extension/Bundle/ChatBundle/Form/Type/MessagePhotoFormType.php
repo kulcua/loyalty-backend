@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Kulcua\Extension\Bundle\ChatBundle\Validator\Constraints;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type as Numeric;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -50,8 +49,8 @@ class MessagePhotoFormType extends AbstractType
                     new Assert\NotBlank(),
                     new Constraints\Image(
                         [
-                            'mimeTypes' => ['image/png', 'image/gif', 'image/jpeg', 'image/jpg'],
-                            'maxSize' => '2M',
+                            'mimeTypes' => ['image/png', 'image/gif', 'image/jpeg', 'image/jpg', 'video/mp4'],
+                            'maxSize' => '20M',
                         ]
                     ),
                 ],

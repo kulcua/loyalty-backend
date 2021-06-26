@@ -9,7 +9,7 @@ use Kulcua\Extension\Component\Message\Domain\Exception\InvalidPhotoMimeTypeExce
  */
 class PhotoMimeType
 {
-    private const SUPPORTED_MIME_TYPES = ['image/gif', 'image/jpg', 'image/png', 'image/jpeg'];
+    private const SUPPORTED_MIME_TYPES = ['image/gif', 'image/jpg', 'image/png', 'image/jpeg', 'video/mp4'];
 
     /**
      * @var string
