@@ -1,0 +1,18 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Kulcua\Extension\Bundle\SuggestionBoxBundle\Controller\:
+            resource: '../../Controller'
+            tags: ['controller.service_arguments']
+
+    kc.suggestion_box.photos_filesystem:
+        public: true
+        class:     Gaufrette\Filesystem
+        factory:   ['@knp_gaufrette.filesystem_map', get]
+        arguments: ['suggestion_box_photos']
+
+    Kulcua\Extension\Bundle\SuggestionBoxBundle\Service\SuggestionBoxPhotoUploader:
+        arguments:
+            $filesystem: "@kc.suggestion_box.photos_filesystem"

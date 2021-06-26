@@ -1,0 +1,73 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    kc.suggestion_box.command_handler:
+        class: Kulcua\Extension\Component\SuggestionBox\Domain\Command\SuggestionBoxCommandHandler
+        arguments:
+            - '@kc.suggestion_box.repository'
+            - '@broadway.event_dispatcher'
+        lazy: true
+        tags:
+            - { name: broadway.command_handler }
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\EventSourcedSuggestionBoxRepository:
+        arguments:
+            - '@broadway.event_store'
+            - '@broadway.event_handling.event_bus'
+            - ['@broadway.metadata_enriching_event_stream_decorator']
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\SuggestionBoxRepository:
+        arguments:
+            - '@Kulcua\Extension\Component\SuggestionBox\Domain\EventSourcedSuggestionBoxRepository'
+            - '@broadway.event_store'
+            - '@OpenLoyalty\Bundle\CoreBundle\Repository\DBALSnapshotRepository'
+            - '@Broadway\Snapshotting\Snapshot\Trigger\EventCountTrigger'
+
+    kc.suggestion_box.read_model.repository.suggestion_box_details:
+        class: 'Broadway\ReadModel\ReadModel'
+        factory: ['@oloy.read_model.repository.factory', create]
+        arguments:
+            - 'kc.suggestion_boxs_details'
+            - 'Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetails'
+            - 'Kulcua\Extension\Component\SuggestionBox\Infrastructure\Repository\SuggestionBoxDetailsElasticsearchRepository'
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetailsProjector:
+        tags:
+            - { name: broadway.domain.event_listener }
+        arguments:
+            $suggestionBoxRepository: '@kc.suggestion_box.repository'
+            $repository: '@kc.suggestion_box.read_model.repository.suggestion_box_details'
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetailsRepository: '@kc.suggestion_box.read_model.repository.suggestion_box_details'
+
+    Kulcua\Extension\Bundle\SuggestionBoxBundle\Service\SuggestionBoxPhotoContentGeneratorInterface: '@Kulcua\Extension\Bundle\SuggestionBoxBundle\Service\SuggestionBoxPhotoContentGenerator'
+    
+    Kulcua\Extension\Bundle\SuggestionBoxBundle\Service\SuggestionBoxPhotoContentGenerator:
+        arguments:
+            $filesystem: '@kc.suggestion_box.photos_filesystem'
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\Repository\SuggestionBoxPhotoRepositoryInterface: '@Kulcua\Extension\Component\SuggestionBox\Infrastructure\Doctrine\ORM\Repository\SuggestionBoxPhotoRepository'
+
+    Kulcua\Extension\Component\SuggestionBox\Infrastructure\Doctrine\ORM\Repository\SuggestionBoxPhotoRepository: ~
+
+    Kulcua\Extension\Component\SuggestionBox\Infrastructure\EventListener\SaveFileListener:
+        arguments:
+            - '@kc.suggestion_box.photos_filesystem'
+        tags:
+            - { name: broadway.event_listener, event: !php/const:Kulcua\Extension\Component\SuggestionBox\Domain\Event\SuggestionBoxPhotoSavedEvent::NAME, method: __invoke }
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\Command\SuggestionBoxPhotoCommandHandler:
+            arguments:
+                $uuidGenerator: '@broadway.uuid.generator'
+            tags:
+                - { name: broadway.command_handler }
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\Repository\SuggestionBoxRepositoryInterface: '@kc.suggestion_box.repository'
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\SuggestionBoxRepository: '@kc.suggestion_box.repository'
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\Factory\PhotoEntityFactoryInterface: '@Kulcua\Extension\Component\SuggestionBox\Domain\Factory\PhotoEntityFactory'
+
+    Kulcua\Extension\Component\SuggestionBox\Domain\Factory\PhotoEntityFactory: ~

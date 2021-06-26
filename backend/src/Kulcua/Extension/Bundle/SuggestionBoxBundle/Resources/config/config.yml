@@ -1,0 +1,17 @@
+jms_serializer:
+    metadata:
+      directories:
+        SuggestionBox:
+          namespace_prefix: "Kulcua\\Extension\\Component\\SuggestionBox\\Domain"
+          path: "@SuggestionBoxBundle/Resources/config/serializer"
+
+doctrine:
+    dbal:
+        types:
+            photo_id: Kulcua\Extension\Component\SuggestionBox\Infrastructure\Doctrine\Type\PhotoIdDoctrineType
+
+suggestion_box:
+  photos_adapter: "%suggestion_box_photos_adapter%"
+  photos_adapter_env: "%suggestion_box_photos_adapter_env%"
+  photos_min_width: 600
+  photos_min_height: 600

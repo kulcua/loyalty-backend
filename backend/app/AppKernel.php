@@ -60,6 +60,7 @@ class AppKernel extends Kernel
             new Kulcua\Extension\Bundle\MaintenanceBundle\MaintenanceBundle(),
             new Kulcua\Extension\Bundle\ChatBundle\ChatBundle(),
             new Kulcua\Extension\Bundle\WarrantyBundle\WarrantyBundle(),
+            new Kulcua\Extension\Bundle\SuggestionBoxBundle\SuggestionBoxBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

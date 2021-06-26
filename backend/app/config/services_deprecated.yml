@@ -1,6 +1,15 @@
 services:
     _defaults:
         public: true
+
+    kc.suggestion_box.repository:
+        alias: Kulcua\Extension\Component\SuggestionBox\Domain\SuggestionBoxRepository
+        deprecated: The "%service_id%" service is deprecated since Kulcua
+    
+    kc.suggestion_box.read_model.projector.suggestion_box_details:
+        alias: Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetailsProjector
+        deprecated: The "%service_id%" service is deprecated since Kulcua
+
     kc.warranty.repository:
         alias: Kulcua\Extension\Component\Warranty\Domain\WarrantyRepository
         deprecated: The "%service_id%" service is deprecated since Kulcua

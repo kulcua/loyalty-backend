@@ -1,0 +1,25 @@
+Kulcua\Extension\Component\SuggestionBox\Domain\Entity\SuggestionBoxPhoto:
+  type: entity
+  table: kc__suggestion_box_photo
+  id:
+    photoId:
+      type: photo_id
+      column: photo_id
+  
+  fields:
+    suggestionBoxId:
+      type: text
+      nullable: true
+      column: suggestion_box_id
+
+  embedded:
+    path:
+      class: Kulcua\Extension\Component\SuggestionBox\Domain\PhotoPath
+      columnPrefix: false
+    mimeType:
+      class: Kulcua\Extension\Component\SuggestionBox\Domain\PhotoMimeType
+      columnPrefix: false
+    originalName:
+      class: Kulcua\Extension\Component\SuggestionBox\Domain\PhotoOriginalName
+      columnPrefix: false
+

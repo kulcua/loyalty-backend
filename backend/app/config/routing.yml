@@ -1,3 +1,6 @@
+suggestion_box:
+    resource: "@SuggestionBoxBundle/Resources/config/routing.yml"
+
 warranty:
     resource: "@WarrantyBundle/Resources/config/routing.yml"
 

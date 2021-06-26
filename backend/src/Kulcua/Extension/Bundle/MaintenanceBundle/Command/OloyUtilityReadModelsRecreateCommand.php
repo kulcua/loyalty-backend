@@ -17,6 +17,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Kulcua\Extension\Component\Conversation\Domain\ReadModel\ConversationDetailsProjector;
 use Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetailsProjector;
 use Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetailsProjector;
+use Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetailsProjector;
 /**
  * Class OloyUtilityReadModelsRecreateCommand.
  */
@@ -36,7 +37,8 @@ class OloyUtilityReadModelsRecreateCommand extends ContainerAwareCommand
         'maintenance_details' => MaintenanceDetailsProjector::class,
         'conversation_details' => ConversationDetailsProjector::class,
         'message_details' => MessageDetailsProjector::class,
-        'warantty_details' => WarrantyDetailsProjector::class
+        'warantty_details' => WarrantyDetailsProjector::class,
+        'suggestion_box_details' => SuggestionBoxDetailsProjector::class
     ];
 
     /**
