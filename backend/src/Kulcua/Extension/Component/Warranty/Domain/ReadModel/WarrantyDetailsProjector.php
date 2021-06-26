@@ -99,15 +99,15 @@ class WarrantyDetailsProjector extends Projector
         }
 
         if (isset($data['description'])) {
-            $readModel->setProductSku($data['description']);
+            $readModel->setDescription($data['description']);
         }
 
         if (isset($data['cost'])) {
-            $readModel->setProductSku($data['cost']);
+            $readModel->setCost($data['cost']);
         }
 
         if (isset($data['paymentStatus'])) {
-            $readModel->setProductSku($data['paymentStatus']);
+            $readModel->setPaymentStatus($data['paymentStatus']);
         }
 
         $this->repository->save($readModel);
