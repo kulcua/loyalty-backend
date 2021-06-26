@@ -281,7 +281,7 @@
     "visible_to_prompt": "",
     "coupon_active_since": "Coupon kích hoạt kể từ",
     "coupon_active_to": "Coupon kích hoạt",
-    "coupon_mãi mãi_active": "mãi mãi",
+    "coupon_forever_active": "mãi mãi",
     "brand_description": "Mô tả thương hiệu",
     "brand_description_prompt": "",
     "brand_icon": "Icon thương hiệu",
@@ -290,12 +290,12 @@
     "brand_name_prompt": "",
     "campaign_shipping_address": {
       "details":  "Shipping details",
-      "street": "Đường name",
-      "house_number": "House number",
-      "building_number": "Building number",
+      "street": "Đường",
+      "house_number": "Số nhà",
+      "building_number": "Số toà",
       "city": "Thành phố",
       "postal_code": "Postal code",
-      "country": "Đất nước",
+      "country": "Quốc gia",
       "voivodeship": "Voivodeship"
     }
   },
@@ -666,12 +666,12 @@
         "password": "Mật khẩu",
         "confirm_password": "Confirm password",
         "phone_number": "Điện thoại",
-        "street": "Đường name",
-        "house_number": "House number",
-        "building_number": "Building number",
+        "street": "Đường",
+        "house_number": "Số nhà",
+        "building_number": "Số toà",
         "city": "Thành phố",
         "postal_code": "Postal code",
-        "country": "Đất nước",
+        "country": "Quốc gia",
         "voivodeship": "Voivodeship",
         "company_name": "Tên công ty",
         "company_tax_id": "Thêm công ty Tax ID",
@@ -832,7 +832,7 @@
     "company_name": "Tên công ty",
     "company_name_prompt": "",
     "company_nip_prompt": "",
-    "country": "Đất nước",
+    "country": "Quốc gia",
     "created_at": "Tạo lúc",
     "current_level": "Cấp bậc hiện tại",
     "days_from_last_transaction": "Ngày cuối đặt hàng",
@@ -924,7 +924,7 @@
     "show_company_prompt": "",
     "single_data": "Thông tin khách hàng",
     "state": "State/Province",
-    "street": "Đường name",
+    "street": "Đường",
     "surname": "Họ",
     "tabs": {
       "campaigns": "Phần thưởng khả dụng",
@@ -1165,7 +1165,7 @@
     "company_name": "Thêm công ty",
     "company_name_prompt": "",
     "company_nip_prompt": "",
-    "country": "Đất nước",
+    "country": "Quốc gia",
     "created_at": "Tạo lúc",
     "data": {
       "basic": "Basic information",
@@ -1240,7 +1240,7 @@
       "city": "Thành phố",
       "company_data": "Dữ liệu công ty",
       "company_name": "Tên công ty",
-      "country": "Đất nước",
+      "country": "Quốc gia",
       "create_account": "Tạo tài khoản",
       "description": "You can create account in loyalty program here.",
       "email": "E-mail",
@@ -1258,7 +1258,7 @@
       "phone": "Điện thoại",
       "postal": "Postal code",
       "state": "State/Province",
-      "street": "Đường name",
+      "street": "Đường",
       "surname": "Họ"
     },
     "registration_activation": {
@@ -1301,7 +1301,7 @@
     "building_name": "Tên toà nhà",
     "category": "Thể loại",
     "city": "Thành phố",
-    "country": "Đất nước",
+    "country": "Quốc gia",
     "customer_email": "E-mail",
     "customer_email_prompt": "Tìm kiếm khách hàng bằng e-mail",
     "customer_id": "ID khách hàng",
@@ -1665,7 +1665,7 @@
     "building_name": "Tên toà nhà",
     "city": "Thành phố",
     "city_prompt": "",
-    "country": "Đất nước",
+    "country": "Quốc gia",
     "country_prompt": "",
     "description": "Mô tả",
     "description_prompt": "",
@@ -1686,7 +1686,7 @@
     "postal_code": "Postal code",
     "postal_prompt": "",
     "province_prompt": "",
-    "select_country": "Chọn đất nước",
+    "select_country": "Chọn quốc gia",
     "select_pos": "Chọn POS",
     "state": "State/Province",
     "street_name": "Đường",
@@ -1714,7 +1714,7 @@
     "city": "Thành phố",
     "company_data": "Công ty",
     "company_name": "Tên công ty",
-    "country": "Đất nước",
+    "country": "Quốc gia",
     "create_account": "Tạo tài khoản",
     "description": "Bạn có thể tạo tài khoản ở đây.",
     "email": "E-mail",
@@ -2060,7 +2060,7 @@
     "building_name": "Tên toà nhà",
     "category": "Thể loại",
     "city": "Thành phố",
-    "country": "Đất nước",
+    "country": "Quốc gia",
     "customer_email": "E-mail",
     "customer_email_or_phone": "E-mail hoặc điện thoại",
     "customer_email_or_phone_prompt": "Tìm kiếm khách hàng bằng e-mail hoặc điện thoại",
@@ -2187,7 +2187,7 @@
   },
   "xhr": {
     "pos_coupon_usage": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Success"
     },
     "get_delivery_statuses": {
@@ -2219,7 +2219,7 @@
       "warning": "Chiến dịch edited without photo"
     },
     "delete_campaign_brand_icon": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Image deleted"
     },
     "post_campaign_brand_icon": {
@@ -2233,39 +2233,39 @@
       "warning": "Chiến dịch added without photo"
     },
     "delete_campaign_image": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Image deleted"
     },
     "delete_earning_rule_image": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Image deleted"
     },
     "delete_level_image": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Image deleted"
     },
     "delete_segment": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Phân loại deleted"
     },
     "delete_settings_conditions_file": {
-      "error": "Conditions file has not been deleted",
-      "success": "Conditions file has been deleted"
+      "error": "Conditions file chưa được xoá",
+      "success": "Conditions file đã bị xoá"
     },
     "delete_settings_hero_image": {
-      "error": "Hero image has not been deleted",
-      "success": "Hero image has been deleted"
+      "error": "Hero image chưa được xoá",
+      "success": "Hero image đã bị xoá"
     },
     "delete_settings_logo": {
-      "error": "Logo has not been deleted",
-      "success": "Logo has been deleted"
+      "error": "Logo chưa được xoá",
+      "success": "Logo đã bị xoá"
     },
     "delete_settings_small_logo": {
-      "error": "Small logo has not been deleted",
-      "success": "Small logo has been deleted"
+      "error": "Small logo chưa được xoá",
+      "success": "Small logo đã bị xoá"
     },
     "delete_user": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "User deleted"
     },
     "get_available_rewards": {
@@ -2275,73 +2275,73 @@
       "success": "Success"
     },
     "get_campaign": {
-      "error": "An error occurred",
-      "no_id": "Phần thưởng campaign ID not found"
+      "error": "Có lỗi xảy ra",
+      "no_id": "Phần thưởng campaign không tìm thấy ID"
     },
     "get_campaigns": {
-      "error": "Cannot get chiến dịch đổi thưởng"
+      "error": "Không thể lấy chiến dịch đổi thưởng"
     },
     "get_customer": {
       "cant_edit": "You don\"t have rights to edit that customer",
-      "error": "Cannot get customer",
+      "error": "Không thể lấy customer",
       "no_id": "ID khách hàng not found"
     },
     "get_customers": {
-      "error": "Cannot get customers list"
+      "error": "Không thể lấy customers list"
     },
     "get_customers_for_campaign": {
-      "error": "An error occurred",
-      "no_id": "Phần thưởng campaign ID not found"
+      "error": "Có lỗi xảy ra",
+      "no_id": "Phần thưởng campaign không tìm thấy ID"
     },
     "get_earning_rule": {
-      "error": "An error occurred",
-      "no_id": "Tích điểm ID not found"
+      "error": "Có lỗi xảy ra",
+      "no_id": "Tích điểm không tìm thấy ID"
     },
     "get_earning_rules": {
-      "error": "Cannot get điều kiện tích điểm list"
+      "error": "Không thể lấy điều kiện tích điểm list"
     },
     "get_level": {
-      "error": "Cannot get assigned level"
+      "error": "Không thể lấy assigned level"
     },
     "get_levels": {
-      "error": "Cannot get available levels"
+      "error": "Không thể lấy available levels"
     },
     "get_levels_list": {
-      "error": "Cannot get levels list"
+      "error": "Không thể lấy levels list"
     },
     "get_pos": {
-      "error": "An error occurred",
-      "no_id": "POS ID not found"
+      "error": "Có lỗi xảy ra",
+      "no_id": "POS không tìm thấy ID"
     },
     "get_pos_list": {
-      "error": "Cannot get POS list"
+      "error": "Không thể lấy POS list"
     },
     "get_redeemed_campaigns": {
-      "error": "An error occurred"
+      "error": "Có lỗi xảy ra"
     },
     "get_segment": {
-      "error": "An error occurred",
-      "no_id": "Phân loại ID not found"
+      "error": "Có lỗi xảy ra",
+      "no_id": "Phân loại không tìm thấy ID"
     },
     "get_segments": {
-      "error": "Cannot get segments list"
+      "error": "Không thể lấy segments list"
     },
     "get_seller": {
-      "error": "An error occurred",
-      "no_id": "đại lý ID not found"
+      "error": "Có lỗi xảy ra",
+      "no_id": "đại lý không tìm thấy ID"
     },
     "get_sellers": {
-      "error": "Cannot get merchants list"
+      "error": "Không thể lấy merchants list"
     },
     "get_settings": {
-      "error": "Cannot get settings data"
+      "error": "Không thể lấy settings data"
     },
     "get_single_level": {
       "error": "Server error",
-      "no_id": "Cấp bậc ID not found"
+      "no_id": "Cấp bậc không tìm thấy ID"
     },
     "get_transfers": {
-      "error": "Cannot get đổi điểm list"
+      "error": "Không thể lấy đổi điểm list"
     },
     "get_translation": {
       "error": "Error",
@@ -2351,8 +2351,8 @@
       "error": "Error"
     },
     "delete_translations": {
-      "success": "Giao dịch has been deleted",
-      "error": "Giao dịch hasn't been deleted"
+      "success": "Giao dịch đã bị xoá",
+      "error": "Giao dịch chưa được xoá"
     },
     "import": {
       "error": "Nhập process failed",
@@ -2365,7 +2365,7 @@
       "success": "Success."
     },
     "post_activate_level": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Cấp bậc status changed"
     },
     "post_activate_rule": {
@@ -2373,11 +2373,11 @@
       "success": "Status changed"
     },
     "post_activate_segment": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Phân loại activated"
     },
     "post_activate_seller": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "đại lý activated"
     },
     "post_add_transfer": {
@@ -2399,32 +2399,32 @@
       "success": "Transfer canceled."
     },
     "post_customer": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully added customer."
     },
     "post_deactivate_customer": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully deactivated customer"
     },
     "post_deactivate_segment": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Phân loại deactivated"
     },
     "post_deactivate_seller": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "đại lý deactivated"
     },
     "post_delete_seller": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "đại lý deleted"
     },
     "post_earning_rule": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Tích điểm added",
       "warning": "Tích điểm added without photo"
     },
     "post_level": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully assigned level to customer"
     },
     "post_password_change": {
@@ -2432,7 +2432,7 @@
       "success": "Success"
     },
     "post_password_request": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "If user exists in our database, we will send next instruction to connected email address"
     },
     "post_password_reset": {
@@ -2440,31 +2440,31 @@
       "success": "Mật khẩu has been changed."
     },
     "post_pos": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "POS added"
     },
     "post_role": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Role has been added"
     },
     "put_role": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Role has been edited"
     },
     "post_registration_customer": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully registered customer"
     },
     "post_delete_role": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Role deleted"
     },
     "post_registration_customer_activate": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully activated your account"
     },
     "post_remove_customer_manually_level": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Manually level has been removed"
     },
     "post_resend_activation_code": {
@@ -2475,15 +2475,15 @@
       "success": "Code was sent to your phone"
     },
     "post_segment": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "Phân loại added"
     },
     "post_seller": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "đại lý added"
     },
     "post_single_level": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully added level.",
       "warning": "Cấp bậc added without photo"
     },
@@ -2492,11 +2492,11 @@
       "success": "You successfully spend points."
     },
     "post_transaction_assign": {
-      "error": "An error occurred while. Please check form form details.",
+      "error": "Có lỗi xảy ra while. Please check form form details.",
       "success": "Giao dịch has been assigned to khách hàng account."
     },
     "post_transaction_labels": {
-      "error": "An error occurred while. Please check form form details.",
+      "error": "Có lỗi xảy ra while. Please check form form details.",
       "success": "Tên have been edited."
     },
     "post_translations": {
@@ -2504,7 +2504,7 @@
       "success": "Success"
     },
     "post_user": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "User created"
     },
     "put_admin_data": {
@@ -2516,24 +2516,24 @@
       "success": "Phần thưởng campaign edited"
     },
     "put_customer": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully edited customer."
     },
     "put_earning_rule": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully edited điều kiện tích điểm.",
       "warning": "Couldn't uploaded điều kiện tích điểm's image"
     },
     "put_pos": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully edited POS."
     },
     "put_segment": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully edited segment."
     },
     "put_seller": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully edited merchant."
     },
     "put_settings": {
@@ -2541,7 +2541,7 @@
       "success": "Cài đặt updated"
     },
     "put_single_level": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "You successfully edited level.",
       "warning": "Cấp bậc edited without photo"
     },
@@ -2550,7 +2550,7 @@
       "success": "Success"
     },
     "put_user": {
-      "error": "An error occurred",
+      "error": "Có lỗi xảy ra",
       "success": "User edited"
     },
     "upload_settings_conditions_file": {

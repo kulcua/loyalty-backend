@@ -16,3 +16,14 @@ services:
     Kulcua\Extension\Bundle\SuggestionBoxBundle\Service\SuggestionBoxPhotoUploader:
         arguments:
             $filesystem: "@kc.suggestion_box.photos_filesystem"
+
+    kc.suggestion_box.form_handler.edit:
+        class: Kulcua\Extension\Bundle\SuggestionBoxBundle\Form\Handler\SuggestionBoxEditFormHandler
+        arguments:
+            - '@broadway.command_handling.command_bus'
+            - '@doctrine.orm.entity_manager'
+
+    kc.suggestion_box.param_converter:
+        class: Kulcua\Extension\Bundle\SuggestionBoxBundle\ParamConverter\SuggestionBoxDetailsParamConverter
+        tags:
+            - { name: request.param_converter, priority: -2, converter: suggestionbox_details_converter }

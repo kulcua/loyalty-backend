@@ -5,7 +5,7 @@ namespace Kulcua\Extension\Component\SuggestionBox\Domain;
 use OpenLoyalty\Component\Core\Domain\SnapableEventSourcedAggregateRoot;
 use Kulcua\Extension\Component\SuggestionBox\Domain\Event\SuggestionBoxWasCreated;
 use Kulcua\Extension\Component\SuggestionBox\Domain\Event\SuggestionBoxWasUpdated;
-use Kulcua\Extension\Component\SuggestionBox\Domain\Model\CustomerBasicData;
+use Kulcua\Extension\Component\SuggestionBox\Domain\Event\SuggestionBoxWasDeactivated;
 
 /**
  * Class SuggestionBox.
@@ -109,6 +109,25 @@ class SuggestionBox extends SnapableEventSourcedAggregateRoot
         $this->timestamp = $suggestionBoxData['timestamp'];
     }
 
+    /**
+     * @param array $suggestionBoxData
+     */
+    public function updateSuggestionBoxDetails(array $suggestionBoxData): void
+    {
+        $this->apply(
+            new SuggestionBoxWasUpdated($this->getSuggestionBoxId(), $suggestionBoxData)
+        );
+    }
+
+    /**
+     * Deactivate.
+     */
+    public function deactivate(): void
+    {
+        $this->apply(
+            new SuggestionBoxWasDeactivated($this->getSuggestionBoxId())
+        );
+    }
 
     /**
      * @return string

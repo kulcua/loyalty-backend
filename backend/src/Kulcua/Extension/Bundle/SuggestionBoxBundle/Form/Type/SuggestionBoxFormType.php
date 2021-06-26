@@ -13,9 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 /**
- * Class SuggestionBoxPhotoFormType.
+ * Class SuggestionBoxFormType.
  */
-class SuggestionBoxPhotoFormType extends AbstractType
+class SuggestionBoxFormType extends AbstractType
 {
     /**
      * {@inheritdoc}

@@ -10,6 +10,7 @@ use Kulcua\Extension\Component\SuggestionBox\Domain\Event\SuggestionBoxWasUpdate
 use Kulcua\Extension\Component\SuggestionBox\Domain\Model\CustomerBasicData;
 use Kulcua\Extension\Component\SuggestionBox\Domain\SuggestionBox;
 use Kulcua\Extension\Component\SuggestionBox\Domain\SuggestionBoxId;
+use Kulcua\Extension\Component\SuggestionBox\Domain\Event\SuggestionBoxWasDeactivated;
 
 /**
  * ClasssuggestionBoxDetailsProjector.
@@ -76,5 +77,51 @@ class SuggestionBoxDetailsProjector extends Projector
         }
 
         return $readModel;
+    }
+
+    /**
+     * @param SuggestionBoxWasUpdated $event
+     */
+    protected function applySuggestionBoxWasUpdated(SuggestionBoxWasUpdated $event): void
+    {
+        $readModel = $this->getReadModel($event->getSuggestionBoxId());
+        $data = $event->getSuggestionBoxData();
+
+        if (isset($data['senderId'])) {
+            $readModel->setSenderId($data['senderId']);
+        }
+
+        if (isset($data['senderName'])) {
+            $readModel->setSenderName($data['senderName']);
+        }
+
+        if (isset($data['problemType'])) {
+            $readModel->setProblemType($data['problemType']);
+        }
+
+        if (isset($data['description'])) {
+            $readModel->setDescription($data['description']);
+        }
+
+        if (isset($data['timestamp'])) {
+            $readModel->setTimestamp($data['timestamp']);
+        }
+
+        if (isset($data['active'])) {
+            $readModel->setActive($data['active']);
+        }
+
+        $this->repository->save($readModel);
+    }
+
+    /**
+     * @param SuggestionBoxWasDeactivated $event
+     */
+    protected function applySuggestionBoxWasDeactivated(SuggestionBoxWasDeactivated $event): void
+    {
+        /** @var SuggestionBoxDetails $readModel */
+        $readModel = $this->getReadModel($event->getSuggestionBoxId());
+        $readModel->setActive(false);
+        $this->repository->save($readModel);
     }
 }

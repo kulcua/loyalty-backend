@@ -1,7 +1,7 @@
-Kulcua\Extension\Component\Maintenance\Domain\ReadModel\MaintenanceDetails:
+Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetails:
   exlusion_policy: all
   properties:
-    maintenanceId:
+    warrantyId:
       expose: true
       inline: true
     customerId:
