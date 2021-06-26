@@ -999,6 +999,17 @@ export default class EditableMap {
     return maintenance;
   }
 
+  warranty(data) {
+    let self = this;
+    let warranty = angular.copy(data);
+
+    delete warranty.warrantyId;
+    delete warranty.customerData;
+    delete warranty.version;
+
+    return warranty;
+  }
+
   conversation(data) {
     let self = this;
     let conversation = angular.copy(data);

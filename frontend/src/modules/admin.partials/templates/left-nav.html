@@ -96,6 +96,19 @@
           </li>
         </ul>
       </li>
+      <li ng-show="RootCtrl.AuthService.hasPermission('WARRANTY', 'VIEW')">
+        <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>Đăng ký bảo hành</a>
+        <ul class="menu vertical nested">
+          <li>
+            <a ui-sref="admin.warranties-list">Danh sách đăng ký bảo hành</a>
+          </li>
+          <li
+            ng-show="RootCtrl.AuthService.hasPermission('WARRANTY', 'MODIFY')"
+          >
+            <a ui-sref="admin.add-warranty">Thêm đăng ký bảo hành</a>
+          </li>
+        </ul>
+      </li>
       <li ng-show="RootCtrl.AuthService.hasPermission('SEGMENT', 'VIEW')">
         <a href="#"
           ><i class="fa fa-tags" aria-hidden="true"></i>{{ "nav.segments" |

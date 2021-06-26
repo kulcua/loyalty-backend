@@ -1,0 +1,147 @@
+<box-loader
+  loading="WarrantyCtrl.loaderStates.coverLoader"
+  cover="1"
+  class="cover"
+  delay="1000"
+></box-loader>
+
+<div class="heading" ng-init="WarrantyCtrl.getData()">
+  <h1>Danh sách đăng ký bảo hành</h1>
+  <div class="action-buttons">
+    <button
+      ng-show="WarrantyCtrl.AuthService.hasPermission('WARRANTY', 'MODIFY')"
+      class="medium button button-septenary-colorized"
+      ui-sref="admin.add-warranty"
+    >
+      Thêm mới
+    </button>
+  </div>
+</div>
+<div style="clear: both"></div>
+
+<div class="client-list box">
+  <div class="box-title">
+    <h1 class="text-left">Danh sách đăng ký bảo hành</h1>
+  </div>
+  <div class="box-content">
+    <box-loader
+      loading="WarrantyCtrl.loaderStates.warrantyList"
+    ></box-loader>
+    <table
+      ng-table="WarrantyCtrl.tableParams"
+      class="default"
+      template-pagination="templatePagination.html"
+    >
+ 
+      <tr ng-repeat="row in $data">
+        <td data-title="'ID'" sortable="'id'">
+          <span ng-bind="row.warrantyId"></span>
+        </td>
+        <td data-title="'Mã sản phẩm'">
+          <span ng-bind="row.productSku"></span>
+        </td>
+        <td data-title="'Ngày đến'">
+          <span ng-bind="row.bookingDate|date: 'yyyy-MM-dd'"></span>
+        </td>
+        <td data-title="'Thời gian'">
+          <span ng-bind="row.bookingTime"></span>
+        </td>
+        <td data-title="'Trung tâm bảo hành'">
+          <span ng-bind="row.warrantyCenter"></span>
+        </td>
+        <td data-title="'Phí bảo hành'">
+          <!-- <span ng-bind="row.cost"></span> -->
+          <span>Miễn phí</span>
+        </td>
+        <td data-title="'Trạng thái thanh toán'">
+          <div ng-if="row.paymentStatus == 'paid'">Đã thanh toán</div>
+          <div ng-if="row.paymentStatus == 'unpaid'">Chưa thanh toán</div>
+          <!-- <span ng-bind="row.paymentStatus"></span> -->
+        </td>
+        <td data-title="'Ghi chú'">
+          <span ng-bind="row.discription"></span>
+        </td>
+        <td data-title="'Tên khách hàng'">
+          <span ng-bind="row.customerData.name"></span>
+        </td>
+        <td data-title="'Số điện thoại'">
+          <span ng-bind="row.customerData.phone"></span>
+        </td>
+
+        <td data-title="'Trạng thái'" sortable="'active'">
+          <span
+            ng-show="WarrantyCtrl.AuthService.hasPermission('EARNING_RULE', 'MODIFY')"
+          >
+            <button
+              ng-if="row.active"
+              class="tiny button button-septenary-colorized"
+              ng-click="WarrantyCtrl.setWarrantyState(!row.active, row.warrantyId)"
+            >
+             Active
+            </button>
+            <button
+              ng-if="!row.active"
+              class="tiny button button-default"
+              ng-click="WarrantyCtrl.setWarrantyState(!row.active, row.warrantyId)"
+            >
+             Inactive
+            </button>
+          </span>
+          <span
+            ng-show="!WarrantyCtrl.AuthService.hasPermission('WARRANTY', 'MODIFY')"
+          >
+            <span ng-if="row.active">active </span>
+            <span ng-if="!row.active"> inactive </span>
+          </span>
+        </td>
+        <td data-title="'Chỉnh sửa'">
+          <button
+            ng-show="WarrantyCtrl.AuthService.hasPermission('WARRANTY', 'MODIFY')"
+            type="button"
+            class="button button-secondary tiny"
+            ui-sref="admin.edit-warranty({warrantyId: row.warrantyId})"
+          >
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<modal
+  ng-repeat="warranty in warrantys"
+  show="warrantys[$index].showModal"
+  modalId="{{warranty.id}}"
+>
+  <table class="default">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Mã sản phẩm/th>
+        <th>Ngày đến</th>
+        <th>Thời gian</th>
+        <th>Trung tâm bảo hành</th>
+        <th>Phí bảo hành</th>
+        <th>Trạng thái thanh toán</th>
+        <th>Tên khách hàng</th>
+        <th>Số điện thoại</th>
+      </tr>
+    </thead>
+    <!-- <tbody>
+      <tr ng-repeat="special in warranty.specialRewards">
+        <td><span ng-bind="special.name"></span></td>
+        <td><span ng-bind="special.code"></span></td>
+        <td><span ng-bind="special.value*100|number:2"></span>%</td>
+        <td><span ng-bind="special.active"></span></td>
+        <td>
+          <span ng-bind="warranty.bookingTimedate: 'yyyy-MM-dd HH:mm'"></span>
+        </td>
+        <td><span ng-bind="special.endAt|date: 'yyyy-MM-dd HH:mm'"></span></td>
+        <td>
+          <span ng-bind="special.createdAt|date: 'yyyy-MM-dd HH:mm'"></span>
+        </td>
+      </tr>
+    </tbody> -->
+  </table>
+</modal>
