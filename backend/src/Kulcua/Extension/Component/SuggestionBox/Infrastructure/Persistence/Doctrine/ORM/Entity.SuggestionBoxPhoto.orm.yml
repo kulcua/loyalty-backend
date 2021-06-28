@@ -3,7 +3,7 @@ Kulcua\Extension\Component\SuggestionBox\Domain\Entity\SuggestionBoxPhoto:
   table: kc__suggestion_box_photo
   id:
     photoId:
-      type: photo_id
+      type: suggestion_box_photo_id
       column: photo_id
   
   fields:

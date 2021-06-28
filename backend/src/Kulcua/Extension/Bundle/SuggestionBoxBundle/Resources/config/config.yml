@@ -8,7 +8,7 @@ jms_serializer:
 doctrine:
     dbal:
         types:
-            photo_id: Kulcua\Extension\Component\SuggestionBox\Infrastructure\Doctrine\Type\PhotoIdDoctrineType
+            suggestion_box_photo_id: Kulcua\Extension\Component\SuggestionBox\Infrastructure\Doctrine\Type\PhotoIdDoctrineType
 
 suggestion_box:
   photos_adapter: "%suggestion_box_photos_adapter%"

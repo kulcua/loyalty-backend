@@ -11,7 +11,7 @@ jms_serializer:
 doctrine:
     dbal:
         types:
-            photo_id: Kulcua\Extension\Component\Message\Infrastructure\Doctrine\Type\PhotoIdDoctrineType
+            message_photo_id: Kulcua\Extension\Component\Message\Infrastructure\Doctrine\Type\PhotoIdDoctrineType
 
 chat:
   photos_adapter: "%message_photos_adapter%"
