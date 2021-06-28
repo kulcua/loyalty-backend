@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kulcua\Extension\Bundle\SuggestionBoxBundle\Controller\Api;
 
 use Broadway\CommandHandling\CommandBus;
+use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View as FosView;
@@ -24,6 +25,7 @@ use Kulcua\Extension\Component\SuggestionBox\Domain\SuggestionBoxId;
 use Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetails;
 use Kulcua\Extension\Component\SuggestionBox\Domain\Command\DeactivateSuggestionBox;
 use FOS\RestBundle\View\View;
+use Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetailsRepository;
 
 /**
  * Class SuggestionBoxController.
@@ -69,7 +71,7 @@ class SuggestionBoxController extends FOSRestController
      * @Method("GET")
      * @ApiDoc(
      *     name="Get suggestionBox photo",
-     *     section="SuggestionBox"
+     *     section="Suggestion Box"
      * )
      *
      * @param Request $request
@@ -98,7 +100,7 @@ class SuggestionBoxController extends FOSRestController
      * @Method("POST")
      * @ApiDoc(
      *     name="Add photo to SuggestionBox",
-     *     section="SuggestionBox",
+     *     section="Suggestion Box",
      *     input={"class" = "Kulcua\Extension\Bundle\SuggestionBoxBundle\Form\Type\SuggestionBoxFormType", "name" = "suggestionBox"}
      * )
      *
@@ -146,7 +148,7 @@ class SuggestionBoxController extends FOSRestController
      * @Method("PUT")
      * @ApiDoc(
      *     name="Edit SuggestionBox",
-     *     section="SuggestionBox",
+     *     section="Suggestion Box",
      *     input={"class" = "Kulcua\Extension\Bundle\SuggestionBoxBundle\Form\Type\SuggestionBoxFormType", "name" = "suggestion_box"},
      *     statusCodes={
      *       200="Returned when successful",
@@ -182,7 +184,7 @@ class SuggestionBoxController extends FOSRestController
      * @Method("POST")
      * @ApiDoc(
      *     name="Change SuggestionBox state active",
-     *     section="SuggestionBox"
+     *     section="Suggestion Box"
      * )
      *
      * @param SuggestionBoxDetails $suggestion_box
@@ -203,5 +205,46 @@ class SuggestionBoxController extends FOSRestController
         );
 
         return $this->view(['suggestionBoxId' => (string) $suggestion_box->getSuggestionBoxId()]);
+    }
+
+    /**
+     * Method will return complete list of all suggestionBoxs.
+     *
+     * @Route(name="kc.suggestionBox.list", path="/suggestion_box")
+     * @Method("GET")
+     *
+     * @ApiDoc(
+     *     name="get suggestionBoxs list",
+     *     section="Suggestion Box")
+     *
+     * @param Request      $request
+     * @param ParamFetcher $paramFetcher
+     *
+     * @return View
+     *
+     */
+    public function listAction(Request $request, ParamFetcher $paramFetcher): View
+    {
+        $params = $this->get('oloy.user.param_manager')->stripNulls($paramFetcher->all());
+
+        $pagination = $this->get('oloy.pagination')->handleFromRequest($request, 'timestamp', 'DESC');
+
+        /** @var SuggestionBoxDetailsRepository $repo */
+        $repo = $this->get(SuggestionBoxDetailsRepository::class);
+
+        $suggestionBoxs = $repo->findByParametersPaginated(
+            $params,
+            false,
+            $pagination->getPage(),
+            $pagination->getPerPage(),
+            $pagination->getSort(),
+            $pagination->getSortDirection()
+        );
+        $total = $repo->countTotal($params, $request->get('strict', false));;
+
+        return $this->view([
+            'suggestionBoxs' => $suggestionBoxs,
+            'total' => $total,
+        ], 200);
     }
 }
