@@ -109,6 +109,14 @@
           </li>
         </ul>
       </li>
+      <li ng-show="RootCtrl.AuthService.hasPermission('WARRANTY', 'VIEW')">
+        <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i>Yêu cầu hỗ trợ</a>
+        <ul class="menu vertical nested">
+          <li>
+            <a ui-sref="admin.request-list">Danh sách yêu cầu hỗ trợ</a>
+          </li>
+        </ul>
+      </li>
       <li ng-show="RootCtrl.AuthService.hasPermission('SEGMENT', 'VIEW')">
         <a href="#"
           ><i class="fa fa-tags" aria-hidden="true"></i>{{ "nav.segments" |

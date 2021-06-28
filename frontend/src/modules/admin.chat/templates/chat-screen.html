@@ -1,48 +1,54 @@
-<div class="container" >
+<div class="container">
   <div class="chat-round">
     <p id="cusName" style="color: black;">{{customerName}}</p>
   </div>
-  <div
-    id="chat-panel"
-    ng-init="ChatCtrl.getMessages()"
-    class="chat-content-round"
-  >
-  <div  class="row no-gutters" data-ng-repeat="mess in messages track by $index">
-    <div class="col-md-3 offset-md-4" ng-if="mess.senderId==loggedUserId">
-      <div class="chat-bubble chat-bubble--right">{{mess["message"]}}</div>
-    </div>
-    <div class="col-md-3" ng-if="mess.senderId!=loggedUserId">
-      <div  class="chat-bubble chat-bubble--left" style="color: black">
-        {{ mess["message"]}}
+  <div id="chat-panel" ng-init="ChatCtrl.getMessages()" class="chat-content-round">
+    <div class="row no-gutters" data-ng-repeat="mess in messages track by $index">
+      <div class="col-md-3 offset-md-4" ng-if="mess.senderId==loggedUserId">
+        <div class="chat-bubble chat-bubble--right">{{mess["message"]}}</div>
+      </div>
+      <div class="col-md-3" ng-if="mess.senderId!=loggedUserId">
+        <div class="chat-bubble chat-bubble--left" style="color: black">
+          {{ mess["message"]}}
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row no-gutters" >
-    <div class="col-md-3 offset-md-4" >
-      <div ng-attr-id="{{ 'chat-text' + customerId}}"  >
+    <div class="row no-gutters">
+      <div class="col-md-3 offset-md-4">
+        <div ng-attr-id="{{ 'chat-text' + customerId}}">
+        </div>
       </div>
-    </div>
-    <!-- <div class="col-md-3">
+      <!-- <div class="col-md-3">
       <div ng-attr-id="{{ 'chat-text' + customerId}}"  >
       </div>
     </div> -->
-  </div>
+    </div>
   </div>
   <div style="margin-top: 0px;">
     <form id="chat-form" ng-submit="ChatCtrl.addChat(newMess)" style="margin-top: 0 !important;">
       <div class="chat-box-tray">
-        <input
-          type="text"
-          placeholder="Hãy viết gì đó ..."
-          ng-model="newMess.message"
-          style="border-radius: 10px;"
-        />
-        <button type="submit" ng-click="ChatCtrl.appendJquery(newMess.message)"  class="fa fa-paper-plane-o"></button>
-      </div>
+        <div class="chat_content">
+          <input type="text" placeholder="Hãy viết gì đó ..." size="4" ng-model="newMess.message" style="border-radius: 10px;" />
+          <form id="uploadImage">
+     <label for="imgInp" class="fa fa-picture-o" style="color: black; padding-right: 8px;"></label>
+     <input type="file" name="imgInp" style="display: none;" id="imgInp" ng-click="ChatCtrl.fileUpload();" accept=".gif, .jpeg, .png, .mp4" />
     </form>
-</div>
+          <button type="submit" ng-click="ChatCtrl.appendJquery(newMess.message)" class="fa fa-paper-plane-o"></button>
+        </div>
+        <div class="image" ng-model="isImage" ng-if="isImage">
+          <img id="selectedImage" alt="Chọn tệp" style="font-size: 14px; font-weight: 400;"  width="100" height="100" />
+        </div>
+      </div>
+
+      </div>
+
+    </form>
+  </div>
 </div>
 
-<script> 
-  $('#chat-panel').animate({scrollTop: $('#chat-panel')[0].scrollHeight}, 1000);
+<script>
+
+  $('#chat-panel').animate({
+    scrollTop: $('#chat-panel')[0].scrollHeight
+  }, 1000);
 </script>
