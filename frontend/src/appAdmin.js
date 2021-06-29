@@ -109,6 +109,7 @@ require("./modules/admin.emails/module.js");
 require("./modules/admin.logs/module.js");
 require("./modules/admin.maintenance/module.js");
 require("./modules/admin.warranty/module.js");
+require("./modules/admin.suggestion-box/module.js");
 require("./modules/admin.chat/module.js");
 
 if (!window.OpenLoyaltyConfig.debug) {
@@ -156,6 +157,7 @@ angular
     "admin.emails",
     "admin.maintenance",
     "admin.warranty",
+    "admin.suggestion-box",
     "admin.chat",
     "admin.logs",
     "simplemde",

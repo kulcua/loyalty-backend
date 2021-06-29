@@ -264,18 +264,24 @@ hr {
     background: white;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     display: flex;
+    flex-direction: column;
+    border: 1px solid $gray;
+    bottom: 0.15;
+
+}
+
+.chat_content {
     border-bottom-right-radius: 15px;
     border-bottom-left-radius: 15px;
     align-items: baseline;
     padding: 10px 15px;
     align-items: center;
-    border: 1px solid $gray;
-    bottom: 0;
+    display: flex;
     input {
         margin: 0 10px;
         padding: 6px 2px;
+        size: 6;
     }
-
     i {
         color: grey;
         font-size: 30px;
@@ -285,6 +291,21 @@ hr {
             margin-left: 25px;
         }
     }
+}
+
+.chat_message_area
+{
+ position: relative;
+ width: 100%;
+ height: auto;
+ background-color: #FFF;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+}
+
+.image{
+    margin-left: 30px;
+    margin-bottom: 10px;
 }
 
 .dot {

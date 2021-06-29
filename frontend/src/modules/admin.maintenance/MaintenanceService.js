@@ -48,49 +48,6 @@ export default class MaintenanceService {
       .one(state?"active":"inactive")
       .customPOST();
   }
-
-  /**
-   * Calls for post image to maintenance
-   *
-   * @method postMaintenanceImage
-   * @param {Integer} maintenanceId
-   * @param {Object} data
-   * @returns {Promise}
-   */
-  postMaintenanceImage(maintenanceId, data) {
-    let fd = new FormData();
-
-    fd.append("photo[file]", data);
-
-    return this.Restangular.one("maintenance", maintenanceId)
-      .one("photo")
-      .withHttpConfig({ transformRequest: angular.identity })
-      .customPOST(fd, "", undefined, { "Content-Type": undefined });
-  }
-
-  /**
-   * Calls for maintenance image
-   *
-   * @method getMaintenanceImage
-   * @param {Integer} maintenanceId
-   * @returns {Promise}
-   */
-  getMaintenanceImage(maintenanceId) {
-    return this.Restangular.one("level", maintenanceId).one("photo").get();
-  }
-
-  /**
-   * Calls to remove maintenance photo
-   *
-   * @method deleteMaintenanceImage
-   * @param {Integer} maintenanceId
-   * @returns {Promise}
-   */
-  deleteMaintenanceImage(maintenanceId) {
-    return this.Restangular.one("maintenance", maintenanceId)
-      .one("photo")
-      .remove();
-  }
 }
 
 MaintenanceService.$inject = ["Restangular", "EditableMap"];

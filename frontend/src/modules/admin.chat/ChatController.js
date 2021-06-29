@@ -31,6 +31,7 @@ export default class ChatController {
     this.AuthService = AuthService;
     this.$scope.loggedUserId = AuthService.getLoggedUserId() || null;
     this.$scope.firstSelected = null;
+    this.$scope.isImage = false;
     this.Flash = Flash;
     this.NgTableParams = NgTableParams;
     this.$scope.selectedIndex = 0;
@@ -90,6 +91,18 @@ export default class ChatController {
       document.getElementById("chat-form").reset();
     };
   }
+
+  fileUpload() {    
+    imgInp.onchange = evt => {
+      const [file] = imgInp.files
+      if (file) {
+        $("#selectedImage").attr("src",URL.createObjectURL(file));
+      }
+    }
+
+  this.$scope.isImage = true;
+    
+  };
 
   getData() {
     let self = this;

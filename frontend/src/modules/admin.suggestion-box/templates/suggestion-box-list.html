@@ -1,0 +1,64 @@
+<box-loader loading="SuggestionBoxCtrl.loaderStates.coverLoader" cover="1" class="cover" delay="1000"></box-loader>
+
+<div class="heading" ng-init="SuggestionBoxCtrl.getData()">
+    <h1>Hộp thư góp ý</h1>
+</div>
+<div style="clear:both;"></div>
+
+<div class="client-list box">
+    <div class="box-title">
+        <h1 class="text-left">Danh sách hộp thư góp ý</h1>
+    </div>
+    <div class="box-content">
+        <box-loader loading="SuggestionBoxCtrl.loaderStates.suggestionBoxList"></box-loader>
+        <table ng-table="SuggestionBoxCtrl.tableParams" class="default" template-pagination="templatePagination.html">
+            <tr ng-repeat="row in $data">
+                <td data-title="'Tên khách hàng'" sortable="'senderName'">
+                    <span ng-bind="row.senderName"></span>
+                </td>
+                <td data-title="'Số điện thoại'" sortable="'senderPhone'">
+                    <span ng-bind="row.senderPhone "></span>
+                </td>
+                <td data-title="'Vấn đề'" sortable="'problemType'">
+                    <span ng-bind="row.problemType"></span>
+                </td>
+                <td data-title="'Mô tả'">
+                    <span ng-bind="row.description"></span>
+                </td>
+                <td data-title="'Trạng thái'" sortable="'active'">
+                    <span ng-show="SuggestionBoxCtrl.AuthService.hasPermission('EARNING_RULE', 'MODIFY')">
+                        <button ng-if="row.active" class="tiny button button-septenary-colorized"
+                            ng-click="SuggestionBoxCtrl.setLevelState(!row.active, row.id)">
+                            {{'global.active'|translate}}
+                        </button>
+                        <button ng-if="!row.active" class="tiny button button-default"
+                            ng-click="SuggestionBoxCtrl.setLevelState(!row.active, row.id)">
+                            {{'global.inactive'|translate}}
+                        </button>
+                    </span>
+                    <span ng-show="!SuggestionBoxCtrl.AuthService.hasPermission('EARNING_RULE', 'MODIFY')">
+                        <span ng-if="row.active">
+                            {{'global.active'|translate}}
+                        </span>
+                        <span ng-if="!row.active">
+                            {{'global.inactive'|translate}}
+                        </span>
+                    </span>
+                </td>
+                <td data-title="'Chi tiết'">
+
+                    <a class="tiny button button-primary" data-modal-id="{{row.id}}"
+                        ng-click="SuggestionBoxCtrl.testSuggestionBox[$index].showModal=true">
+                        {{ "global.show" | translate }}
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<modal ng-repeat="test in SuggestionBoxCtrl.testSuggestionBox" show='SuggestionBoxCtrl.testSuggestionBox[$index].showModal' modalId="{{test.id}}">
+<div>
+    <h1>test.senderName</h1>
+</div>
+</modal>

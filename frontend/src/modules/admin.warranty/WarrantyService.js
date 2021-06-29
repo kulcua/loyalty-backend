@@ -48,49 +48,6 @@ export default class WarrantyService {
       .one(state?"active":"inactive")
       .customPOST();
   }
-
-  /**
-   * Calls for post image to warranty
-   *
-   * @method postWarrantyImage
-   * @param {Integer} warrantyId
-   * @param {Object} data
-   * @returns {Promise}
-   */
-  postWarrantyImage(warrantyId, data) {
-    let fd = new FormData();
-
-    fd.append("photo[file]", data);
-
-    return this.Restangular.one("warranty", warrantyId)
-      .one("photo")
-      .withHttpConfig({ transformRequest: angular.identity })
-      .customPOST(fd, "", undefined, { "Content-Type": undefined });
-  }
-
-  /**
-   * Calls for warranty image
-   *
-   * @method getWarrantyImage
-   * @param {Integer} warrantyId
-   * @returns {Promise}
-   */
-  getWarrantyImage(warrantyId) {
-    return this.Restangular.one("level", warrantyId).one("photo").get();
-  }
-
-  /**
-   * Calls to remove warranty photo
-   *
-   * @method deleteWarrantyImage
-   * @param {Integer} warrantyId
-   * @returns {Promise}
-   */
-  deleteWarrantyImage(warrantyId) {
-    return this.Restangular.one("warranty", warrantyId)
-      .one("photo")
-      .remove();
-  }
 }
 
 WarrantyService.$inject = ["Restangular", "EditableMap"];
