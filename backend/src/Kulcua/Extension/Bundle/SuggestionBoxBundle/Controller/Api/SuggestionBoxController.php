@@ -26,7 +26,6 @@ use Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetai
 use Kulcua\Extension\Component\SuggestionBox\Domain\Command\DeactivateSuggestionBox;
 use FOS\RestBundle\View\View;
 use Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetailsRepository;
-use Kulcua\Extension\Component\SuggestionBox\Domain\SuggestionBox;
 
 /**
  * Class SuggestionBoxController.
@@ -271,12 +270,12 @@ class SuggestionBoxController extends FOSRestController
      *     }
      * )
      *
-     * @param SuggestionBox $suggestionBox
+     * @param SuggestionBoxDetails $suggestion_box
      *
      * @return FosView
      */
-    public function getAction(SuggestionBox $suggestionBox)
+    public function getAction(SuggestionBoxDetails $suggestion_box)
     {
-        return $this->view($suggestionBox);
+        return $this->view($suggestion_box);
     }
 }
