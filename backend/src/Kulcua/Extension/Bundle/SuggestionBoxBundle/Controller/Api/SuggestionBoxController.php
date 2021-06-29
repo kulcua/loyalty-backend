@@ -144,7 +144,7 @@ class SuggestionBoxController extends FOSRestController
      * @param SuggestionBoxDetails $suggestion_box
      *
      * @return \FOS\RestBundle\View\View
-     * @Route(name="kc.suggestion_box.edit", path="/suggestion_box/{suggestion_box}")
+     * @Route(name="kc.suggestion_box.edit", path="/{suggestion_box}")
      * @Method("PUT")
      * @ApiDoc(
      *     name="Edit SuggestionBox",
@@ -180,7 +180,7 @@ class SuggestionBoxController extends FOSRestController
     /**
      * Change suggestion_box state action to active or inactive.
      *
-     * @Route(name="kc.suggestion_box.change_state", path="/suggestion_box/{suggestion_box}/{active}", requirements={"active":"active|inactive"})
+     * @Route(name="kc.suggestion_box.change_state", path="/{suggestion_box}/{active}", requirements={"active":"active|inactive"})
      * @Method("POST")
      * @ApiDoc(
      *     name="Change SuggestionBox state active",
@@ -210,12 +210,20 @@ class SuggestionBoxController extends FOSRestController
     /**
      * Method will return complete list of all suggestionBoxs.
      *
-     * @Route(name="kc.suggestionBox.list", path="/suggestion_box")
+     * @Route(name="kc.suggestionBox.list", path="/")
      * @Method("GET")
      *
      * @ApiDoc(
-     *     name="get suggestionBoxs list",
-     *     section="Suggestion Box")
+     *     name="get Suggestion Box list",
+     *     section="Suggestion Box",
+     *     parameters={
+     *      {"name"="active", "dataType"="boolean", "required"=false, "description"="isActive"},
+     *      {"name"="page", "dataType"="integer", "required"=false, "description"="Page number"},
+     *      {"name"="perPage", "dataType"="integer", "required"=false, "description"="Number of elements per page"},
+     *      {"name"="sort", "dataType"="string", "required"=false, "description"="Field to sort by"},
+     *      {"name"="direction", "dataType"="asc|desc", "required"=false, "description"="Sorting direction"},
+     *     }
+     * )
      *
      * @param Request      $request
      * @param ParamFetcher $paramFetcher
