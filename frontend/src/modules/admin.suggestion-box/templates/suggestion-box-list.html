@@ -26,6 +26,9 @@
                 <td data-title="'Mô tả'">
                     <span ng-bind="row.description"></span>
                 </td>
+                <td data-title="'Tạo lúc'">
+                    <span ng-bind="row.timestamp|date: 'yyyy-MM-dd HH:mm'"></span>
+                </td>
                 <td data-title="'Trạng thái'" sortable="'active'">
                     <span ng-show="SuggestionBoxCtrl.AuthService.hasPermission('EARNING_RULE', 'MODIFY')">
                         <button ng-if="row.active" class="tiny button button-septenary-colorized"
@@ -67,12 +70,20 @@
             <td><span ng-bind="suggestionBox.senderName"></span></td>
         </tr>
         <tr>
+            <td><b>Số điện thoại</b></td>
+            <td><span>0909090909</span></td>
+        </tr>
+        <tr>
             <td><b>Loại vấn đề</b></td>
             <td><span ng-bind="suggestionBox.problemType"></span></td>
         </tr>
         <tr>
             <td><b>Mô tả</b></td>
             <td><span ng-bind="suggestionBox.description"></span></td>
+        </tr>
+        <tr>
+            <td><b>Tạo lúc</b></td>
+            <td><span ng-bind="suggestionBox.timestamp|date: 'yyyy-MM-dd HH:mm'"></span></td>
         </tr>
         <tr>
             <td><b>Ảnh đính kèm</b></td>
