@@ -8,6 +8,10 @@ export default class SuggestionBoxService {
         return this.Restangular.all('suggestion_box').getList(params);
     }
 
+    getSuggestionBox(suggestionBox) {
+        return this.Restangular.one('suggestion_box', suggestionBox).get();
+    }
+
     // postActivateLevel(state, levelId) {
     //     let self = this;
 

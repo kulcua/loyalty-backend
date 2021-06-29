@@ -76,7 +76,15 @@
         </tr>
         <tr>
             <td><b>Ảnh đính kèm</b></td>
-            <td><span ng-bind="suggestionBox.senderName"></span></td>
+            <td class="campaign-photos">
+                <div class="single-photo">
+                    <div class="img-wrapper">
+                        <div class="thumb">
+                            <img ng-src="{{SuggestionBoxCtrl.generateSuggestionBoxPhotoRoute(suggestionBox.suggestionBoxId.suggestionBoxId)}}" />
+                        </div>
+                    </div>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>

@@ -107,29 +107,29 @@ export default class SuggestionBoxController {
         .then(
           res => {
             self.$scope.suggestionBox = res;
-            self.$scope.editableFields = self.EditableMap.humanizeCampaign(res);
+            self.$scope.editableFields = self.EditableMap.humanizeSuggestionBox(res);
 
-            if (self.$scope.editableFields.levels && self.$scope.editableFields.levels.length) {
-              let levels = self.$scope.editableFields.levels;
-              for (let i in levels) {
-                let level = _.find(self.levels, { id: levels[i] });
-              }
+            // if (self.$scope.editableFields.levels && self.$scope.editableFields.levels.length) {
+            //   let levels = self.$scope.editableFields.levels;
+            //   for (let i in levels) {
+            //     let level = _.find(self.levels, { id: levels[i] });
+            //   }
 
-            }
-            if (self.$scope.editableFields.segments && self.$scope.editableFields.segments.length) {
-              let segments = self.$scope.editableFields.segments;
-              for (let i in segments) {
-                let segment = _.find(self.segments, { id: segments[i] });
-              }
+            // }
+            // if (self.$scope.editableFields.segments && self.$scope.editableFields.segments.length) {
+            //   let segments = self.$scope.editableFields.segments;
+            //   for (let i in segments) {
+            //     let segment = _.find(self.segments, { id: segments[i] });
+            //   }
 
-            }
-            if (self.$scope.editableFields.pos && self.$scope.editableFields.pos.length) {
-              let poses = self.$scope.editableFields.pos;
-              for (let i in poses) {
-                let pos = _.find(self.pos, { id: poses[i] });
-              }
+            // }
+            // if (self.$scope.editableFields.pos && self.$scope.editableFields.pos.length) {
+            //   let poses = self.$scope.editableFields.pos;
+            //   for (let i in poses) {
+            //     let pos = _.find(self.pos, { id: poses[i] });
+            //   }
 
-            }
+            // }
             self.$scope.editableFields = self.EditableMap.humanizeSuggestionBoxFields(res);
             self.loaderStates.suggestionBoxDetails = false;
           },
@@ -158,6 +158,16 @@ export default class SuggestionBoxController {
       self.Flash.create('warning', message);
       self.loaderStates.suggestionBoxDetails = false;
     }
+  }
+
+  /**
+     * Generating SuggestionBox photo route
+     *
+     * @method generateSuggestionBoxPhotoRoute
+     * @returns {string}
+     */
+  generateSuggestionBoxPhotoRoute(suggestionBoxId) {
+    return this.DataService.getConfig().apiUrl + '/suggestion_box/photo/' + suggestionBoxId
   }
 }
 
