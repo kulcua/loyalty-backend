@@ -26,6 +26,7 @@ use Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetai
 use Kulcua\Extension\Component\SuggestionBox\Domain\Command\DeactivateSuggestionBox;
 use FOS\RestBundle\View\View;
 use Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetailsRepository;
+use Kulcua\Extension\Component\SuggestionBox\Domain\SuggestionBox;
 
 /**
  * Class SuggestionBoxController.
@@ -254,5 +255,28 @@ class SuggestionBoxController extends FOSRestController
             'suggestionBoxs' => $suggestionBoxs,
             'total' => $total,
         ], 200);
+    }
+
+    /**
+     * Method will return Suggestion box details.
+     *
+     * @Route(name="oloy.suggestion_box.get", path="/{suggestion_box}")
+     * @Method("GET")
+     * @ApiDoc(
+     *     name="get Suggestion box",
+     *     section="Suggestion Box",
+     *     statusCodes={
+     *       200="Returned when successful",
+     *       404="Returned when Suggestion box does not exist"
+     *     }
+     * )
+     *
+     * @param SuggestionBox $suggestionBox
+     *
+     * @return FosView
+     */
+    public function getAction(SuggestionBox $suggestionBox)
+    {
+        return $this->view($suggestionBox);
     }
 }
