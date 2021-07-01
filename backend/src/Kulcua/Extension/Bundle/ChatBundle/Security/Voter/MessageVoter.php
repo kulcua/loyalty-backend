@@ -7,7 +7,6 @@ use OpenLoyalty\Bundle\UserBundle\Security\PermissionAccess;
 use OpenLoyalty\Component\Customer\Domain\ReadModel\CustomerDetails;
 use OpenLoyalty\Component\Seller\Domain\ReadModel\SellerDetailsRepository;
 use Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetails;
-use Kulcua\Extension\Component\Message\Domain\Message;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 

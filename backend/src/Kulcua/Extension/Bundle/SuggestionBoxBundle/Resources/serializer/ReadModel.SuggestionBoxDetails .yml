@@ -1,0 +1,9 @@
+Kulcua\Extension\Component\SuggestionBox\Domain\ReadModel\SuggestionBoxDetails:
+  exlusion_policy: all
+  properties:
+    suggestionBoxId:
+      expose: true
+      inline: true
+    accountId:
+      expose: true
+      inline: true

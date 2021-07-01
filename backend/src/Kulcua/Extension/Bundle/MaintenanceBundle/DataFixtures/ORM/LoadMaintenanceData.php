@@ -18,17 +18,10 @@ use Symfony\Bridge\Doctrine\Tests\Fixtures\ContainerAwareFixture;
 class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterface, OrderedFixtureInterface
 {
     const MAINTENANCE_ID = '00000000-0000-2222-0000-000000000000';
-    // const MAINTENANCE_COUPONS_ID = '00000000-0000-1111-0000-000000002121';
-    // const MAINTENANCE_COUPONS_USED_ID = '00000000-0000-1111-0000-000000002123';
     const MAINTENANCE2_ID = '00000000-0000-2222-0000-000000000002';
     const MAINTENANCE3_ID = '00000000-0000-2222-0000-000000000003';
     const MAINTENANCE4_ID = '00000000-0000-2222-0000-000000000004';
-    // const MAINTENANCE5_ID = '00000000-0000-1111-0000-000000000005';
-    // const MAINTENANCE6_ID = '00000000-0000-1111-0000-000000000006';
-    // const MAINTENANCE7_ID = '00000000-0000-1111-0000-000000000007';
-    // const MAINTENANCE8_ID = '00000000-0000-1111-0000-000000000008';
-    // const MAINTENANCE9_ID = '00000000-0000-1111-0000-000000000009';
-
+    
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
@@ -41,6 +34,9 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
             'createdAt' => (new \DateTime('+1 day'))->getTimestamp(),
             'active' => false,
             'warrantyCenter' => 'HCM',
+            'description' => 'no description',
+            'cost' => '10.000',
+            'paymentStatus' => 'paid'
         ];
 
         /** @var CommandBus $bus */
@@ -71,6 +67,7 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
 
         $maintenanceData['productSku'] = '22222';
         $maintenanceData['active'] = true;
+        $maintenanceData['paymentStatus'] = 'unpaid';
 
         $bus->dispatch(
             new BookMaintenance(
@@ -97,6 +94,8 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
         $maintenanceData['productSku'] = '333333';
         $maintenanceData['bookingTime'] = '10:00';
         $maintenanceData['warrantyCenter'] = 'Vung Tau';
+        $maintenanceData['paymentStatus'] = 'unpaid';
+
         $bus->dispatch(
             new BookMaintenance(
                 new MaintenanceId(self::MAINTENANCE4_ID),
@@ -122,6 +121,8 @@ class LoadMaintenanceData extends ContainerAwareFixture implements FixtureInterf
         $maintenanceData['productSku'] = '44444';
         $maintenanceData['bookingTime'] = '10:30';
         $maintenanceData['warrantyCenter'] = 'Tra Vinh';
+        $maintenanceData['paymentStatus'] = 'paid';
+
         $bus->dispatch(
             new BookMaintenance(
                 new MaintenanceId(self::MAINTENANCE3_ID),

@@ -1,0 +1,9 @@
+Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetails:
+  exlusion_policy: all
+  properties:
+    warrantyId:
+      expose: true
+      inline: true
+    customerId:
+      expose: true
+      inline: true

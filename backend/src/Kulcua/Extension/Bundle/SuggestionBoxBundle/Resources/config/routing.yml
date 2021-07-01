@@ -1,0 +1,4 @@
+suggestion_box:
+    resource: "@SuggestionBoxBundle/Controller/Api/SuggestionBoxController.php"
+    type:     annotation
+    prefix:   /api/suggestion_box

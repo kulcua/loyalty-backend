@@ -1,0 +1,6 @@
+jms_serializer:
+    metadata:
+      directories:
+        Warranty:
+          namespace_prefix: "Kulcua\\Extension\\Component\\Warranty\\Domain"
+          path: "@WarrantyBundle/Resources/config/serializer"

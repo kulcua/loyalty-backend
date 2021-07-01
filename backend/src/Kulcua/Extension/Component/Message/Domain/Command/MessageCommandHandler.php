@@ -58,4 +58,25 @@ class MessageCommandHandler extends SimpleCommandHandler
             )]
         );
     }
+
+    /**
+     * @param CreatePhotoMessage $command
+     */
+    public function handleCreatePhotoMessage(CreatePhotoMessage $command)
+    {
+        $message = Message::createMessage(
+            $command->getMessageId(),
+            $command->getMessageData()
+        );
+
+        $this->repository->save($message);
+
+        $this->eventDispatcher->dispatch(
+            MessageSystemEvents::MESSAGE_CREATED,
+            [new MessageCreatedSystemEvent(
+                $command->getMessageId(),
+                $command->getMessageData()
+            )]
+        );
+    }
 }

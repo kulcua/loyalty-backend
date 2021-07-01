@@ -1,0 +1,6 @@
+services:
+    Kulcua\Extension\Bundle\WarrantyBundle\Security\Voter\WarrantyVoter:
+        arguments:
+            $sellerDetailsRepository: '@oloy.user.read_model.repository.seller_details'
+        tags:
+            - { name: security.voter }

@@ -1,0 +1,31 @@
+imports:
+   - { resource: 'services/forms.yml' }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Kulcua\Extension\Bundle\WarrantyBundle\Controller\:
+            resource: '../../Controller'
+            tags: ['controller.service_arguments']
+
+    kc.warranty.param_converter:
+        class: Kulcua\Extension\Bundle\WarrantyBundle\ParamConverter\WarrantyDetailsParamConverter
+        tags:
+            - { name: request.param_converter, priority: -2, converter: warranty_details_converter }
+
+    kc.warranty.settings_based_customer_id_provider:
+        class: Kulcua\Extension\Bundle\WarrantyBundle\Service\SettingsBasedCustomerIdProvider
+        arguments:
+            - '@ol.doctrine_settings.manager'
+            - '@oloy.user.read_model.repository.customer_details'
+
+    kc.warranty.customer_id_provider:
+        alias: kc.warranty.settings_based_customer_id_provider
+
+    kc.warranty.form_handler.edit:
+        class: Kulcua\Extension\Bundle\WarrantyBundle\Form\Handler\WarrantyEditFormHandler
+        arguments:
+            - '@broadway.command_handling.command_bus'
+            - '@doctrine.orm.entity_manager'

@@ -82,5 +82,32 @@ services:
 
     Kulcua\Extension\Component\Message\Domain\ReadModel\MessageDetailsRepository: '@kc.message.read_model.repository.message_details'
 
-
+    Kulcua\Extension\Bundle\ChatBundle\Service\MessagePhotoContentGeneratorInterface: '@Kulcua\Extension\Bundle\ChatBundle\Service\MessagePhotoContentGenerator'
     
+    Kulcua\Extension\Bundle\ChatBundle\Service\MessagePhotoContentGenerator:
+        arguments:
+            $filesystem: '@kc.message.photos_filesystem'
+
+    Kulcua\Extension\Component\Message\Domain\Repository\MessagePhotoRepositoryInterface: '@Kulcua\Extension\Component\Message\Infrastructure\Doctrine\ORM\Repository\MessagePhotoRepository'
+
+    Kulcua\Extension\Component\Message\Infrastructure\Doctrine\ORM\Repository\MessagePhotoRepository: ~
+
+    Kulcua\Extension\Component\Message\Infrastructure\EventListener\SaveFileListener:
+        arguments:
+            - '@kc.message.photos_filesystem'
+        tags:
+            - { name: broadway.event_listener, event: !php/const:Kulcua\Extension\Component\Message\Domain\Event\MessagePhotoSavedEvent::NAME, method: __invoke }
+
+    Kulcua\Extension\Component\Message\Domain\Command\MessagePhotoCommandHandler:
+            arguments:
+                $uuidGenerator: '@broadway.uuid.generator'
+            tags:
+                - { name: broadway.command_handler }
+
+    Kulcua\Extension\Component\Message\Domain\Repository\MessageRepositoryInterface: '@kc.message.repository'
+
+    Kulcua\Extension\Component\Message\Domain\MessageRepository: '@kc.message.repository'
+
+    Kulcua\Extension\Component\Message\Domain\Factory\PhotoEntityFactoryInterface: '@Kulcua\Extension\Component\Message\Domain\Factory\PhotoEntityFactory'
+
+    Kulcua\Extension\Component\Message\Domain\Factory\PhotoEntityFactory: ~

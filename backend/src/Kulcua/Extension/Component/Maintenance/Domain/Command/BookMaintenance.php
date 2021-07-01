@@ -26,7 +26,10 @@ class BookMaintenance extends MaintenanceCommand
         'bookingTime',
         'warrantyCenter',
         'createdAt',
-        'active'
+        'active',
+        'description',
+        'cost',
+        'paymentStatus'
     ];
 
     private $requiredCustomerFields = [

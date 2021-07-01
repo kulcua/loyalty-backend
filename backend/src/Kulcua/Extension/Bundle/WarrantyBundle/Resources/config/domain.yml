@@ -1,0 +1,43 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    kc.warranty.command_handler:
+        class: Kulcua\Extension\Component\Warranty\Domain\Command\WarrantyCommandHandler
+        arguments:
+            - '@kc.warranty.repository'
+            - '@broadway.event_dispatcher'
+        lazy: true
+        tags:
+            - { name: broadway.command_handler }
+
+    Kulcua\Extension\Component\Warranty\Domain\EventSourcedWarrantyRepository:
+        arguments:
+            - '@broadway.event_store'
+            - '@broadway.event_handling.event_bus'
+            - ['@broadway.metadata_enriching_event_stream_decorator']
+
+    Kulcua\Extension\Component\Warranty\Domain\WarrantyRepository:
+        arguments:
+            - '@Kulcua\Extension\Component\Warranty\Domain\EventSourcedWarrantyRepository'
+            - '@broadway.event_store'
+            - '@OpenLoyalty\Bundle\CoreBundle\Repository\DBALSnapshotRepository'
+            - '@Broadway\Snapshotting\Snapshot\Trigger\EventCountTrigger'
+
+    kc.warranty.read_model.repository.warranty_details:
+        class: 'Broadway\ReadModel\ReadModel'
+        factory: ['@oloy.read_model.repository.factory', create]
+        arguments:
+            - 'kc.warrantys_details'
+            - 'Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetails'
+            - 'Kulcua\Extension\Component\Warranty\Infrastructure\Repository\WarrantyDetailsElasticsearchRepository'
+
+    Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetailsProjector:
+        tags:
+            - { name: broadway.domain.event_listener }
+        arguments:
+            $warrantyRepository: '@kc.warranty.repository'
+            $repository: '@kc.warranty.read_model.repository.warranty_details'
+
+    Kulcua\Extension\Component\Warranty\Domain\ReadModel\WarrantyDetailsRepository: '@kc.warranty.read_model.repository.warranty_details'

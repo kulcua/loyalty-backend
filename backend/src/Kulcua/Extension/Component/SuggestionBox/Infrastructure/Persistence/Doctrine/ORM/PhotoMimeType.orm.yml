@@ -1,0 +1,7 @@
+Kulcua\Extension\Component\SuggestionBox\Domain\PhotoMimeType:
+  type: embeddable
+  fields:
+    value:
+      type: string
+      column: mime_type
+      nullable: false

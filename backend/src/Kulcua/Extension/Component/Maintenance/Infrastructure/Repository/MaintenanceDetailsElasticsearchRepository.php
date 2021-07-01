@@ -83,6 +83,48 @@ class MaintenanceDetailsElasticsearchRepository extends OloyElasticsearchReposit
         return $this->query($query);
     }
 
+     /**
+     * {@inheritdoc}
+     */
+    public function findByDescription(string $description, bool $withCustomer = true): array
+    {
+        $query['bool']['must'][]['term'] = ['description' => $description];
+
+        if ($customer) {
+            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+        }
+
+        return $this->query($query);
+    }
+
+     /**
+     * {@inheritdoc}
+     */
+    public function findByCost(string $cost, bool $withCustomer = true): array
+    {
+        $query['bool']['must'][]['term'] = ['cost' => $cost];
+
+        if ($customer) {
+            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+        }
+
+        return $this->query($query);
+    }
+
+     /**
+     * {@inheritdoc}
+     */
+    public function findByPaymentStatus(string $paymentStatus, bool $withCustomer = true): array
+    {
+        $query['bool']['must'][]['term'] = ['paymentStatus' => $paymentStatus];
+
+        if ($customer) {
+            $query['bool']['must'][]['exists'] = ['field' => 'customerId'];
+        }
+
+        return $this->query($query);
+    }
+
     /**
      * {@inheritdoc}
      */

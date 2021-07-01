@@ -53,6 +53,10 @@ parameters:
 
     campaign_photos_adapter: campaign_photos_local
     campaign_photos_adapter_env: CAMPAIGN_PHOTOS_ADAPTER
+    message_photos_adapter: message_photos_local
+    message_photos_adapter_env: MESSAGE_PHOTOS_ADAPTER
+    suggestion_box_photos_adapter: suggestion_box_photos_local
+    suggestion_box_photos_adapter_env: SUGGESTION_BOX_PHOTOS_ADAPTER
     level_photos_adapter: level_photos_local
     level_photos_adapter_env: LEVEL_PHOTOS_ADAPTER
     earning_rule_photos_adapter: earning_rule_photos_local

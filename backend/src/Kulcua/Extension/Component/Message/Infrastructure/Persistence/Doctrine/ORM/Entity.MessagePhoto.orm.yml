@@ -1,0 +1,25 @@
+Kulcua\Extension\Component\Message\Domain\Entity\MessagePhoto:
+  type: entity
+  table: kc__message_photo
+  id:
+    photoId:
+      type: message_photo_id
+      column: photo_id
+  
+  fields:
+    messageId:
+      type: text
+      nullable: true
+      column: message_id
+
+  embedded:
+    path:
+      class: Kulcua\Extension\Component\Message\Domain\PhotoPath
+      columnPrefix: false
+    mimeType:
+      class: Kulcua\Extension\Component\Message\Domain\PhotoMimeType
+      columnPrefix: false
+    originalName:
+      class: Kulcua\Extension\Component\Message\Domain\PhotoOriginalName
+      columnPrefix: false
+

@@ -1,7 +1,5 @@
 <?php
 namespace Kulcua\Extension\Bundle\ChatBundle\WebSocket;
-// use Kulcua\Extension\Component\Message\Domain\Message;
-// use OpenLoyalty\Bundle\UserBundle\Entity\User;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 

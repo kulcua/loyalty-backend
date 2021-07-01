@@ -3,13 +3,9 @@
 namespace Kulcua\Extension\Bundle\MaintenanceBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type as Numeric;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
@@ -48,5 +44,14 @@ class MaintenanceDetailsFormType extends AbstractType
                 'required' => false,
             ]
         );
+        $builder->add('description', TextType::class, [
+            'required' => true
+        ]);
+        $builder->add('cost', TextType::class, [
+            'required' => true
+        ]);
+        $builder->add('paymentStatus', TextType::class, [
+            'required' => true
+        ]);
     }
 }

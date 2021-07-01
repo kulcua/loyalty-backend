@@ -1,0 +1,6 @@
+Kulcua\Extension\Component\SuggestionBox\Domain\SuggestionBoxId:
+  exlusion_policy: ALL
+  properties:
+    suggestionBoxId:
+      expose: true
+      serialized_name: suggestionBoxId
