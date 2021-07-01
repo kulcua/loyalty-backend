@@ -100,6 +100,11 @@ security:
             methods: ["GET"]
             stateless: true
             anonymous: true
+        message_photo:
+            pattern:  ^/api/chat/message/photo/
+            methods: ["GET"]
+            stateless: true
+            anonymous: true
         earning_rule_photo:
             pattern:  ^/api/earningRule/([a-zA-Z\-0-9]+)/photo
             methods: ["GET"]
@@ -221,6 +226,7 @@ security:
         - { path: ^/api/settings/photo/(logo|small-logo|hero-image|admin-cockpit-logo|client-cockpit-logo-big|client-cockpit-logo-small|client-cockpit-hero-image), roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: ["GET"] }
         - { path: ^/api/settings/logo, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: ["GET"] }
         - { path: ^/api/suggestion_box/photo/, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: ["GET"] }
+        - { path: ^/api/chat/message/photo/, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: ["GET"] }
         - { path: ^/api/settings/small-logo, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: ["GET"] }
         - { path: ^/api/settings/hero-image, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: ["GET"] }
         - { path: ^/api/settings/conditions-file, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: ["GET"] }
