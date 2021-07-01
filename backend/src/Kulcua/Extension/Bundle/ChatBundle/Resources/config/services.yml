@@ -15,6 +15,11 @@ services:
         tags:
             - { name: request.param_converter, priority: -2, converter: conversation_details_converter }
 
+    kc.message.param_converter:
+        class: Kulcua\Extension\Bundle\ChatBundle\ParamConverter\MessageParamConverter
+        tags:
+            - { name: request.param_converter, priority: -2, converter: message_details_converter }
+
     kc.conversation.form_handler.edit:
         class: Kulcua\Extension\Bundle\ChatBundle\Form\Handler\ConversationEditFormHandler
         arguments:

@@ -132,4 +132,27 @@ class MessageController extends FOSRestController
 
         return $this->view($form->getErrors(), Response::HTTP_BAD_REQUEST);
     }
+
+    /**
+     * Method will return Message details.
+     *
+     * @Route(name="kc.message.get", path="/{message}")
+     * @Method("GET")
+     * @ApiDoc(
+     *     name="get Message",
+     *     section="Chat Message",
+     *     statusCodes={
+     *       200="Returned when successful",
+     *       404="Returned when Message does not exist"
+     *     }
+     * )
+     *
+     * @param MessageDetails $message
+     *
+     * @return FosView
+     */
+    public function getAction(MessageDetails $message)
+    {
+        return $this->view($message);
+    }
 }

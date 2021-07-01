@@ -259,7 +259,7 @@ class SuggestionBoxController extends FOSRestController
     /**
      * Method will return Suggestion box details.
      *
-     * @Route(name="oloy.suggestion_box.get", path="/{suggestion_box}")
+     * @Route(name="kc.suggestion_box.get", path="/{suggestion_box}")
      * @Method("GET")
      * @ApiDoc(
      *     name="get Suggestion box",
