@@ -51,46 +51,46 @@ class LoadCustomerKmeansData extends AbstractFixture implements FixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        // $bus = $this->container->get('broadway.command_handling.command_bus');
+        $bus = $this->container->get('broadway.command_handling.command_bus');
 
-        // $string = file_get_contents('data.json', true);
-        // $json_data = json_decode($string, true);
-        // foreach ($json_data as $person) {
-        //     $firstName = $person['first'];
-        //     $lastName = $person['last'];
-        //     $email = $person['email'];
-        //     $phone = $person['phone'];
-        //     $year = $person['year'];
-        //     $gender = $person['gender'];
-        //     $birthday = strtotime("$year-01-01");
+        $string = file_get_contents('data.json', true);
+        $json_data = json_decode($string, true);
+        foreach ($json_data as $person) {
+            $firstName = $person['first'];
+            $lastName = $person['last'];
+            $email = $person['email'];
+            $phone = $person['phone'];
+            $year = $person['year'];
+            $gender = $person['gender'];
+            $birthday = strtotime("$year-01-01");
 
-        //     //LOAD USER
-        //     $randomUuidGenerator = new UuidGenerator();
-        //     $customerId = new CustomerId($randomUuidGenerator->generate());
-        //     $command = new RegisterCustomer(
-        //         $customerId,
-        //         $this->getDefaultCustomerData($firstName, $lastName, $email, $phone, $birthday, $gender)
-        //     );
+            //LOAD USER
+            $randomUuidGenerator = new UuidGenerator();
+            $customerId = new CustomerId($randomUuidGenerator->generate());
+            $command = new RegisterCustomer(
+                $customerId,
+                $this->getDefaultCustomerData($firstName, $lastName, $email, $phone, $birthday, $gender)
+            );
 
-        //     $bus->dispatch($command);
-        //     $bus->dispatch(new ActivateCustomer($customerId));
-        //     $bus->dispatch(new AssignPosToCustomer($customerId, new \OpenLoyalty\Component\Customer\Domain\PosId(LoadPosData::POS_ID)));
+            $bus->dispatch($command);
+            $bus->dispatch(new ActivateCustomer($customerId));
+            $bus->dispatch(new AssignPosToCustomer($customerId, new \OpenLoyalty\Component\Customer\Domain\PosId(LoadPosData::POS_ID)));
 
-        //     $user = new Customer($customerId);
-        //     $user->setPlainPassword("loyalty");
-        //     $user->setPhone($command->getCustomerData()[$phone]);
+            $user = new Customer($customerId);
+            $user->setPlainPassword("loyalty");
+            $user->setPhone($command->getCustomerData()[$phone]);
 
-        //     $password = $this->container->get('security.password_encoder')
-        //         ->encodePassword($user, $user->getPlainPassword());
+            $password = $this->container->get('security.password_encoder')
+                ->encodePassword($user, $user->getPlainPassword());
 
-        //     $user->addRole($this->getReference('role_participant'));
-        //     $user->setPassword($password);
-        //     $user->setIsActive(true);
-        //     $user->setStatus(Status::typeActiveNoCard());
+            $user->addRole($this->getReference('role_participant'));
+            $user->setPassword($password);
+            $user->setIsActive(true);
+            $user->setStatus(Status::typeActiveNoCard());
 
-        //     $user->setEmail($email);
-        //     $manager->persist($user);
-        // }
+            $user->setEmail($email);
+            $manager->persist($user);
+        }
     }
 
     public static function getDefaultCustomerData($firstName, $lastName, $email, $phone = '00000', $birthday, $gender)
