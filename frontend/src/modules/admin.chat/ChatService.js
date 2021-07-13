@@ -17,7 +17,7 @@ export default class ChatService {
       .get()
       .then(
         (res) => {
-          self.conversations = self._toObject(res.conversations);
+          self.conversations = self._toObjectConversation(res.conversations);
           dfd.resolve();
         },
         () => {
@@ -65,17 +65,15 @@ export default class ChatService {
      * @param {Object} data
      * @returns {Promise}
      */
-    postImage(newMess) {
+    postImage(newMess, image) {
       let fd = new FormData();
 
       fd.append('message[conversationId]', newMess.conversationId);
-      // fd.append('message[conversationParticipantIds][0]', newMess.senderId);
-      // fd.append('message[conversationParticipantIds][1]', newMess.customerId);
       fd.append('message[senderId]', newMess.senderId);
       fd.append('message[senderName]', newMess.senderName);
       fd.append('message[message]', "photo");
       fd.append('message[messageTimestamp]',newMess.messageTimestamp);
-      fd.append('message[photoMessage]', newMess.file);
+      fd.append('message[photoMessage]', image);
 
       return this.Restangular
           .one('chat').one('message')
@@ -99,8 +97,26 @@ export default class ChatService {
   _toObject(data) {
     let res = {};
     for (let i in data) {
-      res[i] = data[i];
+      if(data[i]["message"]==="photo")
+      {
+        res[i] = data[i];
+        res[i].isPhoto = true;
+      }else {
+        res[i] = data[i];
+        res[i].isPhoto = false;
+      }
+     
     }
+
+    return res;
+  }
+
+  _toObjectConversation(data) {
+    let res = {};
+    for (let i in data) {
+     
+        res[i] = data[i];
+      }
 
     return res;
   }

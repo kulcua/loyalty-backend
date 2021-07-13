@@ -52,18 +52,29 @@ export default class ChatController {
       chatList: true,
       coverLoader: true,
     };
-    this.settingWebServer(this.$scope.loggedUserId, this.ChatService,this.$scope);
+    this.settingWebServer(this.config, this.ChatService,this.$scope);
 
   }
 
-  settingWebServer(loggedId, chatService,scope) {
+   /**
+     * Generating photo route
+     *
+     * @method generatePhotoRoute
+     * @returns {string}
+     */
+    generatePhotoRoute(messId) {
+      return this.DataService.getConfig().apiUrl + '/chat/message/photo/' + messId
+    }
+
+
+  settingWebServer(config, chatService,scope) {
     this.Ratchet.onopen = function (e) {
       console.log("Connection established!");
     };
+
     this.Ratchet.onmessage = function (e) {
       let data = JSON.parse(e.data);
 
-      let content;
       let classname;
       let id;
       let receiverId = data.customerId;
@@ -77,14 +88,13 @@ export default class ChatController {
           classname = "chat-left";
           id = senderId;
         }
-
-        if(data.type=="text")
+        
+        if(data.type==="text")
         {
         chatService.Restangular.one('chat', data.messId).get().then((value) => {
         let time = moment(Date.now()).format(
          "HH:mm"
         );
-
          //update new mess
          $('#cusid_' + id).html('<span class="dot"></span>');
          $('#lastMess_' + id).html('<p class="text-muted">'+value.message+' </p>');
@@ -99,26 +109,28 @@ export default class ChatController {
          //reset text box
          document.getElementById("chat-form").reset();
         }) 
-      }else {
-        chatService.Restangular.one('chat').one('message').one('photo', data.messId).get().then((value) => {
-          let time = moment(Date.now()).format(
-           "HH:mm"
-          );
-  
-           //update new mess
-           $('#cusid_' + id).html('<span class="dot"></span>');
-           $('#lastMess_' + id).html('<p class="text-muted"> photo </p>');
-           $('#lastTime_' + id).html('<span class="time text-muted small">' +time+ '</span');
-     
-          $('#chat-text' + id).append("<div class=" + classname + "> <img src="+URL.createObjectURL(scope.image)+"  width='300'  height='300' >  </div>");
-          
-          $('#chat-panel').animate({
-             scrollTop: $('#chat-panel')[0].scrollHeight
-           }, 2000);
-           
-           scope.image = null;
-           //reset text box
-           document.getElementById("chat-form").reset();})
+      }
+      else
+       {
+      let photo =  config.apiUrl + '/chat/message/photo/' + data.messId;
+      let time = moment(Date.now()).format(
+        "HH:mm"
+      );
+
+        //update new mess
+        $('#cusid_' + id).html('<span class="dot"></span>');
+        $('#lastMess_' + id).html('<p class="text-muted"> Đã gửi ảnh </p>');
+        $('#lastTime_' + id).html('<span class="time text-muted small">' +time+ '</span');
+
+      $('#chat-text' + id).append("<div class=" + classname + "> <img src="+ photo+"  width='300'  height='300' >  </div>");
+      
+      $('#chat-panel').animate({
+          scrollTop: $('#chat-panel')[0].scrollHeight
+        }, 2000);
+        
+        scope.image = null;
+        //reset text box
+        document.getElementById("chat-form").reset();
       }
     }
 
@@ -162,7 +174,9 @@ export default class ChatController {
 
     return dfd.promise;
   }
+  
 
+  
   getMessages() {
     let self = this;
     this.$scope.customerName = self.conversation.participantNames[1];
@@ -173,6 +187,7 @@ export default class ChatController {
       ).then(
         () => {
           self.$scope.messages = self.ChatService.messages;
+          
           $('#chat-panel').animate({
             scrollTop: $('#chat-panel')[0].scrollHeight
           }, 2000);
@@ -196,24 +211,25 @@ export default class ChatController {
     let self = this;
     let editedConversation = angular.copy(self.conversation);
 
+
     newMess.conversationId = self.conversation.conversationId.conversationId;
+    
     newMess.senderName = "admin";
     newMess.senderId = self.$scope.loggedUserId;
     newMess.messageTimestamp = moment(Date.now()).format(
       self.config.dateTimeFormat
     );
 
-
-    editedConversation.lastMessageSnippet = newMess.message;
     editedConversation.lastMessageTimestamp = moment(Date.now()).format(
       self.config.dateTimeFormat
     );
-
-
-      if(self.$scope.isImage)
+    
+    //alert(newMess.file);
+    if(self.$scope.isImage)
       {
-      newMess.file = self.$scope.image;
-      self.ChatService.postImage(newMess).then((value) => {
+      editedConversation.lastMessageSnippet = "photo";
+    //  newMess.file = self.$scope.image;
+      self.ChatService.postImage(newMess,self.$scope.image).then((value) => {
 
         this.appendJquery(value.messageId);
 
@@ -265,6 +281,7 @@ export default class ChatController {
     }
     else //post chat
     {
+      editedConversation.lastMessageSnippet = newMess.message;
       if (newMess.message) {
       self.ChatService.postChat(newMess).then((value) => {
 
@@ -279,7 +296,6 @@ export default class ChatController {
             .then(
               () => {
                 newMess.message = "";
-                self.$scope.isImage = false;
               },
               (res) => {
                 self.$scope.validate = self.Validation.mapSymfonyValidation(
@@ -323,7 +339,7 @@ export default class ChatController {
     let user_id = this.$scope.loggedUserId; //truyen day ne
     let cusId = this.conversation.participantIds[1];
     let type = "text";
-    if(this.$scope.image!=null) {
+    if(this.$scope.isImage) {
       type = "media"
     }
 

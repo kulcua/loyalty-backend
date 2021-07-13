@@ -5,11 +5,17 @@
   <div id="chat-panel" ng-init="ChatCtrl.getMessages()" class="chat-content-round">
     <div class="row no-gutters" data-ng-repeat="mess in messages track by $index">
       <div class="col-md-3 offset-md-4" ng-if="mess.senderId==loggedUserId">
-        <div class="chat-bubble chat-bubble--right">{{mess["message"]}}</div>
+        <div class="chat-bubble chat-bubble--right" ng-if="!mess.isPhoto" >{{mess["message"]}}</div>
+        <div class="chat-bubble chat-bubble--right" style="color: black" ng-if="mess.isPhoto" >
+          <img ng-src="{{ChatCtrl.generatePhotoRoute(mess.messageId.messageId)}}"  width="300"  height="300" >
+        </div>
       </div>
       <div class="col-md-3" ng-if="mess.senderId!=loggedUserId">
-        <div class="chat-bubble chat-bubble--left" style="color: black">
+        <div class="chat-bubble chat-bubble--left" style="color: black" ng-if="!mess.isPhoto" >
           {{ mess["message"]}}
+        </div>
+        <div class="chat-bubble chat-bubble--left" style="color: black" ng-if="mess.isPhoto" >
+          <img ng-src="{{ChatCtrl.generatePhotoRoute(mess.messageId.messageId)}}" width="300"  height="300" >
         </div>
       </div>
     </div>
