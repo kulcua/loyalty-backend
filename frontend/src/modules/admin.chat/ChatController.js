@@ -32,6 +32,7 @@ export default class ChatController {
     this.$scope.loggedUserId = AuthService.getLoggedUserId() || null;
     this.$scope.firstSelected = null;
     this.$scope.isImage = false;
+    this.$scope.image=null;
     this.Flash = Flash;
     this.NgTableParams = NgTableParams;
     this.$scope.selectedIndex = 0;
@@ -51,57 +52,91 @@ export default class ChatController {
       chatList: true,
       coverLoader: true,
     };
-    this.settingWebServer(this.$scope.loggedUserId);
+    this.settingWebServer(this.$scope.loggedUserId, this.ChatService,this.$scope);
 
   }
 
-  settingWebServer(loggedId) {
+  settingWebServer(loggedId, chatService,scope) {
     this.Ratchet.onopen = function (e) {
       console.log("Connection established!");
     };
     this.Ratchet.onmessage = function (e) {
       let data = JSON.parse(e.data);
+
+      let content;
+      let classname;
+      let id;
       let receiverId = data.customerId;
       let senderId = data.userId;
 
-      let classname;
-      let id;
+        //add text chat
+        if (data.from == 'Me') {
+          classname = "chat-bubble chat-bubble--right";
+          id = receiverId;
+        } else {
+          classname = "chat-left";
+          id = senderId;
+        }
 
-      //add text chat
-      if (data.from == 'Me') {
-        classname = "chat-bubble chat-bubble--right";
-        id = receiverId;
-      } else {
-        classname = "chat-left";
-        id = senderId;
+        if(data.type=="text")
+        {
+        chatService.Restangular.one('chat', data.messId).get().then((value) => {
+        let time = moment(Date.now()).format(
+         "HH:mm"
+        );
 
-        $('#cusid_' + id).html('<span class="dot"></span>');
-      }
-
-       //update new mess
-       $('#lastMess_' + id).html('<p class="text-muted">' + data.msg + '</p>');
-       $('#lastTime_' + id).html('<span class="time text-muted small">' + data.time + '</span');
-      
-      $('#chat-text' + id).append("<div class=" + classname + "> " + data.msg + " </div>");
-      $('#chat-panel').animate({
-        scrollTop: $('#chat-panel')[0].scrollHeight
-      }, 2000);
-
-      //reset text box
-      document.getElementById("chat-form").reset();
-    };
-  }
-
-  fileUpload() {    
-    imgInp.onchange = evt => {
-      const [file] = imgInp.files
-      if (file) {
-        $("#selectedImage").attr("src",URL.createObjectURL(file));
+         //update new mess
+         $('#cusid_' + id).html('<span class="dot"></span>');
+         $('#lastMess_' + id).html('<p class="text-muted">'+value.message+' </p>');
+         $('#lastTime_' + id).html('<span class="time text-muted small">' +time+ '</span');
+   
+         $('#chat-text' + id).append("<div class=" + classname + "> " + value.message + " </div>");
+         $('#chat-panel').animate({
+           scrollTop: $('#chat-panel')[0].scrollHeight
+         }, 2000);
+         
+   
+         //reset text box
+         document.getElementById("chat-form").reset();
+        }) 
+      }else {
+        chatService.Restangular.one('chat').one('message').one('photo', data.messId).get().then((value) => {
+          let time = moment(Date.now()).format(
+           "HH:mm"
+          );
+  
+           //update new mess
+           $('#cusid_' + id).html('<span class="dot"></span>');
+           $('#lastMess_' + id).html('<p class="text-muted"> photo </p>');
+           $('#lastTime_' + id).html('<span class="time text-muted small">' +time+ '</span');
+     
+          $('#chat-text' + id).append("<div class=" + classname + "> <img src="+URL.createObjectURL(scope.image)+"  width='300'  height='300' >  </div>");
+          
+          $('#chat-panel').animate({
+             scrollTop: $('#chat-panel')[0].scrollHeight
+           }, 2000);
+           
+           scope.image = null;
+           //reset text box
+           document.getElementById("chat-form").reset();})
       }
     }
 
-  this.$scope.isImage = true;
+  }
+
+
+  fileUpload() {
+    imgInp.onchange = evt => {
+      const [file] = imgInp.files
+      if (file) {
+        $("#selectedImage").attr("src", URL.createObjectURL(file));
+        this.$scope.image = file;
+        $("#inputText").prop('disabled', true);
+      }
+    }
     
+    this.$scope.isImage = true;
+
   };
 
   getData() {
@@ -168,79 +203,139 @@ export default class ChatController {
       self.config.dateTimeFormat
     );
 
+
     editedConversation.lastMessageSnippet = newMess.message;
     editedConversation.lastMessageTimestamp = moment(Date.now()).format(
       self.config.dateTimeFormat
     );
 
 
-    if ((newMess.message) && (newMess.message.trim() != '')) {
-      self.ChatService.postChat(newMess).then(
-        () => {
-          if (self.conversation.conversationId.conversationId) {
-            self.ChatService.putConversation(
-                self.conversation.conversationId.conversationId,
-                editedConversation
-              )
-              .then(
-                () => {
-                  newMess.message = "";
-                },
-                (res) => {
-                  self.$scope.validate = self.Validation.mapSymfonyValidation(
-                    res.data
-                  );
-                  let message = self.$filter("translate")(
-                    "xhr.put_conversation.error"
-                  );
-                  self.Flash.create("danger", message);
-                }
-              )
-              .catch((err) => {
-                self.$scope.fileValidate = self.Validation.mapSymfonyValidation(
-                  err.data
-                );
-                self.ChatService.storedFileError = self.$scope.fileValidate;
+      if(self.$scope.isImage)
+      {
+      newMess.file = self.$scope.image;
+      self.ChatService.postImage(newMess).then((value) => {
 
-                let message = self.$filter("translate")(
-                  "xhr.post_single_chat.warning"
+        this.appendJquery(value.messageId);
+
+
+        if (self.conversation.conversationId.conversationId) {
+          self.ChatService.putConversation(
+              self.conversation.conversationId.conversationId,
+              editedConversation
+            )
+            .then(
+              () => {
+                newMess.message = "";
+                $("#inputText").prop('disabled', false);
+                self.$scope.isImage = false;
+              },
+              (res) => {
+                self.$scope.validate = self.Validation.mapSymfonyValidation(
+                  res.data
                 );
-                self.Flash.create("warning", message);
-              });
-          } else {
-            let message = self.$filter("translate")(
-              "xhr.post_single_chat.success"
-            );
-            self.Flash.create("success", message);
-          }
-        },
-        (res) => {
-          self.$scope.validate = self.Validation.mapSymfonyValidation(res.data);
-          let message = self.$filter("translate")("xhr.post_single_chat.error");
-          self.Flash.create("danger", message);
+                let message = self.$filter("translate")(
+                  "xhr.put_conversation.error"
+                );
+                self.Flash.create("danger", message);
+              }
+            )
+            .catch((err) => {
+              self.$scope.fileValidate = self.Validation.mapSymfonyValidation(
+                err.data
+              );
+              self.ChatService.storedFileError = self.$scope.fileValidate;
+
+              let message = self.$filter("translate")(
+                "xhr.post_single_chat.warning"
+              );
+              self.Flash.create("warning", message);
+            });
+        } else {
+          let message = self.$filter("translate")(
+            "xhr.post_single_chat.success"
+          );
+          self.Flash.create("success", message);
         }
-      );
+
+      }, (res) => {
+        self.$scope.validate = self.Validation.mapSymfonyValidation(res.data);
+        let message = self.$filter("translate")("xhr.post_single_chat.error");
+        self.Flash.create("danger", message);
+      })
+    }
+    else //post chat
+    {
+      if (newMess.message) {
+      self.ChatService.postChat(newMess).then((value) => {
+
+        this.appendJquery(value.messageId);
+
+
+        if (self.conversation.conversationId.conversationId) {
+          self.ChatService.putConversation(
+              self.conversation.conversationId.conversationId,
+              editedConversation
+            )
+            .then(
+              () => {
+                newMess.message = "";
+                self.$scope.isImage = false;
+              },
+              (res) => {
+                self.$scope.validate = self.Validation.mapSymfonyValidation(
+                  res.data
+                );
+                let message = self.$filter("translate")(
+                  "xhr.put_conversation.error"
+                );
+                self.Flash.create("danger", message);
+              }
+            )
+            .catch((err) => {
+              self.$scope.fileValidate = self.Validation.mapSymfonyValidation(
+                err.data
+              );
+              self.ChatService.storedFileError = self.$scope.fileValidate;
+
+              let message = self.$filter("translate")(
+                "xhr.post_single_chat.warning"
+              );
+              self.Flash.create("warning", message);
+            });
+        } else {
+          let message = self.$filter("translate")(
+            "xhr.post_single_chat.success"
+          );
+          self.Flash.create("success", message);
+        }
+
+      }, (res) => {
+        self.$scope.validate = self.Validation.mapSymfonyValidation(res.data);
+        let message = self.$filter("translate")("xhr.post_single_chat.error");
+        self.Flash.create("danger", message);
+      })
+    }
     }
   }
 
-  appendJquery(content) {
+  appendJquery(messId) {
+
     let user_id = this.$scope.loggedUserId; //truyen day ne
     let cusId = this.conversation.participantIds[1];
-    let mess = content;
-    let lastTime = moment(Date.now()).format(
-      "HH:mm"
-    );
+    let type = "text";
+    if(this.$scope.image!=null) {
+      type = "media"
+    }
 
     let data = {
       userId: user_id,
       customerId: cusId,
-      msg: mess,
-      time: lastTime,
+      messId: messId,
+      type: type,
     }
 
-    if ((content) && (content.trim() != '')) {
-      this.Ratchet.send(JSON.stringify(data));
-    }
+    this.Ratchet.send(JSON.stringify(data));
+
   }
 
   highlightName(index, conversation) {

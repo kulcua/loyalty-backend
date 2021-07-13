@@ -5,6 +5,7 @@ export default class ChatService {
     this.$q = $q;
     this.conversations = null;
     this.messages = null;
+    this.mess = null;
   }
 
   getCustomerConversation() {
@@ -54,6 +55,33 @@ export default class ChatService {
     return this.Restangular.one("chat").one("message").customPOST({
       message: newMess,
     });
+  }
+   
+   /**
+     * Calls for post image to chat
+     *
+     * @method postImage
+     * @param {Mess} newMess
+     * @param {Object} data
+     * @returns {Promise}
+     */
+    postImage(newMess) {
+      let fd = new FormData();
+
+      fd.append('message[conversationId]', newMess.conversationId);
+      // fd.append('message[conversationParticipantIds][0]', newMess.senderId);
+      // fd.append('message[conversationParticipantIds][1]', newMess.customerId);
+      fd.append('message[senderId]', newMess.senderId);
+      fd.append('message[senderName]', newMess.senderName);
+      fd.append('message[message]', "photo");
+      fd.append('message[messageTimestamp]',newMess.messageTimestamp);
+      fd.append('message[photoMessage]', newMess.file);
+
+      return this.Restangular
+          .one('chat').one('message')
+          .one('photo')
+          .withHttpConfig({transformRequest: angular.identity})
+          .customPOST(fd, '', undefined, {'Content-Type': undefined});
   }
 
   putConversation(conversationId, editedConversation) {
