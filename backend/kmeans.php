@@ -131,6 +131,8 @@ foreach ($points as $i => $coordinates) {
 // cluster these points in 3 clusters
 $clusters = $space->solve(4);
 
+$exportarray = array();
+
 printf("Segment result:\n");
 // display the cluster centers and attached points
 foreach ($clusters as $num => $cluster) {
@@ -146,19 +148,27 @@ foreach ($clusters as $num => $cluster) {
         count($cluster)
     );
 
+    $datacluster = array();
+
     foreach ($cluster as $point) {
         $gender = $point[0];
         $transactionsAmount = $point[1];
         $age = $point[2];
-        printf("[%d,%d,%d]\n", $gender, $transactionsAmount, $age);
+        // printf("[%d,%d,%d]\n", $gender, $transactionsAmount, $age);
 
         $data = $point->toArray();
         $customerId = $data["data"]["ID"];
         array_push($customers, $customerId);
+        array_push($datacluster, $data);
     }
+
+    array_push($exportarray, [$num + 1 => $datacluster]);
 
     HandleSegment($num, $customers, $coordinates);
 }
+
+$json = json_encode($exportarray);
+$bytes = file_put_contents("datakmeans.json", $json);
 
 function array_push_assoc($array, $key, $value)
 {
