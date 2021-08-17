@@ -1,23 +1,53 @@
-# Open Loyalty
+# Melodi
 
-Open Loyalty is a headless loyalty technology for visionaries and innovators who want to implement an effective loyalty program that cuts across multiple touchpoints. Our solution is 100% API-first and unlike old-fashioned, monolithic software, it’s easy to integrate with and ensures complete flexibility, speed, and effectiveness at all levels. 
+Melodi is a membership point system built from Open Loyalty.
 
-## Screenshots
 
-![Admin Cockpit](https://user-images.githubusercontent.com/3582562/54033263-1db79500-41b4-11e9-8f2d-9b91acce50cf.png)
+## Table of Content
+* [Features](#features)
+* [Screenshots](#screenshots)
+* [Quick Install](#quick-install)
+* [Technologies](#technologies)
+* [Documentation](#documentation)
+* [Authors](#authors)
 
-## Url access
+## Features:
+* Schedule Maintenance
+* Schedule Warranty
+* Realtime Chat
+* Feedback
+* Segment customer automatically
 
-After starting Open Loyalty, it exposes services under the following URLs:
+## Screenshots:
+* Schedule Maintenance:
+  <p align="middle">
+  <img src="./demo/4-1.JPG" width="400" />
+    <img src="./demo/4-2.JPG" width="400" />
+  </p>
+  
+* Schedule Warranty:
+  <p align="middle">
+  <img src="./demo/3-1.JPG" width="400" />
+    <img src="./demo/3-2.JPG" width="400" />
+  </p>
 
- * http://openloyalty.localhost:8182 - the administration panel,
- * http://openloyalty.localhost:8183 - the customer panel,
- * http://openloyalty.localhost - RESTful API port
- * http://openloyalty.localhost/doc - swagger-like API doc
+* Realtime Chat:
+  <p align="middle">
+  <img src="./demo/8.JPG" width="500" />
+  </p>
+  
+* Feedback:
+<p align="middle">
+<img src="./demo/7-1.JPG" width="400" />
+ <img src="./demo/7-2.JPG" width="400" />
+</p>
+
+* Segment customer automatically
+<p align="middle">
+<img src="./demo/9.JPG" width="500" />
+</p>
  
-
-## Quick install
-
+## Quick Install:
 
 ```
 ./docker/base/build_dev.sh
@@ -43,7 +73,15 @@ After starting Open Loyalty in developer mode, it exposes services under slightl
  * http://openloyalty.localhost - RESTful API port
  * http://openloyalty.localhost/app_dev.php/doc - swagger-like API doc
 
-## Documentation
+## Technologies:
+* Database: Postgresql, Elastic Search
+* Frontend: Angularjs
+* Backend: Symfony
 
-Technical documentation of Open Loyalty is located [here](backend/doc/index.rst). 
+## Documentation:
+Technical documentation of Open Loyalty is located [here](backend/doc/index.rst).
+
+## Authors:
+* Bùi Xuân Nhã - nhabui137@gmail.com
+* Nguyễn Thị Kim Phương - nguyenphuong9995@gmail.com
 
